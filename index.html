@@ -314,6 +314,19 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m9 8.5 3 3.5 3-3.5M12 12v6M9.3 14.8h5.4M9.3 17.2h5.4"/></svg>
             <span><span class="nname">年収・時給換算</span><span class="ndesc">時給と月収・年収の換算</span></span>
           </button>
+
+          <button class="navbtn" data-tool="fuel" data-keys="燃費 ガソリン 燃料代 車 ドライブ 旅行">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M14 9h2.5A1.5 1.5 0 0 1 18 10.5V16a2 2 0 0 0 4 0V9.8a2 2 0 0 0-.6-1.4L19 6"/><path d="M2.5 21h13.5"/><path d="M7 8h4v4H7z"/></svg>
+            <span><span class="nname">燃費・ガソリン代</span><span class="ndesc">燃費と燃料代の計算</span></span>
+          </button>
+          <button class="navbtn" data-tool="roulette" data-keys="ルーレット 抽選 ランダム くじ 順番 決める">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="1.6"/><path d="M12 3.5v5M19.5 16.5l-4.5-2M4.5 16.5l4.5-2"/></svg>
+            <span><span class="nname">ルーレット・抽選</span><span class="ndesc">候補からランダムに1つ選ぶ</span></span>
+          </button>
+          <button class="navbtn" data-tool="base" data-keys="進数 変換 2進数 10進数 16進数 バイナリ">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 3.5 12 7 19"/><path d="m17 5 3.5 7L17 19"/></svg>
+            <span><span class="nname">進数変換</span><span class="ndesc">2進・8進・10進・16進</span></span>
+          </button>
         </nav>
 
         <main id="panels">
@@ -925,6 +938,79 @@
               </div>
             </div>
             <p class="note"><strong>ご注意：</strong>単純な掛け算・割り算による概算です。残業代、ボーナス、税金、社会保険料などは含みません。</p>
+          </section>
+
+          <!-- 燃費・ガソリン代 -->
+          <section class="panel" data-panel="fuel" hidden aria-label="燃費・ガソリン代計算">
+            <h2>燃費・ガソリン代</h2>
+            <p class="sub">走った距離と使った燃料から燃費を出し、ガソリン代も計算します。</p>
+            <div class="row3">
+              <div class="field">
+                <label for="fuelDist">走行距離</label>
+                <div class="withunit"><input type="number" id="fuelDist" value="300" min="0" step="1" inputmode="decimal" /><span class="unit">km</span></div>
+              </div>
+              <div class="field">
+                <label for="fuelUsed">使った燃料</label>
+                <div class="withunit"><input type="number" id="fuelUsed" value="20" min="0" step="0.1" inputmode="decimal" /><span class="unit">L</span></div>
+              </div>
+              <div class="field">
+                <label for="fuelPrice">ガソリン単価</label>
+                <div class="withunit"><input type="number" id="fuelPrice" value="170" min="0" step="1" inputmode="numeric" /><span class="unit">円/L</span></div>
+              </div>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">燃費</div><div class="svalue mono" id="fuelEff">—</div></div>
+              <div class="stat"><div class="slabel">この走行の燃料代</div><div class="svalue mono" id="fuelCost">—</div></div>
+              <div class="stat"><div class="slabel">1kmあたり</div><div class="svalue mono" id="fuelPerKm">—</div></div>
+            </div>
+            <p class="note">満タン法（給油量＝使った燃料量とみなす方法）を前提にした概算です。</p>
+          </section>
+
+          <!-- ルーレット・抽選 -->
+          <section class="panel" data-panel="roulette" hidden aria-label="ルーレット・抽選">
+            <h2>ルーレット・抽選</h2>
+            <p class="sub">候補を1行に1つずつ書いて、ランダムに1つ選びます。順番決めやくじ引きにどうぞ。</p>
+            <div class="field">
+              <label for="rouletteList">候補（1行に1つ）</label>
+              <textarea id="rouletteList" rows="6">Aさん
+Bさん
+Cさん
+Dさん</textarea>
+            </div>
+            <div class="btnrow">
+              <button class="btn" id="rouletteGo">抽選する</button>
+            </div>
+            <div class="resultbox">
+              <div class="result-label">結果</div>
+              <div class="result-big" id="rouletteOut">まだ抽選していません</div>
+              <p class="note" id="rouletteCount"></p>
+            </div>
+            <h3>これまでの結果</h3>
+            <ul class="laplist" id="rouletteHistory"></ul>
+          </section>
+
+          <!-- 進数変換 -->
+          <section class="panel" data-panel="base" hidden aria-label="進数変換">
+            <h2>進数変換</h2>
+            <p class="sub">2進数・8進数・10進数・16進数のあいだで変換します（0以上の整数）。</p>
+            <div class="field">
+              <label for="baseInput">変換したい数</label>
+              <input type="text" id="baseInput" value="255" inputmode="text" autocomplete="off" />
+            </div>
+            <span class="flabel">入力した数の進数</span>
+            <div class="seg wrap-fit" id="baseFrom">
+              <button data-bf="2">2進数</button>
+              <button data-bf="8">8進数</button>
+              <button data-bf="10" class="active">10進数</button>
+              <button data-bf="16">16進数</button>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">2進数</div><div class="svalue mono" id="baseOut2" style="word-break:break-all">—</div></div>
+              <div class="stat"><div class="slabel">8進数</div><div class="svalue mono" id="baseOut8">—</div></div>
+              <div class="stat"><div class="slabel">10進数</div><div class="svalue mono" id="baseOut10">—</div></div>
+              <div class="stat"><div class="slabel">16進数</div><div class="svalue mono" id="baseOut16">—</div></div>
+            </div>
+            <p class="note" id="baseMsg">16進数のアルファベット（A〜F）も入力できます。</p>
           </section>
         </main>
       </div>
@@ -1759,6 +1845,65 @@
     ['salHourly','salHoursDay','salDaysMonth'].forEach(function(id){ $(id).addEventListener('input', updateSalHourly); });
     ['salMonthly','salMDays','salMHours'].forEach(function(id){ $(id).addEventListener('input', updateSalMonthly); });
     updateSalHourly(); updateSalMonthly();
+
+    /* ---------- 燃費・ガソリン代 ---------- */
+    function updateFuel() {
+      var d = parseFloat($('fuelDist').value), u = parseFloat($('fuelUsed').value), p = parseFloat($('fuelPrice').value);
+      if (isNaN(d) || isNaN(u) || u === 0) { $('fuelEff').textContent = '—'; $('fuelCost').textContent = '—'; $('fuelPerKm').textContent = '—'; return; }
+      var eff = d / u;
+      $('fuelEff').textContent = (Math.round(eff * 100) / 100).toLocaleString('ja-JP') + ' km/L';
+      if (!isNaN(p)) {
+        $('fuelCost').textContent = yen(u * p);
+        $('fuelPerKm').textContent = d > 0 ? (Math.round(u * p / d * 10) / 10).toLocaleString('ja-JP') + ' 円' : '—';
+      }
+    }
+    ['fuelDist','fuelUsed','fuelPrice'].forEach(function(id){ $(id).addEventListener('input', updateFuel); });
+    updateFuel();
+
+    /* ---------- ルーレット・抽選 ---------- */
+    var roulettePast = [];
+    $('rouletteGo').addEventListener('click', function(){
+      var items = $('rouletteList').value.split('\n').map(function(x){ return x.trim(); }).filter(function(x){ return x !== ''; });
+      if (items.length === 0) { $('rouletteOut').textContent = '候補が入力されていません'; return; }
+      var pick = items[randBelow(items.length)];
+      $('rouletteOut').textContent = pick;
+      $('rouletteCount').textContent = items.length + ' 件の候補から選びました。';
+      roulettePast.unshift(pick);
+      if (roulettePast.length > 10) roulettePast.pop();
+      $('rouletteHistory').innerHTML = roulettePast.map(function(x, i){
+        return '<li><span>' + (i + 1) + ' 回前</span><span></span></li>';
+      }).join('');
+      Array.prototype.forEach.call($('rouletteHistory').children, function(li, i){
+        li.lastElementChild.textContent = roulettePast[i];
+      });
+    });
+
+    /* ---------- 進数変換 ---------- */
+    var baseFromVal = 10;
+    function updateBase() {
+      var raw = $('baseInput').value.trim();
+      var msg = $('baseMsg');
+      if (raw === '') { ['baseOut2','baseOut8','baseOut10','baseOut16'].forEach(function(id){ $(id).textContent = '—'; }); return; }
+      var v;
+      try {
+        if (baseFromVal === 2) { if (!/^[01]+$/.test(raw)) throw 0; v = BigInt('0b' + raw); }
+        else if (baseFromVal === 8) { if (!/^[0-7]+$/.test(raw)) throw 0; v = BigInt('0o' + raw); }
+        else if (baseFromVal === 10) { if (!/^[0-9]+$/.test(raw)) throw 0; v = BigInt(raw); }
+        else { if (!/^[0-9a-fA-F]+$/.test(raw)) throw 0; v = BigInt('0x' + raw); }
+      } catch (e) {
+        msg.textContent = '入力した進数で使える文字だけを入れてください（例：2進数は 0 と 1 のみ）。';
+        ['baseOut2','baseOut8','baseOut10','baseOut16'].forEach(function(id){ $(id).textContent = '—'; });
+        return;
+      }
+      msg.textContent = '16進数のアルファベット（A〜F）も入力できます。';
+      $('baseOut2').textContent = v.toString(2);
+      $('baseOut8').textContent = v.toString(8);
+      $('baseOut10').textContent = v.toString(10);
+      $('baseOut16').textContent = v.toString(16).toUpperCase();
+    }
+    segWire('baseFrom', 'data-bf', function(v){ baseFromVal = parseInt(v, 10); updateBase(); });
+    $('baseInput').addEventListener('input', updateBase);
+    updateBase();
     </script>
   </body>
 </html>
