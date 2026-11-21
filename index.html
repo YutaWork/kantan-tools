@@ -20,7 +20,166 @@
     <title>かんたんツール集</title>
     <script type="application/ld+json">
       {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "description": "文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換、平均・合計。全18ツールが無料で使えるツール集です。"}, {"@type": "WebPage", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "isPartOf": {"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/"}}]}
-    </script>
+    
+/* ===== batch A: text tools ===== */
+function setOut(id, txt, note){ $(id).value = txt; if(note !== undefined) $(id+'Note').textContent = note; }
+let caseMode = 'upper';
+segWire('caseMode', v => { caseMode = v; runCase(); });
+function runCase(){
+  const t = $('caseIn').value; let r = t;
+  if(caseMode==='upper') r = t.toUpperCase();
+  else if(caseMode==='lower') r = t.toLowerCase();
+  else if(caseMode==='title') r = t.toLowerCase().replace(/(^|[\s(\[{「『"'])([a-z])/g, (m,p,c)=>p+c.toUpperCase());
+  else if(caseMode==='sentence') r = t.toLowerCase().replace(/(^\s*[a-z])|([.!?]\s+[a-z])/g, m=>m.toUpperCase());
+  setOut('caseOut', r, r.length + '文字');
+}
+$('caseIn').addEventListener('input', runCase); runCase();
+
+const HW_KANA = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮｯｰﾞﾟ';
+const FW_KANA = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンァィゥェォャュョッー゛゜';
+const DAKU = {'カ':'ガ','キ':'ギ','ク':'グ','ケ':'ゲ','コ':'ゴ','サ':'ザ','シ':'ジ','ス':'ズ','セ':'ゼ','ソ':'ゾ','タ':'ダ','チ':'ヂ','ツ':'ヅ','テ':'デ','ト':'ド','ハ':'バ','ヒ':'ビ','フ':'ブ','ヘ':'ベ','ホ':'ボ','ウ':'ヴ'};
+const HANDAKU = {'ハ':'パ','ヒ':'ピ','フ':'プ','ヘ':'ペ','ホ':'ポ'};
+function toFullStr(t){
+  let r = t.replace(/[!-~]/g, c => String.fromCharCode(c.charCodeAt(0) + 0xFEE0)).replace(/ /g, '　');
+  let out = '';
+  for(let i=0;i<r.length;i++){
+    const idx = HW_KANA.indexOf(r[i]);
+    if(idx >= 0){
+      let f = FW_KANA[idx];
+      const nx = r[i+1];
+      if(nx === 'ﾞ' && DAKU[f]){ f = DAKU[f]; i++; }
+      else if(nx === 'ﾟ' && HANDAKU[f]){ f = HANDAKU[f]; i++; }
+      out += f;
+    } else out += r[i];
+  }
+  return out;
+}
+function toHalfStr(t){
+  let r = t.replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/　/g, ' ');
+  let out = '';
+  for(const ch of r){
+    const idx = FW_KANA.indexOf(ch);
+    if(idx >= 0 && idx <= 60) out += HW_KANA[idx];
+    else {
+      const base = Object.keys(DAKU).find(k => DAKU[k] === ch);
+      if(base){ out += HW_KANA[FW_KANA.indexOf(base)] + 'ﾞ'; continue; }
+      const hb = Object.keys(HANDAKU).find(k => HANDAKU[k] === ch);
+      if(hb){ out += HW_KANA[FW_KANA.indexOf(hb)] + 'ﾟ'; continue; }
+      out += ch;
+    }
+  }
+  return out;
+}
+let zenMode = 'toFull';
+segWire('zenMode', v => { zenMode = v; runZen(); });
+function runZen(){ const t = $('zenIn').value; setOut('zenOut', zenMode==='toFull' ? toFullStr(t) : toHalfStr(t)); }
+$('zenIn').addEventListener('input', runZen); runZen();
+
+let kanaMode = 'toKata';
+segWire('kanaMode', v => { kanaMode = v; runKana(); });
+function runKana(){
+  const t = $('kanaIn').value;
+  const r = kanaMode==='toKata'
+    ? t.replace(/[ぁ-ん]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60))
+    : t.replace(/[ァ-ン]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  setOut('kanaOut', r);
+}
+$('kanaIn').addEventListener('input', runKana); runKana();
+
+$('cleanRun').addEventListener('click', () => {
+  let lines = $('cleanIn').value.split('\n');
+  if($('cleanTrim').checked) lines = lines.map(l => l.replace(/^[ \t　]+|[ \t　]+$/g, ''));
+  if($('cleanSpace').checked) lines = lines.map(l => l.replace(/[ \t　]{2,}/g, ' '));
+  if($('cleanEmpty').checked) lines = lines.filter(l => l.trim() !== '');
+  let r = lines.join('\n');
+  if($('cleanJoin').checked) r = r.replace(/\n/g, '');
+  setOut('cleanOut', r, '整理前 ' + $('cleanIn').value.length + '文字 → 整理後 ' + r.length + '文字');
+});
+$('dupRun').addEventListener('click', () => {
+  const lines = $('dupIn').value.split('\n');
+  const seen = new Set(); const out = [];
+  for(const l of lines){ if(!seen.has(l)){ seen.add(l); out.push(l); } }
+  setOut('dupOut', out.join('\n'), lines.length + '行 → ' + out.length + '行（' + (lines.length - out.length) + '行を取り除きました）');
+});
+let sortMode = 'asc';
+segWire('sortMode', v => { sortMode = v; });
+$('sortRun').addEventListener('click', () => {
+  const lines = $('sortIn').value.split('\n').filter(l => l !== '');
+  const numeric = $('sortNum').checked;
+  lines.sort((a,b) => numeric ? (parseFloat(a) - parseFloat(b)) : a.localeCompare(b, 'ja'));
+  if(sortMode === 'desc') lines.reverse();
+  setOut('sortOut', lines.join('\n'), lines.length + '行を並べ替えました');
+});
+$('lnRun').addEventListener('click', () => {
+  const start = parseInt($('lnStart').value, 10) || 1;
+  const sep = $('lnSep').value;
+  const lines = $('lnIn').value.split('\n');
+  const width = String(start + lines.length - 1).length;
+  setOut('lnOut', lines.map((l,i) => String(start + i).padStart(width, '0') + sep + l).join('\n'));
+});
+$('repRun').addEventListener('click', () => {
+  const from = $('repFrom').value, to = $('repTo').value, src = $('repIn').value;
+  if(from === ''){ setOut('repOut', src, '探す文字列が空です'); return; }
+  try {
+    let count = 0, r;
+    if($('repRegex').checked){
+      const re = new RegExp(from, 'g' + ($('repCase').checked ? 'i' : ''));
+      r = src.replace(re, () => { count++; return to; });
+    } else if($('repCase').checked){
+      const re = new RegExp(from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+      r = src.replace(re, () => { count++; return to; });
+    } else {
+      const parts = src.split(from); count = parts.length - 1; r = parts.join(to);
+    }
+    setOut('repOut', r, count + 'か所を置き換えました');
+  } catch(e){ setOut('repOut', src, '正規表現に誤りがあります'); }
+});
+$('diffRun').addEventListener('click', () => {
+  const A = $('diffA').value.split('\n'), B = $('diffB').value.split('\n');
+  const m = A.length, n = B.length;
+  const dp = Array.from({length: m+1}, () => new Uint16Array(n+1));
+  for(let i = m-1; i >= 0; i--) for(let j = n-1; j >= 0; j--) dp[i][j] = A[i] === B[j] ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
+  let html = '', i = 0, j = 0, add = 0, del = 0;
+  const esc = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  while(i < m && j < n){
+    if(A[i] === B[j]){ html += '<div class="diffrow">' + esc(A[i]) + '</div>'; i++; j++; }
+    else if(dp[i+1][j] >= dp[i][j+1]){ html += '<div class="diffrow diffdel">− ' + esc(A[i]) + '</div>'; i++; del++; }
+    else { html += '<div class="diffrow diffadd">＋ ' + esc(B[j]) + '</div>'; j++; add++; }
+  }
+  while(i < m){ html += '<div class="diffrow diffdel">− ' + esc(A[i]) + '</div>'; i++; del++; }
+  while(j < n){ html += '<div class="diffrow diffadd">＋ ' + esc(B[j]) + '</div>'; j++; add++; }
+  $('diffOut').innerHTML = html;
+  $('diffNote').textContent = '追加 ' + add + '行 ／ 削除 ' + del + '行';
+});
+function renderMd(){
+  const src = $('mdIn').value;
+  const esc = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const inline = t => esc(t)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  const lines = src.split('\n'); let html = '', inList = false, inCode = false, codeBuf = '';
+  const closeList = () => { if(inList){ html += '</ul>'; inList = false; } };
+  for(const line of lines){
+    if(line.trim().startsWith('```')){ if(inCode){ html += '<pre><code>' + esc(codeBuf) + '</code></pre>'; inCode = false; codeBuf=''; } else { closeList(); inCode = true; } continue; }
+    if(inCode){ codeBuf += line + '\n'; continue; }
+    const h = line.match(/^(#{1,3})\s+(.*)$/);
+    if(h){ closeList(); html += '<h' + h[1].length + '>' + inline(h[2]) + '</h' + h[1].length + '>'; continue; }
+    if(/^\s*[-*]\s+/.test(line)){ if(!inList){ html += '<ul>'; inList = true; } html += '<li>' + inline(line.replace(/^\s*[-*]\s+/, '')) + '</li>'; continue; }
+    closeList();
+    if(line.trim() === '') continue;
+    if(line.trim() === '---'){ html += '<hr>'; continue; }
+    if(line.trim().startsWith('>')){ html += '<blockquote>' + inline(line.trim().replace(/^>\s?/, '')) + '</blockquote>'; continue; }
+    html += '<p>' + inline(line) + '</p>';
+  }
+  if(inCode) html += '<pre><code>' + esc(codeBuf) + '</code></pre>';
+  closeList();
+  $('mdOut').innerHTML = html;
+}
+$('mdIn').addEventListener('input', renderMd); renderMd();
+
+</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -332,7 +491,7 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-5"/><path d="M10 20V7"/><path d="M15 20v-8"/><path d="M20 20V4"/></svg>
             <span><span class="nname">平均・合計</span><span class="ndesc">平均・最大・最小・中央値</span></span>
           </button>
-        </nav>
+        <button class="navbtn" data-tool="case">大文字・小文字変換</button><button class="navbtn" data-tool="zenkaku">全角・半角変換</button><button class="navbtn" data-tool="kana">ひらがな・カタカナ変換</button><button class="navbtn" data-tool="textclean">空白・改行整理</button><button class="navbtn" data-tool="dedupe">重複行削除</button><button class="navbtn" data-tool="sortlines">行の並べ替え</button><button class="navbtn" data-tool="linenum">行番号付け</button><button class="navbtn" data-tool="replace">文章の置換</button><button class="navbtn" data-tool="diff">文章比較</button><button class="navbtn" data-tool="markdown">Markdownプレビュー</button></nav>
 
         <main id="panels">
           <div class="nohit" id="noHit">条件に合うツールが見つかりませんでした。別の言葉で検索してみてください。</div>
@@ -1067,7 +1226,79 @@ Dさん</textarea>
             </div>
             <p class="note">小数やマイナスの数も使えます。数字でない行は数えません。</p>
           </section>
-        </main>
+        <section class="panel" id="panel-case" hidden>
+<h2>大文字・小文字変換</h2>
+<p class="desc">英字の大文字・小文字をまとめて変換します。文章はブラウザの中だけで処理されます。</p>
+<div class="seg" id="caseMode"><button data-v="upper" class="on">すべて大文字</button><button data-v="lower">すべて小文字</button><button data-v="title">単語の先頭を大文字</button><button data-v="sentence">文の先頭を大文字</button></div><div class="field"><label>変換したい文章</label><textarea class="ta" id="caseIn" rows="5">Hello World! this is a test.</textarea></div><div class="field"><label>結果</label><textarea class="ta" id="caseOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="caseOut">結果をコピー</button></div><p class="note" id="caseOutNote"></p>
+</section>
+<section class="panel" id="panel-zenkaku" hidden>
+<h2>全角・半角変換</h2>
+<p class="desc">英数字や記号、カタカナの全角と半角を変換します。入力フォームの文字種の統一などに。</p>
+<div class="seg" id="zenMode"><button data-v="toFull" class="on">半角 → 全角</button><button data-v="toHalf">全角 → 半角</button></div><div class="field"><label>変換したい文章</label><textarea class="ta" id="zenIn" rows="5">ABC123 ｱｲｳｴｵ</textarea></div><div class="field"><label>結果</label><textarea class="ta" id="zenOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="zenOut">結果をコピー</button></div><p class="note" id="zenOutNote"></p>
+</section>
+<section class="panel" id="panel-kana" hidden>
+<h2>ひらがな・カタカナ変換</h2>
+<p class="desc">ひらがなとカタカナを相互に変換します。</p>
+<div class="seg" id="kanaMode"><button data-v="toKata" class="on">ひらがな → カタカナ</button><button data-v="toHira">カタカナ → ひらがな</button></div><div class="field"><label>変換したい文章</label><textarea class="ta" id="kanaIn" rows="5">あいうえお</textarea></div><div class="field"><label>結果</label><textarea class="ta" id="kanaOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="kanaOut">結果をコピー</button></div><p class="note" id="kanaOutNote"></p>
+</section>
+<section class="panel" id="panel-textclean" hidden>
+<h2>空白・改行整理</h2>
+<p class="desc">コピーした文章の余分な空白や空行を整えます。</p>
+<div class="field"><label>整えたい文章</label><textarea class="ta" id="cleanIn" rows="6">  行頭の空白   と、  連続した空白。
+
+
+空行がたくさんあります。  </textarea></div><label class="chk"><input type="checkbox" id="cleanSpace" checked> 連続する空白を1つにする</label><label class="chk"><input type="checkbox" id="cleanTrim" checked> 行の先頭と末尾の空白を取り除く</label><label class="chk"><input type="checkbox" id="cleanEmpty" checked> 空行を取り除く</label><label class="chk"><input type="checkbox" id="cleanJoin"> 改行をすべて取り除く</label><div class="btnrow"><button class="btn" id="cleanRun">整える</button></div><div class="field"><label>結果</label><textarea class="ta" id="cleanOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="cleanOut">結果をコピー</button></div><p class="note" id="cleanOutNote"></p>
+</section>
+<section class="panel" id="panel-dedupe" hidden>
+<h2>重複行削除</h2>
+<p class="desc">同じ行が複数ある場合に、最初の1行だけを残して重なりを取り除きます。</p>
+<div class="field"><label>文章（1行に1件）</label><textarea class="ta" id="dupIn" rows="7">りんご
+みかん
+りんご
+ぶどう
+みかん</textarea></div><div class="btnrow"><button class="btn" id="dupRun">重なりを取り除く</button></div><div class="field"><label>結果</label><textarea class="ta" id="dupOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="dupOut">結果をコピー</button></div><p class="note" id="dupOutNote"></p>
+</section>
+<section class="panel" id="panel-sortlines" hidden>
+<h2>行の並べ替え</h2>
+<p class="desc">1行ずつの項目を、昇順・降順に並べ替えます。</p>
+<div class="seg" id="sortMode"><button data-v="asc" class="on">昇順</button><button data-v="desc">降順</button></div><label class="chk"><input type="checkbox" id="sortNum"> 数値として並べる</label><div class="field"><label>文章（1行に1件）</label><textarea class="ta" id="sortIn" rows="7">ぶどう
+りんご
+みかん</textarea></div><div class="btnrow"><button class="btn" id="sortRun">並べ替える</button></div><div class="field"><label>結果</label><textarea class="ta" id="sortOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="sortOut">結果をコピー</button></div><p class="note" id="sortOutNote"></p>
+</section>
+<section class="panel" id="panel-linenum" hidden>
+<h2>行番号付け</h2>
+<p class="desc">各行の先頭に連番を付けます。</p>
+<div class="row"><div class="field"><label>開始番号</label><input type="number" id="lnStart" value="1"></div><div class="field"><label>区切り文字</label><input type="text" id="lnSep" value=". "></div></div><div class="field"><label>文章</label><textarea class="ta" id="lnIn" rows="6">一行目
+二行目
+三行目</textarea></div><div class="btnrow"><button class="btn" id="lnRun">番号を付ける</button></div><div class="field"><label>結果</label><textarea class="ta" id="lnOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="lnOut">結果をコピー</button></div><p class="note" id="lnOutNote"></p>
+</section>
+<section class="panel" id="panel-replace" hidden>
+<h2>文章の置換</h2>
+<p class="desc">指定した文字列を、別の文字列に一括で置き換えます。</p>
+<div class="row"><div class="field"><label>探す文字列</label><input type="text" id="repFrom" value="猫"></div><div class="field"><label>置き換える文字列</label><input type="text" id="repTo" value="犬"></div></div><label class="chk"><input type="checkbox" id="repCase"> 大文字・小文字を区別しない（英字）</label><label class="chk"><input type="checkbox" id="repRegex"> 正規表現を使う</label><div class="field"><label>文章</label><textarea class="ta" id="repIn" rows="6">猫が好きです。猫はかわいいです。</textarea></div><div class="btnrow"><button class="btn" id="repRun">置き換える</button></div><div class="field"><label>結果</label><textarea class="ta" id="repOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="repOut">結果をコピー</button></div><p class="note" id="repOutNote"></p>
+</section>
+<section class="panel" id="panel-diff" hidden>
+<h2>文章比較</h2>
+<p class="desc">修正前と修正後の文章を行ごとに比べて、変わった行に色を付けます。</p>
+<div class="field"><label>修正前の文章</label><textarea class="ta" id="diffA" rows="5">今日は晴れです。
+明日も晴れでしょう。
+明後日は未定です。</textarea></div><div class="field"><label>修正後の文章</label><textarea class="ta" id="diffB" rows="5">今日は晴れです。
+明日は雨でしょう。
+明後日は未定です。</textarea></div><div class="btnrow"><button class="btn" id="diffRun">比べる</button></div><div id="diffOut" style="margin-top:10px"></div><p class="note" id="diffNote"></p>
+</section>
+<section class="panel" id="panel-markdown" hidden>
+<h2>Markdownプレビュー</h2>
+<p class="desc">Markdown記法で書いた文章の、表示イメージを確認できます。基本的な記法（見出し・太字・リスト・リンク・引用・コード）に対応します。</p>
+<div class="field"><label>Markdownの文章</label><textarea class="ta" id="mdIn" rows="8"># 見出し
+
+これは**太字**の例です。
+
+- 項目1
+- 項目2
+
+> 引用の例です。</textarea></div><div class="mdpreview" id="mdOut"></div>
+</section>
+</main>
       </div>
 
       <footer class="site">
