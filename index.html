@@ -2171,8 +2171,8 @@ function runMoji(){
   else if(mojiMode === 'sentence') r = t.toLowerCase().replace(/(^\s*[a-z])|([.!?]\s+[a-z])/g, m => m.toUpperCase());
   else if(mojiMode === 'toFull') r = toFullStr(t);
   else if(mojiMode === 'toHalf') r = toHalfStr(t);
-  else if(mojiMode === 'toKata') r = t.replace(/[ぁ-ん]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60));
-  else if(mojiMode === 'toHira') r = t.replace(/[ァ-ン]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  else if(mojiMode === 'toKata') r = t.replace(/[ぁ-ゖ]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60));
+  else if(mojiMode === 'toHira') r = t.replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
   setOut('mojiOut', r, r.length + '文字');
 }
 $('mojiIn').addEventListener('input', runMoji); runMoji();
@@ -2259,7 +2259,7 @@ function renderMd(){
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (m, txt, url) => '<a href="' + url.replace(/"/g, '%22') + '" target="_blank" rel="noopener">' + txt + '</a>');
   const lines = src.split('\n'); let html = '', inList = false, inCode = false, codeBuf = '';
   const closeList = () => { if(inList){ html += '</ul>'; inList = false; } };
   for(const line of lines){
@@ -2289,7 +2289,7 @@ function parseDelimited(text, delim){
     if(inQ){
       if(c === '"'){ if(t[i+1] === '"'){ cur += '"'; i++; } else inQ = false; }
       else cur += c;
-    } else if(c === '"') inQ = true;
+    } else if(c === '"' && cur === '') inQ = true;
     else if(c === delim){ row.push(cur); cur = ''; }
     else if(c === '\n'){ row.push(cur); rows.push(row); row = []; cur = ''; }
     else cur += c;
@@ -2317,7 +2317,7 @@ $('dcRun').addEventListener('click', () => {
       const head = rows[0];
       const arr = rows.slice(1).map(r => { const o = {}; head.forEach((h,i) => { o[h] = r[i] !== undefined ? r[i] : ''; }); return o; });
       setOut('dcOut', JSON.stringify(arr, null, 2), arr.length + '件をJSONに変換しました');
-    } else if(dcMode === 'c2t'){ setOut('dcOut', parseDelimited(src, ',').map(r => r.join('\t')).join('\n'), 'TSVに変換しました'); }
+    } else if(dcMode === 'c2t'){ let replaced = false; const rowsT = parseDelimited(src, ',').map(r => r.map(v => { const w = String(v).replace(/[\t\n]/g, ' '); if(w !== String(v)) replaced = true; return w; })); setOut('dcOut', rowsT.map(r => r.join('\t')).join('\n'), replaced ? 'TSVに変換しました（改行・タブを含む項目は空白に置き換えました）' : 'TSVに変換しました'); }
     else if(dcMode === 't2c'){ setOut('dcOut', rowsToCsv(parseDelimited(src, '\t')), 'CSVに変換しました'); }
   } catch(e){ setOut('dcOut', '', '変換できませんでした：' + e.message); }
 });
@@ -2491,6 +2491,8 @@ $('ipRun').addEventListener('click', async () => {
   const enc = new TextEncoder();
   const chunks = []; let len = 0;
   const push = data => { const b = typeof data === 'string' ? enc.encode(data) : data; chunks.push(b); len += b.length; };
+  push('%PDF-1.4\n');
+  push(new Uint8Array([0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A]));
   const total = 2 + files.length * 3;
   const objPos = new Array(total + 1).fill(0);
   const writeObj = (num, content) => { objPos[num] = len; push(num + ' 0 obj\n'); push(content); push('\nendobj\n'); };
@@ -2520,7 +2522,7 @@ $('ipRun').addEventListener('click', async () => {
   let xref = 'xref\n0 ' + (total + 1) + '\n0000000000 65535 f \n';
   for(let i=1;i<=total;i++) xref += String(objPos[i]).padStart(10, '0') + ' 00000 n \n';
   push(xref);
-  push('trailer\n<< /Size ' + (total + 1) + ' /Root 1 0 R >>\nstartxref\n' + xrefPos + '\n%%EOF');
+  push('trailer\n<< /Size ' + (total + 1) + ' /Root 1 0 R >>\nstartxref\n' + xrefPos + '\n%%EOF\n');
   const pdf = new Blob(chunks, {type: 'application/pdf'});
   dlLink('ipDlRow', pdf, 'images.pdf', 'PDFをダウンロード（' + files.length + 'ページ）');
   $('ipNote').textContent = files.length + '枚の画像からPDFを作りました（容量 ' + fmtBytes(pdf.size) + '）';
