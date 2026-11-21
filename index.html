@@ -4,22 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換。全17ツールが無料で使えるツール集です。" />
+    <meta name="description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換、平均・合計。全18ツールが無料で使えるツール集です。" />
     <link rel="canonical" href="https://yutawork.github.io/kantan-tools/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="かんたんツール集" />
     <meta property="og:title" content="かんたんツール集" />
-    <meta property="og:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換。全17ツールが無料で使えるツール集です。" />
+    <meta property="og:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換、平均・合計。全18ツールが無料で使えるツール集です。" />
     <meta property="og:url" content="https://yutawork.github.io/kantan-tools/" />
     <meta property="og:locale" content="ja_JP" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="かんたんツール集" />
-    <meta name="twitter:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換。全17ツールが無料で使えるツール集です。" />
+    <meta name="twitter:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換、平均・合計。全18ツールが無料で使えるツール集です。" />
     <meta name="theme-color" content="#0b7560" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <title>かんたんツール集</title>
     <script type="application/ld+json">
-      {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "description": "文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換。全17ツールが無料で使えるツール集です。"}, {"@type": "WebPage", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "isPartOf": {"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/"}}]}
+      {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "description": "文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換、平均・合計。全18ツールが無料で使えるツール集です。"}, {"@type": "WebPage", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "isPartOf": {"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/"}}]}
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -405,6 +405,7 @@
               <button data-cat="temp">温度</button>
               <button data-cat="area">面積</button>
               <button data-cat="speed">速さ</button>
+              <button data-cat="data">データ量</button>
             </div>
             <div class="field">
               <label for="unitVal">変換したい数値</label>
@@ -461,6 +462,7 @@
                 <div class="stat"><div class="slabel">消費税額</div><div class="svalue mono" id="taxOnly">—</div></div>
                 <div class="stat"><div class="slabel" id="taxSubLabel">税抜価格</div><div class="svalue mono" id="taxSub">—</div></div>
               </div>
+              <p class="note"><strong>計算方法：</strong>税込価格 ＝ 税抜価格 ×（1 ＋ 税率）。税抜価格 ＝ 税込価格 ÷（1 ＋ 税率）です。</p>
               <p class="note">消費税額は円未満を切り捨てて計算しています。お店や事業者の端数処理によって1円前後異なる場合があります。</p>
             </div>
 
@@ -521,6 +523,7 @@
                 <tbody></tbody>
               </table>
             </div>
+            <p class="note"><strong>計算方法：</strong>毎月の返済額 ＝ 借入額 × 月の金利 ×（1＋月の金利）^返済回数 ÷（（1＋月の金利）^返済回数 − 1）。月の金利は年率 ÷ 12 です。</p>
             <p class="note"><strong>ご注意：</strong>これは元利均等返済・固定金利で計算した概算です。ボーナス払い、保証料・手数料、団体信用生命保険料などは含みません。実際の返済額は金融機関の条件で確認してください。</p>
           </section>
 
@@ -556,6 +559,7 @@
               <span><i style="background:var(--accent)"></i>評価額（元本＋運用益）</span>
               <span><i style="background:var(--ink-2)"></i>積立元本</span>
             </div>
+            <p class="note"><strong>計算方法：</strong>毎月末に積み立て、残高に月の金利（年率 ÷ 12）を掛けて増やす計算を、期間の月数だけ繰り返しています。</p>
             <p class="note"><strong>ご注意：</strong>一定の利回りが続く前提の概算で、将来の成果を約束するものではありません。税金・手数料は含みません。毎月末に積み立て、月割りで運用益が付く計算です。</p>
           </section>
 
@@ -1233,6 +1237,10 @@ Dさん</textarea>
       speed: { base: 'メートル毎秒', units: {
         ms: ['メートル毎秒 (m/s)', 1], kmh: ['キロメートル毎時 (km/h)', 1 / 3.6],
         mph: ['マイル毎時 (mph)', 0.44704], knot: ['ノット (kn)', 0.514444444] } },
+      data: { base: 'バイト', units: {
+        bit: ['ビット (bit)', 0.125], byte: ['バイト (B)', 1], kb: ['キロバイト (KB)', 1024],
+        mb: ['メガバイト (MB)', 1048576], gb: ['ギガバイト (GB)', 1073741824],
+        tb: ['テラバイト (TB)', 1099511627776] } },
       temp: { base: '摂氏', units: {
         c: ['摂氏 (°C)', 1], f: ['華氏 (°F)', 1], k: ['ケルビン (K)', 1] } }
     };
