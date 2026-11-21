@@ -1590,14 +1590,18 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     function openAliased(k){
       if (k === 'pomodoro') {
         activateTool('timer');
-        var pb = document.querySelector('#timerMode button[data-tmode="pomo"]');
-        if (pb) pb.click();
+        document.querySelectorAll('#timerMode button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tmode') === 'pomo'); });
+        var cb1 = document.getElementById('countBlock'); if (cb1) cb1.hidden = true;
+        var wb1 = document.getElementById('watchBlock'); if (wb1) wb1.hidden = true;
+        var pb1 = document.getElementById('pomoBlock'); if (pb1) pb1.hidden = false;
         return true;
       }
       if (k === 'datetools') {
         activateTool('date');
-        var wb = document.querySelector('#dateMode button[data-dmode="wareki"]');
-        if (wb) wb.click();
+        document.querySelectorAll('#dateMode button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-dmode') === 'wareki'); });
+        var df = document.getElementById('dateDiffBlock'); if (df) df.hidden = true;
+        var da = document.getElementById('dateAddBlock'); if (da) da.hidden = true;
+        var wk = document.getElementById('dateWarekiBlock'); if (wk) wk.hidden = false;
         return true;
       }
       if (TOOL_ALIAS[k]) { activateTool(TOOL_ALIAS[k]); return true; }
