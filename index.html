@@ -1,0 +1,1186 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算が無料で使えるツール集です。" />
+    <link rel="icon" href="data:," />
+    <title>かんたんツール集</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f3f5f3;
+        --surface: #ffffff;
+        --surface-2: #ebefec;
+        --ink: #17211c;
+        --ink-2: #57665e;
+        --line: #d9e0da;
+        --accent: #0b7560;
+        --accent-strong: #095c4c;
+        --accent-soft: #dff0e9;
+        --accent-ink: #ffffff;
+        --warn: #b3541e;
+        --danger: #bc3f33;
+        --ring: rgba(11, 117, 96, 0.35);
+        --shadow: 0 1px 2px rgba(23, 33, 28, 0.06), 0 8px 24px rgba(23, 33, 28, 0.06);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111614;
+          --surface: #1a201d;
+          --surface-2: #232b27;
+          --ink: #e8eeeb;
+          --ink-2: #9db0a5;
+          --line: #2e3833;
+          --accent: #3ec39c;
+          --accent-strong: #5fd3ae;
+          --accent-soft: #1d2f28;
+          --accent-ink: #0a1512;
+          --warn: #e08b4e;
+          --danger: #e07a6d;
+          --ring: rgba(62, 195, 156, 0.4);
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 20px 16px 56px; }
+
+      .lead { margin: 8px 0 18px; }
+      .lead h1 { font-size: 26px; font-weight: 900; margin: 0 0 6px; letter-spacing: 0.01em; }
+      .lead p { margin: 0; color: var(--ink-2); font-size: 15px; max-width: 42em; }
+
+      .toolbar { margin-bottom: 18px; }
+      .searchbox { position: relative; }
+      .searchbox svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ink-2); pointer-events: none; }
+      .searchbox input[type="text"] {
+        width: 100%; min-height: 48px; padding: 10px 14px 10px 46px;
+        border: 1px solid var(--line); border-radius: 12px;
+        background: var(--surface); color: var(--ink); font: inherit; font-size: 16px;
+      }
+      .searchbox input:focus { outline: 3px solid var(--ring); outline-offset: 0; border-color: var(--accent); }
+      .nohit { display: none; padding: 18px; color: var(--ink-2); background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; }
+      .nohit.show { display: block; }
+
+      .layout { display: grid; grid-template-columns: 252px minmax(0, 1fr); gap: 20px; align-items: start; }
+
+      nav.toolnav { display: flex; flex-direction: column; gap: 6px; }
+      .navbtn {
+        display: flex; align-items: center; gap: 12px; width: 100%;
+        min-height: 52px; padding: 10px 14px; text-align: left;
+        background: transparent; border: 1px solid transparent; border-radius: 12px;
+        color: var(--ink); font: inherit; cursor: pointer;
+      }
+      .navbtn svg { flex: none; color: var(--ink-2); }
+      .navbtn .nname { font-weight: 700; font-size: 15px; line-height: 1.3; }
+      .navbtn .ndesc { display: block; font-weight: 400; font-size: 12px; color: var(--ink-2); line-height: 1.35; }
+      .navbtn:hover { background: var(--surface); }
+      .navbtn.active { background: var(--accent-soft); }
+      .navbtn.active svg { color: var(--accent); }
+      .navbtn:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+      .navbtn[hidden] { display: none; }
+
+      .panel {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+        box-shadow: var(--shadow); padding: 26px;
+      }
+      .panel[hidden] { display: none; }
+      .panel h2 { font-size: 21px; font-weight: 900; margin: 0 0 4px; }
+      .panel .sub { color: var(--ink-2); font-size: 14px; margin: 0 0 20px; }
+      .panel h3 { font-size: 15px; font-weight: 700; margin: 22px 0 8px; }
+
+      .field { margin-bottom: 16px; }
+      .field label, .flabel { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: 6px; }
+      input[type="text"], input[type="number"], input[type="date"], select, textarea {
+        width: 100%; min-height: 48px; padding: 10px 12px;
+        border: 1px solid var(--line); border-radius: 10px;
+        background: var(--bg); color: var(--ink); font: inherit; font-size: 16px;
+      }
+      textarea { min-height: 150px; resize: vertical; line-height: 1.7; }
+      input:focus, select:focus, textarea:focus { outline: 3px solid var(--ring); border-color: var(--accent); }
+      .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+      .withunit { position: relative; }
+      .withunit input { padding-right: 52px; }
+      .withunit .unit { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--ink-2); font-size: 14px; pointer-events: none; }
+
+      .seg { display: flex; flex-wrap: wrap; gap: 4px; background: var(--surface-2); border-radius: 11px; padding: 4px; margin-bottom: 16px; }
+      .seg button {
+        flex: 1 1 auto; min-height: 42px; padding: 8px 12px; border: 0; border-radius: 8px;
+        background: transparent; color: var(--ink-2); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+      }
+      .seg button.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.14); }
+      .seg.wrap-fit button { flex: 0 1 auto; }
+
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .chip {
+        min-height: 42px; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink-2);
+        font: inherit; font-size: 14px; font-weight: 700;
+      }
+      .chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-strong); }
+
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        min-height: 48px; padding: 10px 22px; border-radius: 11px; cursor: pointer;
+        border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+        font: inherit; font-size: 15px; font-weight: 700;
+      }
+      .btn:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+      .btn.ghost { background: transparent; color: var(--accent-strong); }
+      .btn.ghost:hover { background: var(--accent-soft); }
+      .btn.plain { background: var(--surface); border-color: var(--line); color: var(--ink); }
+      .btn.plain:hover { background: var(--surface-2); }
+      .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+      .btnrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+      .btn.sm { min-height: 40px; padding: 6px 16px; font-size: 14px; }
+
+      .result-big { font-size: 34px; font-weight: 600; line-height: 1.25; word-break: break-all; }
+      .result-label { font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: 2px; }
+      .resultbox { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-top: 6px; }
+      .statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 14px; }
+      .stat { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+      .stat .slabel { font-size: 12px; font-weight: 700; color: var(--ink-2); }
+      .stat .svalue { font-size: 21px; font-weight: 600; margin-top: 2px; word-break: break-all; }
+      .stat .svalue small { font-size: 13px; color: var(--ink-2); font-weight: 400; }
+
+      table.data { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+      table.data th, table.data td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+      table.data th { color: var(--ink-2); font-size: 12px; font-weight: 700; }
+      table.data th:first-child, table.data td:first-child { text-align: left; }
+      .tablescroll { max-height: 320px; overflow-y: auto; border: 1px solid var(--line); border-radius: 12px; padding: 0 6px; }
+
+      .note { font-size: 13px; color: var(--ink-2); margin-top: 16px; }
+      .note strong { color: var(--ink); }
+      .copied { font-size: 13px; color: var(--accent-strong); font-weight: 700; min-height: 1.4em; }
+
+      input[type="range"] { width: 100%; min-height: 40px; accent-color: var(--accent); }
+      .meter { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; margin-top: 10px; }
+      .meter > div { height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width 0.25s ease; }
+      .meter > div.weak { background: var(--danger); }
+      .meter > div.mid { background: var(--warn); }
+
+      .timerface { text-align: center; padding: 8px 0 4px; }
+      .ringwrap { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+      .ringwrap svg { transform: rotate(-90deg); display: block; }
+      .ringtime {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 2px;
+      }
+      .ringtime .t { font-size: 44px; font-weight: 600; line-height: 1; }
+      .ringtime .s { font-size: 13px; color: var(--ink-2); font-weight: 700; }
+      .presetrow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 0 4px; }
+      .laplist { list-style: none; margin: 10px 0 0; padding: 0; }
+      .laplist li { display: flex; justify-content: space-between; padding: 8px 4px; border-bottom: 1px solid var(--line); font-size: 15px; }
+      .laplist li span:first-child { color: var(--ink-2); font-weight: 700; font-size: 13px; }
+
+      .swaprow { display: flex; align-items: end; gap: 10px; }
+      .swaprow .grow { flex: 1; min-width: 0; }
+      .swapbtn { flex: none; width: 48px; height: 48px; border-radius: 50%; margin-bottom: 16px; }
+
+      .chartbox { margin-top: 16px; }
+      .chartbox svg { width: 100%; height: auto; display: block; }
+      .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink-2); margin-top: 8px; }
+      .legend i { display: inline-block; width: 22px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+
+      footer.site { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 13px; }
+      footer.site p { margin: 0 0 6px; }
+
+      @media (max-width: 840px) {
+        .layout { grid-template-columns: 1fr; }
+        nav.toolnav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .navbtn { background: var(--surface); border-color: var(--line); min-height: 56px; }
+        .navbtn .ndesc { display: none; }
+        .panel { padding: 20px 16px; }
+        .row2, .row3 { grid-template-columns: 1fr; }
+        .result-big { font-size: 28px; }
+        .lead h1 { font-size: 23px; }
+        .ringwrap { width: 200px; height: 200px; }
+        .ringtime .t { font-size: 38px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="lead">
+        <h1>かんたんツール集</h1>
+        <p>日常のちょっとした計算・変換・文章チェックを、登録なしでその場で使える無料ツール集です。使いたいツールを選んでください。</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="searchbox">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+          <input type="text" id="toolSearch" placeholder="ツールを検索（例：税金、長さ、パスワード）" aria-label="ツールを検索" />
+        </div>
+      </div>
+
+      <div class="layout">
+        <nav class="toolnav" id="toolNav" aria-label="ツール一覧">
+          <button class="navbtn active" data-tool="counter" data-keys="文字数 カウント 文章 文字 もじ 原稿用紙 バイト">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
+            <span><span class="nname">文字数カウンター</span><span class="ndesc">文字数・行数・読了時間の目安</span></span>
+          </button>
+          <button class="navbtn" data-tool="password" data-keys="パスワード 生成 ランダム 暗証番号 セキュリティ">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>
+            <span><span class="nname">パスワード生成</span><span class="ndesc">安全なランダム文字列を作成</span></span>
+          </button>
+          <button class="navbtn" data-tool="unit" data-keys="単位 変換 長さ 重さ 温度 面積 速さ 坪 インチ ポンド">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13"/><path d="m13 4 4 4-4 4"/><path d="M20 16H7"/><path d="m11 12-4 4 4 4"/></svg>
+            <span><span class="nname">単位変換</span><span class="ndesc">長さ・重さ・温度・面積・速さ</span></span>
+          </button>
+          <button class="navbtn" data-tool="tax" data-keys="消費税 税金 税込 税抜 割り勘 わりかん 割り算 飲み会 お金">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>
+            <span><span class="nname">消費税・割り勘</span><span class="ndesc">税込・税抜と1人あたり金額</span></span>
+          </button>
+          <button class="navbtn" data-tool="loan" data-keys="ローン 住宅ローン 借入 返済 金利 元利均等 シミュレーション">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+            <span><span class="nname">ローン計算</span><span class="ndesc">毎月の返済額と利息の試算</span></span>
+          </button>
+          <button class="navbtn" data-tool="savings" data-keys="積立 つみたて 貯金 投資 運用 複利 シミュレーション nisa">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m6.5 15 4-4.5 3.5 2.5L19 7.5"/><path d="M15.5 7.5H19V11"/></svg>
+            <span><span class="nname">積立シミュレーション</span><span class="ndesc">毎月の積立と複利の伸び</span></span>
+          </button>
+          <button class="navbtn" data-tool="timer" data-keys="タイマー ストップウォッチ 時間 計測 カウントダウン ラップ">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.8 2"/><path d="M9.5 2.5h5"/><path d="M12 2.5v3.5"/></svg>
+            <span><span class="nname">タイマー</span><span class="ndesc">カウントダウンとストップウォッチ</span></span>
+          </button>
+          <button class="navbtn" data-tool="date" data-keys="日付 日数 計算 何日 あと何日 曜日 カレンダー">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/></svg>
+            <span><span class="nname">日付計算</span><span class="ndesc">日数の差と◯日後の日付</span></span>
+          </button>
+        </nav>
+
+        <main id="panels">
+          <div class="nohit" id="noHit">条件に合うツールが見つかりませんでした。別の言葉で検索してみてください。</div>
+
+          <!-- 文字数カウンター -->
+          <section class="panel" data-panel="counter" aria-label="文字数カウンター">
+            <h2>文字数カウンター</h2>
+            <p class="sub">文章を貼り付けると、その場で文字数などを数えます。</p>
+            <div class="field">
+              <label for="counterText">文章</label>
+              <textarea id="counterText" placeholder="ここに文章を入力または貼り付けてください"></textarea>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">文字数（全体）</div><div class="svalue mono" id="cntAll">0</div></div>
+              <div class="stat"><div class="slabel">空白・改行を除く</div><div class="svalue mono" id="cntNoSpace">0</div></div>
+              <div class="stat"><div class="slabel">行数</div><div class="svalue mono" id="cntLines">0</div></div>
+              <div class="stat"><div class="slabel">段落数</div><div class="svalue mono" id="cntPara">0</div></div>
+              <div class="stat"><div class="slabel">バイト数（UTF-8）</div><div class="svalue mono" id="cntBytes">0</div></div>
+              <div class="stat"><div class="slabel">原稿用紙（400字）</div><div class="svalue mono" id="cntGenko">0<small> 枚</small></div></div>
+              <div class="stat"><div class="slabel">読了時間の目安</div><div class="svalue mono" id="cntRead">0<small> 分</small></div></div>
+              <div class="stat"><div class="slabel">音読時間の目安</div><div class="svalue mono" id="cntSpeak">0<small> 分</small></div></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn ghost sm" id="counterCopy">文章をコピー</button>
+              <button class="btn plain sm" id="counterClear">クリア</button>
+            </div>
+            <div class="copied" id="counterMsg" aria-live="polite"></div>
+            <p class="note">読了時間は1分500字、音読時間は1分300字で計算した目安です。句読点や記号も1文字として数えています。</p>
+          </section>
+
+          <!-- パスワード生成 -->
+          <section class="panel" data-panel="password" hidden aria-label="パスワード生成">
+            <h2>パスワード生成</h2>
+            <p class="sub">推測されにくいランダムなパスワードを作ります。生成はこの端末の中だけで行われ、外部に送信されることはありません。</p>
+            <div class="resultbox">
+              <div class="result-label">生成されたパスワード</div>
+              <div class="result-big mono" id="pwOut">—</div>
+              <div class="meter" aria-hidden="true"><div id="pwMeter"></div></div>
+              <p class="note" style="margin-top:8px">強さの目安：<strong id="pwStrength">—</strong>（推定 <span class="mono" id="pwEntropy">0</span> ビット）</p>
+            </div>
+            <div class="field" style="margin-top:18px">
+              <span class="flabel">長さ：<span class="mono" id="pwLenVal">16</span> 文字</span>
+              <input type="range" id="pwLen" min="8" max="64" step="1" value="16" aria-label="パスワードの長さ" />
+            </div>
+            <span class="flabel">使う文字の種類</span>
+            <div class="chips" id="pwKinds">
+              <button class="chip" data-kind="lower" aria-pressed="true">英小文字 abc</button>
+              <button class="chip" data-kind="upper" aria-pressed="true">英大文字 ABC</button>
+              <button class="chip" data-kind="digit" aria-pressed="true">数字 123</button>
+              <button class="chip" data-kind="symbol" aria-pressed="false">記号 !#$</button>
+            </div>
+            <div class="chips">
+              <button class="chip" id="pwNoSimilar" aria-pressed="false">似た文字を除外（0 O 1 l I など）</button>
+            </div>
+            <div class="btnrow">
+              <button class="btn" id="pwGen">新しいパスワードを作る</button>
+              <button class="btn ghost" id="pwCopy">コピーする</button>
+            </div>
+            <div class="copied" id="pwMsg" aria-live="polite"></div>
+            <p class="note">同じパスワードを複数のサービスで使い回さず、パスワード管理アプリなどに保管してください。このページを閉じると、生成したパスワードは残りません。</p>
+          </section>
+
+          <!-- 単位変換 -->
+          <section class="panel" data-panel="unit" hidden aria-label="単位変換">
+            <h2>単位変換</h2>
+            <p class="sub">よく使う単位を相互に変換します。数値を入れるだけで即座に計算します。</p>
+            <div class="seg" id="unitCats" role="tablist" aria-label="単位の種類">
+              <button data-cat="length" class="active">長さ</button>
+              <button data-cat="weight">重さ</button>
+              <button data-cat="temp">温度</button>
+              <button data-cat="area">面積</button>
+              <button data-cat="speed">速さ</button>
+            </div>
+            <div class="field">
+              <label for="unitVal">変換したい数値</label>
+              <input type="number" id="unitVal" value="1" step="any" inputmode="decimal" />
+            </div>
+            <div class="swaprow">
+              <div class="field grow">
+                <label for="unitFrom">変換元</label>
+                <select id="unitFrom"></select>
+              </div>
+              <button class="btn plain swapbtn" id="unitSwap" aria-label="変換元と変換先を入れ替える">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13"/><path d="m13 4 4 4-4 4"/><path d="M20 16H7"/><path d="m11 12-4 4 4 4"/></svg>
+              </button>
+              <div class="field grow">
+                <label for="unitTo">変換先</label>
+                <select id="unitTo"></select>
+              </div>
+            </div>
+            <div class="resultbox">
+              <div class="result-label">変換結果</div>
+              <div class="result-big mono" id="unitOut">—</div>
+              <p class="note" id="unitFormula" style="margin-top:6px"></p>
+            </div>
+            <h3>この種類の主な単位</h3>
+            <div class="tablescroll" style="max-height:240px">
+              <table class="data" id="unitTable" aria-label="単位の一覧換算表"></table>
+            </div>
+          </section>
+
+          <!-- 消費税・割り勘 -->
+          <section class="panel" data-panel="tax" hidden aria-label="消費税・割り勘計算">
+            <h2>消費税・割り勘</h2>
+            <p class="sub">税込・税抜の換算と、飲み会などの割り勘計算です。</p>
+            <div class="seg" id="taxMode">
+              <button data-mode="tax" class="active">消費税</button>
+              <button data-mode="split">割り勘</button>
+            </div>
+
+            <div id="taxBlock">
+              <div class="seg wrap-fit" id="taxDir">
+                <button data-dir="ex" class="active">税抜から税込へ</button>
+                <button data-dir="in">税込から税抜へ</button>
+              </div>
+              <div class="seg wrap-fit" id="taxRate">
+                <button data-rate="10" class="active">10%（標準）</button>
+                <button data-rate="8">8%（軽減税率）</button>
+              </div>
+              <div class="field">
+                <label for="taxAmt" id="taxAmtLabel">税抜価格</label>
+                <div class="withunit"><input type="number" id="taxAmt" value="1000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel" id="taxMainLabel">税込価格</div><div class="svalue mono" id="taxMain">—</div></div>
+                <div class="stat"><div class="slabel">消費税額</div><div class="svalue mono" id="taxOnly">—</div></div>
+                <div class="stat"><div class="slabel" id="taxSubLabel">税抜価格</div><div class="svalue mono" id="taxSub">—</div></div>
+              </div>
+              <p class="note">消費税額は円未満を切り捨てて計算しています。お店や事業者の端数処理によって1円前後異なる場合があります。</p>
+            </div>
+
+            <div id="splitBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="splitTotal">合計金額</label>
+                  <div class="withunit"><input type="number" id="splitTotal" value="10000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+                </div>
+                <div class="field">
+                  <label for="splitPeople">人数</label>
+                  <div class="withunit"><input type="number" id="splitPeople" value="4" min="1" step="1" inputmode="numeric" /><span class="unit">人</span></div>
+                </div>
+              </div>
+              <span class="flabel">1人あたりの端数処理</span>
+              <div class="seg wrap-fit" id="splitRound">
+                <button data-round="ceil100" class="active">100円単位で切り上げ</button>
+                <button data-round="ceil10">10円単位で切り上げ</button>
+                <button data-round="exact">1円単位（四捨五入）</button>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">1人あたり</div><div class="svalue mono" id="splitPer">—</div></div>
+                <div class="stat"><div class="slabel">集まる合計</div><div class="svalue mono" id="splitCollected">—</div></div>
+                <div class="stat"><div class="slabel">余り（幹事の手元に残る分）</div><div class="svalue mono" id="splitDiff">—</div></div>
+              </div>
+              <p class="note">切り上げ方式では、集まる合計が請求額を上回る分が「余り」になります。余りは幹事の負担軽減や次回の足しに充てるのが一般的です。</p>
+            </div>
+          </section>
+
+          <!-- ローン計算 -->
+          <section class="panel" data-panel="loan" hidden aria-label="ローン計算">
+            <h2>ローン計算</h2>
+            <p class="sub">元利均等返済での毎月の返済額を試算します。</p>
+            <div class="row3">
+              <div class="field">
+                <label for="loanAmt">借入額</label>
+                <div class="withunit"><input type="number" id="loanAmt" value="3000" min="0" step="10" inputmode="numeric" /><span class="unit">万円</span></div>
+              </div>
+              <div class="field">
+                <label for="loanRate">金利（年率）</label>
+                <div class="withunit"><input type="number" id="loanRate" value="1.5" min="0" step="0.05" inputmode="decimal" /><span class="unit">%</span></div>
+              </div>
+              <div class="field">
+                <label for="loanYears">返済期間</label>
+                <div class="withunit"><input type="number" id="loanYears" value="35" min="1" max="50" step="1" inputmode="numeric" /><span class="unit">年</span></div>
+              </div>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">毎月の返済額</div><div class="svalue mono" id="loanMonthly">—</div></div>
+              <div class="stat"><div class="slabel">総返済額</div><div class="svalue mono" id="loanTotal">—</div></div>
+              <div class="stat"><div class="slabel">利息の合計</div><div class="svalue mono" id="loanInterest">—</div></div>
+              <div class="stat"><div class="slabel">返済回数</div><div class="svalue mono" id="loanCount">—</div></div>
+            </div>
+            <h3>年ごとの残高の推移</h3>
+            <div class="tablescroll">
+              <table class="data" id="loanTable" aria-label="年ごとの返済推移">
+                <thead><tr><th>年</th><th>その年の返済額</th><th>うち利息</th><th>年末残高</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="note"><strong>ご注意：</strong>これは元利均等返済・固定金利で計算した概算です。ボーナス払い、保証料・手数料、団体信用生命保険料などは含みません。実際の返済額は金融機関の条件で確認してください。</p>
+          </section>
+
+          <!-- 積立シミュレーション -->
+          <section class="panel" data-panel="savings" hidden aria-label="積立シミュレーション">
+            <h2>積立シミュレーション</h2>
+            <p class="sub">毎月積み立てた場合に、元本と運用益がどう伸びるかを試算します。</p>
+            <div class="row3">
+              <div class="field">
+                <label for="savMonthly">毎月の積立額</label>
+                <div class="withunit"><input type="number" id="savMonthly" value="30000" min="0" step="1000" inputmode="numeric" /><span class="unit">円</span></div>
+              </div>
+              <div class="field">
+                <label for="savRate">想定利回り（年率）</label>
+                <div class="withunit"><input type="number" id="savRate" value="5" min="0" step="0.1" inputmode="decimal" /><span class="unit">%</span></div>
+              </div>
+              <div class="field">
+                <label for="savYears">積立期間</label>
+                <div class="withunit"><input type="number" id="savYears" value="20" min="1" max="50" step="1" inputmode="numeric" /><span class="unit">年</span></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="savInitial">最初に入れる金額（任意）</label>
+              <div class="withunit"><input type="number" id="savInitial" value="0" min="0" step="10000" inputmode="numeric" /><span class="unit">円</span></div>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">最終金額</div><div class="svalue mono" id="savFinal">—</div></div>
+              <div class="stat"><div class="slabel">積み立てた元本</div><div class="svalue mono" id="savPrincipal">—</div></div>
+              <div class="stat"><div class="slabel">運用益</div><div class="svalue mono" id="savGain">—</div></div>
+            </div>
+            <div class="chartbox" id="savChart" aria-label="積立額と評価額の推移グラフ"></div>
+            <div class="legend">
+              <span><i style="background:var(--accent)"></i>評価額（元本＋運用益）</span>
+              <span><i style="background:var(--ink-2)"></i>積立元本</span>
+            </div>
+            <p class="note"><strong>ご注意：</strong>一定の利回りが続く前提の概算で、将来の成果を約束するものではありません。税金・手数料は含みません。毎月末に積み立て、月割りで運用益が付く計算です。</p>
+          </section>
+
+          <!-- タイマー -->
+          <section class="panel" data-panel="timer" hidden aria-label="タイマーとストップウォッチ">
+            <h2>タイマー</h2>
+            <p class="sub">カウントダウンタイマーとストップウォッチです。</p>
+            <div class="seg" id="timerMode">
+              <button data-tmode="count" class="active">タイマー</button>
+              <button data-tmode="watch">ストップウォッチ</button>
+            </div>
+
+            <div id="countBlock">
+              <div class="timerface">
+                <div class="ringwrap">
+                  <svg width="220" height="220" viewBox="0 0 220 220" aria-hidden="true">
+                    <circle cx="110" cy="110" r="100" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+                    <circle id="ringProg" cx="110" cy="110" r="100" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="628.3" stroke-dashoffset="0"/>
+                  </svg>
+                  <div class="ringtime">
+                    <div class="t mono" id="timerDisp">05:00</div>
+                    <div class="s" id="timerState">待機中</div>
+                  </div>
+                </div>
+              </div>
+              <div class="presetrow" id="timerPresets">
+                <button class="chip" data-min="1">1分</button>
+                <button class="chip" data-min="3">3分</button>
+                <button class="chip" data-min="5">5分</button>
+                <button class="chip" data-min="10">10分</button>
+                <button class="chip" data-min="15">15分</button>
+                <button class="chip" data-min="30">30分</button>
+                <button class="chip" data-min="60">60分</button>
+              </div>
+              <div class="row2" style="max-width:420px;margin:10px auto 0">
+                <div class="field">
+                  <label for="timerMin">分</label>
+                  <input type="number" id="timerMin" value="5" min="0" max="999" step="1" inputmode="numeric" />
+                </div>
+                <div class="field">
+                  <label for="timerSec">秒</label>
+                  <input type="number" id="timerSec" value="0" min="0" max="59" step="1" inputmode="numeric" />
+                </div>
+              </div>
+              <div class="btnrow" style="justify-content:center">
+                <button class="btn" id="timerStart">スタート</button>
+                <button class="btn plain" id="timerReset">リセット</button>
+              </div>
+              <p class="note" style="text-align:center">終了すると音が鳴ります。音量にご注意ください。画面を開いたままにしてお使いください。</p>
+            </div>
+
+            <div id="watchBlock" hidden>
+              <div class="timerface">
+                <div class="result-big mono" id="watchDisp" style="font-size:48px">00:00.00</div>
+              </div>
+              <div class="btnrow" style="justify-content:center">
+                <button class="btn" id="watchStart">スタート</button>
+                <button class="btn ghost" id="watchLap" disabled>ラップ</button>
+                <button class="btn plain" id="watchReset">リセット</button>
+              </div>
+              <ul class="laplist" id="lapList" aria-label="ラップタイム"></ul>
+            </div>
+          </section>
+
+          <!-- 日付計算 -->
+          <section class="panel" data-panel="date" hidden aria-label="日付計算">
+            <h2>日付計算</h2>
+            <p class="sub">2つの日付の間の日数や、◯日後の日付を調べます。</p>
+            <div class="seg" id="dateMode">
+              <button data-dmode="diff" class="active">日数の差</button>
+              <button data-dmode="add">日付の加減</button>
+            </div>
+
+            <div id="dateDiffBlock">
+              <div class="row2">
+                <div class="field">
+                  <label for="dateFrom">開始日</label>
+                  <input type="date" id="dateFrom" />
+                </div>
+                <div class="field">
+                  <label for="dateTo">終了日</label>
+                  <input type="date" id="dateTo" />
+                </div>
+              </div>
+              <div class="resultbox">
+                <div class="result-label">間の日数</div>
+                <div class="result-big mono" id="dateDiffOut">—</div>
+                <p class="note" id="dateDiffDetail" style="margin-top:6px"></p>
+              </div>
+              <p class="note">開始日を含まない日数です（例：今日から明日は1日）。両端を含む日数を知りたい場合は結果に1を足してください。</p>
+            </div>
+
+            <div id="dateAddBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="dateBase">基準日</label>
+                  <input type="date" id="dateBase" />
+                </div>
+                <div class="field">
+                  <label for="dateDays">日数（マイナスで過去）</label>
+                  <div class="withunit"><input type="number" id="dateDays" value="100" step="1" inputmode="numeric" /><span class="unit">日後</span></div>
+                </div>
+              </div>
+              <div class="presetrow" style="justify-content:flex-start" id="datePresets">
+                <button class="chip" data-days="30">30日後</button>
+                <button class="chip" data-days="90">90日後</button>
+                <button class="chip" data-days="100">100日後</button>
+                <button class="chip" data-days="180">180日後</button>
+                <button class="chip" data-days="365">1年後</button>
+                <button class="chip" data-days="-7">1週間前</button>
+              </div>
+              <div class="resultbox">
+                <div class="result-label">計算結果の日付</div>
+                <div class="result-big" id="dateAddOut">—</div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <footer class="site">
+        <p>かんたんツール集 — すべての計算はお使いのブラウザの中で完結し、入力した内容が外部に送信されることはありません。</p>
+        <p>計算結果は目安です。お金に関する判断は、金融機関など専門家の情報もあわせてご確認ください。</p>
+      </footer>
+    </div>
+
+    <script>
+    'use strict';
+    function $(id) { return document.getElementById(id); }
+    function yen(n) { return Math.round(n).toLocaleString('ja-JP') + ' 円'; }
+    function num(n) { return n.toLocaleString('ja-JP'); }
+    function copyText(text, msgEl) {
+      function done() { if (msgEl) { msgEl.textContent = 'コピーしました'; setTimeout(function(){ msgEl.textContent=''; }, 2500); } }
+      function fail() { if (msgEl) { msgEl.textContent = 'コピーできませんでした。長押しや右クリックでコピーしてください。'; } }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { fail(); }
+        document.body.removeChild(ta);
+      }
+    }
+
+    /* ---------- ツール切り替えと検索 ---------- */
+    var navBtns = Array.prototype.slice.call(document.querySelectorAll('.navbtn'));
+    var panels = {};
+    Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function(p){ panels[p.getAttribute('data-panel')] = p; });
+    function activateTool(key) {
+      navBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tool') === key); });
+      Object.keys(panels).forEach(function(k){ panels[k].hidden = k !== key; });
+    }
+    navBtns.forEach(function(b){
+      b.addEventListener('click', function(){ activateTool(b.getAttribute('data-tool')); });
+    });
+    $('toolSearch').addEventListener('input', function(){
+      var q = this.value.trim().toLowerCase();
+      var visible = 0, firstVisible = null;
+      navBtns.forEach(function(b){
+        var hay = (b.querySelector('.nname').textContent + ' ' + (b.getAttribute('data-keys') || '')).toLowerCase();
+        var show = !q || hay.indexOf(q) !== -1;
+        b.hidden = !show;
+        if (show) { visible++; if (!firstVisible) firstVisible = b; }
+      });
+      $('noHit').classList.toggle('show', visible === 0);
+      if (q && firstVisible) {
+        var activeBtn = document.querySelector('.navbtn.active');
+        if (!activeBtn || activeBtn.hidden) activateTool(firstVisible.getAttribute('data-tool'));
+      }
+    });
+
+    /* ---------- 文字数カウンター ---------- */
+    var counterText = $('counterText');
+    function updateCounter() {
+      var t = counterText.value;
+      var all = Array.from(t).length;
+      var noSpace = Array.from(t.replace(/[\s　]/g, '')).length;
+      var lines = t === '' ? 0 : t.split('\n').length;
+      var paras = t === '' ? 0 : t.split(/\n\s*\n/).filter(function(s){ return s.trim() !== ''; }).length;
+      var bytes = new TextEncoder().encode(t).length;
+      $('cntAll').textContent = num(all);
+      $('cntNoSpace').textContent = num(noSpace);
+      $('cntLines').textContent = num(lines);
+      $('cntPara').textContent = num(paras);
+      $('cntBytes').textContent = num(bytes);
+      $('cntGenko').innerHTML = num(Math.ceil(noSpace / 400)) + '<small> 枚</small>';
+      $('cntRead').innerHTML = (noSpace === 0 ? '0' : String(Math.max(1, Math.round(noSpace / 500)))) + '<small> 分</small>';
+      $('cntSpeak').innerHTML = (noSpace === 0 ? '0' : String(Math.max(1, Math.round(noSpace / 300)))) + '<small> 分</small>';
+    }
+    counterText.addEventListener('input', updateCounter);
+    $('counterClear').addEventListener('click', function(){ counterText.value = ''; updateCounter(); counterText.focus(); });
+    $('counterCopy').addEventListener('click', function(){ if (counterText.value) copyText(counterText.value, $('counterMsg')); });
+    updateCounter();
+
+    /* ---------- パスワード生成 ---------- */
+    var PW_SETS = {
+      lower: 'abcdefghijklmnopqrstuvwxyz',
+      upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      digit: '0123456789',
+      symbol: '!#$%&*+-=?@^_~'
+    };
+    var SIMILAR = /[0O1lI|`'"]/g;
+    var pwKindsState = { lower: true, upper: true, digit: true, symbol: false };
+    var pwNoSimilar = false;
+    function randBelow(n) {
+      var arr = new Uint32Array(1);
+      var limit = Math.floor(4294967296 / n) * n;
+      do { crypto.getRandomValues(arr); } while (arr[0] >= limit);
+      return arr[0] % n;
+    }
+    function genPassword() {
+      var kinds = Object.keys(pwKindsState).filter(function(k){ return pwKindsState[k]; });
+      if (kinds.length === 0) { $('pwOut').textContent = '文字の種類を1つ以上選んでください'; return; }
+      var sets = kinds.map(function(k){
+        var s = PW_SETS[k];
+        if (pwNoSimilar) s = s.replace(SIMILAR, '');
+        return s;
+      });
+      var pool = sets.join('');
+      var len = parseInt($('pwLen').value, 10);
+      var chars = [];
+      sets.forEach(function(s){ chars.push(s.charAt(randBelow(s.length))); });
+      while (chars.length < len) chars.push(pool.charAt(randBelow(pool.length)));
+      for (var i = chars.length - 1; i > 0; i--) {
+        var j = randBelow(i + 1);
+        var tmp = chars[i]; chars[i] = chars[j]; chars[j] = tmp;
+      }
+      var pw = chars.join('');
+      $('pwOut').textContent = pw;
+      var entropy = Math.round(len * Math.log2(pool.length));
+      $('pwEntropy').textContent = num(entropy);
+      var meter = $('pwMeter');
+      meter.style.width = Math.min(100, entropy / 1.2) + '%';
+      var label, cls;
+      if (entropy < 45) { label = '弱い'; cls = 'weak'; }
+      else if (entropy < 65) { label = '普通'; cls = 'mid'; }
+      else if (entropy < 90) { label = '強い'; cls = ''; }
+      else { label = '非常に強い'; cls = ''; }
+      $('pwStrength').textContent = label;
+      meter.className = cls;
+      $('pwMsg').textContent = '';
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('#pwKinds .chip'), function(chip){
+      chip.addEventListener('click', function(){
+        var k = chip.getAttribute('data-kind');
+        pwKindsState[k] = !pwKindsState[k];
+        chip.setAttribute('aria-pressed', String(pwKindsState[k]));
+        genPassword();
+      });
+    });
+    $('pwNoSimilar').addEventListener('click', function(){
+      pwNoSimilar = !pwNoSimilar;
+      this.setAttribute('aria-pressed', String(pwNoSimilar));
+      genPassword();
+    });
+    $('pwLen').addEventListener('input', function(){ $('pwLenVal').textContent = this.value; genPassword(); });
+    $('pwGen').addEventListener('click', genPassword);
+    $('pwCopy').addEventListener('click', function(){
+      var pw = $('pwOut').textContent;
+      if (pw && pw !== '—' && pw.indexOf('選んで') === -1) copyText(pw, $('pwMsg'));
+    });
+    genPassword();
+
+    /* ---------- 単位変換 ---------- */
+    var UNITS = {
+      length: { base: 'メートル', units: {
+        mm: ['ミリメートル (mm)', 0.001], cm: ['センチメートル (cm)', 0.01], m: ['メートル (m)', 1],
+        km: ['キロメートル (km)', 1000], inch: ['インチ (in)', 0.0254], ft: ['フィート (ft)', 0.3048],
+        yd: ['ヤード (yd)', 0.9144], mile: ['マイル (mi)', 1609.344] } },
+      weight: { base: 'グラム', units: {
+        mg: ['ミリグラム (mg)', 0.001], g: ['グラム (g)', 1], kg: ['キログラム (kg)', 1000],
+        t: ['トン (t)', 1000000], oz: ['オンス (oz)', 28.349523125], lb: ['ポンド (lb)', 453.59237] } },
+      area: { base: '平方メートル', units: {
+        m2: ['平方メートル (m²)', 1], tsubo: ['坪', 3.305785123966942], a: ['アール (a)', 100],
+        ha: ['ヘクタール (ha)', 10000], km2: ['平方キロメートル (km²)', 1000000], acre: ['エーカー (ac)', 4046.8564224] } },
+      speed: { base: 'メートル毎秒', units: {
+        ms: ['メートル毎秒 (m/s)', 1], kmh: ['キロメートル毎時 (km/h)', 1 / 3.6],
+        mph: ['マイル毎時 (mph)', 0.44704], knot: ['ノット (kn)', 0.514444444] } },
+      temp: { base: '摂氏', units: {
+        c: ['摂氏 (°C)', 1], f: ['華氏 (°F)', 1], k: ['ケルビン (K)', 1] } }
+    };
+    var unitCat = 'length';
+    function fmtNum(x) {
+      if (!isFinite(x)) return '—';
+      if (x === 0) return '0';
+      var ax = Math.abs(x);
+      var s;
+      if (ax >= 1e12 || ax < 1e-6) s = x.toExponential(5);
+      else s = String(Math.round(x * 1e8) / 1e8);
+      var parts = s.split('.');
+      parts[0] = Number(parts[0]).toLocaleString('ja-JP');
+      return parts.join('.');
+    }
+    function tempConvert(v, from, to) {
+      var c;
+      if (from === 'c') c = v; else if (from === 'f') c = (v - 32) * 5 / 9; else c = v - 273.15;
+      if (to === 'c') return c; if (to === 'f') return c * 9 / 5 + 32; return c + 273.15;
+    }
+    function fillUnitSelects() {
+      var def = UNITS[unitCat];
+      var keys = Object.keys(def.units);
+      [$('unitFrom'), $('unitTo')].forEach(function(sel){
+        sel.innerHTML = '';
+        keys.forEach(function(k){
+          var o = document.createElement('option');
+          o.value = k; o.textContent = def.units[k][0];
+          sel.appendChild(o);
+        });
+      });
+      if (unitCat === 'length') { $('unitFrom').value = 'm'; $('unitTo').value = 'ft'; }
+      else if (unitCat === 'weight') { $('unitFrom').value = 'kg'; $('unitTo').value = 'lb'; }
+      else if (unitCat === 'temp') { $('unitFrom').value = 'c'; $('unitTo').value = 'f'; }
+      else if (unitCat === 'area') { $('unitFrom').value = 'm2'; $('unitTo').value = 'tsubo'; }
+      else if (unitCat === 'speed') { $('unitFrom').value = 'kmh'; $('unitTo').value = 'ms'; }
+    }
+    function updateUnit() {
+      var def = UNITS[unitCat];
+      var v = parseFloat($('unitVal').value);
+      var from = $('unitFrom').value, to = $('unitTo').value;
+      if (isNaN(v)) { $('unitOut').textContent = '—'; $('unitFormula').textContent = ''; buildUnitTable(NaN); return; }
+      var res;
+      if (unitCat === 'temp') res = tempConvert(v, from, to);
+      else res = v * def.units[from][1] / def.units[to][1];
+      $('unitOut').textContent = fmtNum(res);
+      $('unitFormula').textContent = fmtNum(v) + ' ' + def.units[from][0] + ' ＝ ' + fmtNum(res) + ' ' + def.units[to][0];
+      buildUnitTable(v);
+    }
+    function buildUnitTable(v) {
+      var def = UNITS[unitCat];
+      var from = $('unitFrom').value;
+      var html = '<thead><tr><th>単位</th><th>' + (isNaN(v) ? '換算値' : fmtNum(v) + ' ' + def.units[from][0] + ' を換算') + '</th></tr></thead><tbody>';
+      Object.keys(def.units).forEach(function(k){
+        var val;
+        if (isNaN(v)) val = '—';
+        else if (unitCat === 'temp') val = fmtNum(tempConvert(v, from, k));
+        else val = fmtNum(v * def.units[from][1] / def.units[k][1]);
+        html += '<tr><td>' + def.units[k][0] + '</td><td class="mono">' + val + '</td></tr>';
+      });
+      html += '</tbody>';
+      $('unitTable').innerHTML = html;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('#unitCats button'), function(b){
+      b.addEventListener('click', function(){
+        Array.prototype.forEach.call(document.querySelectorAll('#unitCats button'), function(x){ x.classList.remove('active'); });
+        b.classList.add('active');
+        unitCat = b.getAttribute('data-cat');
+        fillUnitSelects(); updateUnit();
+      });
+    });
+    $('unitVal').addEventListener('input', updateUnit);
+    $('unitFrom').addEventListener('change', updateUnit);
+    $('unitTo').addEventListener('change', updateUnit);
+    $('unitSwap').addEventListener('click', function(){
+      var f = $('unitFrom').value; $('unitFrom').value = $('unitTo').value; $('unitTo').value = f; updateUnit();
+    });
+    fillUnitSelects(); updateUnit();
+
+    /* ---------- 消費税・割り勘 ---------- */
+    var taxDir = 'ex', taxRateVal = 10;
+    function segWire(id, attr, cb) {
+      var box = $(id);
+      Array.prototype.forEach.call(box.querySelectorAll('button'), function(b){
+        b.addEventListener('click', function(){
+          Array.prototype.forEach.call(box.querySelectorAll('button'), function(x){ x.classList.remove('active'); });
+          b.classList.add('active');
+          cb(b.getAttribute(attr));
+        });
+      });
+    }
+    segWire('taxMode', 'data-mode', function(m){
+      $('taxBlock').hidden = m !== 'tax';
+      $('splitBlock').hidden = m !== 'split';
+    });
+    segWire('taxDir', 'data-dir', function(d){
+      taxDir = d;
+      $('taxAmtLabel').textContent = d === 'ex' ? '税抜価格' : '税込価格';
+      $('taxMainLabel').textContent = d === 'ex' ? '税込価格' : '税抜価格';
+      $('taxSubLabel').textContent = d === 'ex' ? '税抜価格' : '税込価格';
+      updateTax();
+    });
+    segWire('taxRate', 'data-rate', function(r){ taxRateVal = parseInt(r, 10); updateTax(); });
+    function updateTax() {
+      var amt = parseFloat($('taxAmt').value);
+      if (isNaN(amt) || amt < 0) { $('taxMain').textContent = '—'; $('taxOnly').textContent = '—'; $('taxSub').textContent = '—'; return; }
+      var r = taxRateVal / 100, ex, incl, tax;
+      if (taxDir === 'ex') { ex = amt; tax = Math.floor(ex * r); incl = ex + tax; }
+      else { incl = amt; ex = Math.floor(incl / (1 + r)); tax = incl - ex; }
+      $('taxMain').textContent = yen(taxDir === 'ex' ? incl : ex);
+      $('taxOnly').textContent = yen(tax);
+      $('taxSub').textContent = yen(taxDir === 'ex' ? ex : incl);
+    }
+    $('taxAmt').addEventListener('input', updateTax);
+    updateTax();
+
+    var splitRoundMode = 'ceil100';
+    segWire('splitRound', 'data-round', function(m){ splitRoundMode = m; updateSplit(); });
+    function updateSplit() {
+      var total = parseFloat($('splitTotal').value);
+      var people = parseInt($('splitPeople').value, 10);
+      if (isNaN(total) || isNaN(people) || people < 1 || total < 0) {
+        $('splitPer').textContent = '—'; $('splitCollected').textContent = '—'; $('splitDiff').textContent = '—'; return;
+      }
+      var per;
+      if (splitRoundMode === 'ceil100') per = Math.ceil(total / people / 100) * 100;
+      else if (splitRoundMode === 'ceil10') per = Math.ceil(total / people / 10) * 10;
+      else per = Math.round(total / people);
+      var collected = per * people;
+      $('splitPer').textContent = yen(per);
+      $('splitCollected').textContent = yen(collected);
+      var diff = collected - total;
+      $('splitDiff').textContent = diff < 0 ? '不足 ' + yen(-diff) : yen(diff);
+    }
+    $('splitTotal').addEventListener('input', updateSplit);
+    $('splitPeople').addEventListener('input', updateSplit);
+    updateSplit();
+
+    /* ---------- ローン計算 ---------- */
+    function updateLoan() {
+      var P = parseFloat($('loanAmt').value) * 10000;
+      var annual = parseFloat($('loanRate').value);
+      var years = parseInt($('loanYears').value, 10);
+      if (isNaN(P) || isNaN(annual) || isNaN(years) || P < 0 || years < 1) {
+        $('loanMonthly').textContent = '—'; $('loanTotal').textContent = '—'; $('loanInterest').textContent = '—'; $('loanCount').textContent = '—';
+        document.querySelector('#loanTable tbody').innerHTML = ''; return;
+      }
+      var n = years * 12, r = annual / 100 / 12;
+      var pay = r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n));
+      var bal = P, totalInterest = 0, rows = '';
+      for (var y = 1; y <= years; y++) {
+        var yPay = 0, yInt = 0;
+        for (var m = 0; m < 12; m++) {
+          var interest = bal * r;
+          var principal = pay - interest;
+          if (principal > bal) { principal = bal; }
+          bal -= principal; yInt += interest; yPay += principal + interest;
+          if (bal <= 0.005) bal = 0;
+        }
+        totalInterest += yInt;
+        rows += '<tr><td>' + y + ' 年目</td><td class="mono">' + num(Math.round(yPay)) + ' 円</td><td class="mono">' + num(Math.round(yInt)) + ' 円</td><td class="mono">' + num(Math.round(bal)) + ' 円</td></tr>';
+      }
+      $('loanMonthly').textContent = yen(pay);
+      $('loanTotal').textContent = yen(P + totalInterest);
+      $('loanInterest').textContent = yen(totalInterest);
+      $('loanCount').textContent = num(n) + ' 回';
+      document.querySelector('#loanTable tbody').innerHTML = rows;
+    }
+    ['loanAmt', 'loanRate', 'loanYears'].forEach(function(id){ $(id).addEventListener('input', updateLoan); });
+    updateLoan();
+
+    /* ---------- 積立シミュレーション ---------- */
+    function manYen(v) {
+      if (v >= 10000) return (Math.round(v / 1000) / 10).toLocaleString('ja-JP') + ' 万円';
+      return yen(v);
+    }
+    function updateSavings() {
+      var monthly = parseFloat($('savMonthly').value);
+      var annual = parseFloat($('savRate').value);
+      var years = parseInt($('savYears').value, 10);
+      var initial = parseFloat($('savInitial').value);
+      if (isNaN(monthly) || isNaN(annual) || isNaN(years) || years < 1 || monthly < 0) {
+        $('savFinal').textContent = '—'; $('savPrincipal').textContent = '—'; $('savGain').textContent = '—'; $('savChart').innerHTML = ''; return;
+      }
+      if (isNaN(initial) || initial < 0) initial = 0;
+      var rm = annual / 100 / 12;
+      var bal = initial, points = [{ year: 0, bal: initial, prin: initial }];
+      for (var y = 1; y <= years; y++) {
+        for (var m = 0; m < 12; m++) { bal = bal * (1 + rm) + monthly; }
+        points.push({ year: y, bal: bal, prin: initial + monthly * 12 * y });
+      }
+      var principal = initial + monthly * 12 * years;
+      $('savFinal').textContent = manYen(bal);
+      $('savPrincipal').textContent = manYen(principal);
+      $('savGain').textContent = manYen(bal - principal);
+      drawSavChart(points);
+    }
+    function drawSavChart(points) {
+      var W = 640, H = 240, padL = 8, padR = 8, padT = 14, padB = 26;
+      var maxV = 0, maxY = 0;
+      points.forEach(function(p){ if (p.bal > maxV) maxV = p.bal; if (p.year > maxY) maxY = p.year; });
+      if (maxV <= 0 || maxY <= 0) { $('savChart').innerHTML = ''; return; }
+      function X(y) { return padL + (W - padL - padR) * (y / maxY); }
+      function Y(v) { return H - padB - (H - padT - padB) * (v / maxV); }
+      var balPts = points.map(function(p){ return X(p.year).toFixed(1) + ',' + Y(p.bal).toFixed(1); }).join(' ');
+      var prinPts = points.map(function(p){ return X(p.year).toFixed(1) + ',' + Y(p.prin).toFixed(1); }).join(' ');
+      var grid = '';
+      for (var g = 1; g <= 3; g++) {
+        var gy = padT + (H - padT - padB) * g / 4;
+        grid += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="var(--line)" stroke-width="1"/>';
+      }
+      var area = 'M' + points.map(function(p){ return X(p.year).toFixed(1) + ' ' + Y(p.bal).toFixed(1); }).join(' L') +
+        ' L' + X(maxY).toFixed(1) + ' ' + (H - padB) + ' L' + X(0).toFixed(1) + ' ' + (H - padB) + ' Z';
+      $('savChart').innerHTML =
+        '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="積立の推移グラフ">' +
+        grid +
+        '<path d="' + area + '" fill="var(--accent)" opacity="0.12"/>' +
+        '<polyline points="' + prinPts + '" fill="none" stroke="var(--ink-2)" stroke-width="2" stroke-dasharray="5 4"/>' +
+        '<polyline points="' + balPts + '" fill="none" stroke="var(--accent)" stroke-width="2.5"/>' +
+        '<text x="' + padL + '" y="' + (H - 8) + '" font-size="12" fill="var(--ink-2)">0年</text>' +
+        '<text x="' + (W - padR) + '" y="' + (H - 8) + '" font-size="12" fill="var(--ink-2)" text-anchor="end">' + maxY + '年</text>' +
+        '<text x="' + (W - padR) + '" y="' + (padT - 2) + '" font-size="12" fill="var(--ink-2)" text-anchor="end">最大 ' + manYen(maxV) + '</text>' +
+        '</svg>';
+    }
+    ['savMonthly', 'savRate', 'savYears', 'savInitial'].forEach(function(id){ $(id).addEventListener('input', updateSavings); });
+    updateSavings();
+
+    /* ---------- タイマー ---------- */
+    segWire('timerMode', 'data-tmode', function(m){
+      $('countBlock').hidden = m !== 'count';
+      $('watchBlock').hidden = m !== 'watch';
+    });
+    var CIRC = 628.3;
+    var timerTotal = 300, timerRemain = 300, timerEndAt = 0, timerRunning = false, timerInt = null;
+    var audioCtx = null;
+    function fmtClock(sec) {
+      sec = Math.max(0, Math.ceil(sec));
+      var m = Math.floor(sec / 60), s = sec % 60;
+      return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    function drawTimer() {
+      $('timerDisp').textContent = fmtClock(timerRemain);
+      var frac = timerTotal > 0 ? timerRemain / timerTotal : 0;
+      $('ringProg').style.strokeDashoffset = String(CIRC * (1 - frac));
+    }
+    function setTimerFromInputs() {
+      var m = parseInt($('timerMin').value, 10) || 0;
+      var s = parseInt($('timerSec').value, 10) || 0;
+      timerTotal = Math.max(0, m * 60 + s);
+      timerRemain = timerTotal;
+      drawTimer();
+    }
+    function beep() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        var t0 = audioCtx.currentTime;
+        [0, 0.35, 0.7].forEach(function(off){
+          var osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+          osc.type = 'sine'; osc.frequency.value = 880;
+          gain.gain.setValueAtTime(0.0001, t0 + off);
+          gain.gain.exponentialRampToValueAtTime(0.25, t0 + off + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t0 + off + 0.3);
+          osc.connect(gain); gain.connect(audioCtx.destination);
+          osc.start(t0 + off); osc.stop(t0 + off + 0.32);
+        });
+      } catch (e) { /* 音が出ない環境では無音で終了 */ }
+    }
+    function stopTimerInt() { if (timerInt) { clearInterval(timerInt); timerInt = null; } }
+    $('timerStart').addEventListener('click', function(){
+      if (timerRunning) {
+        timerRunning = false; stopTimerInt();
+        timerRemain = Math.max(0, (timerEndAt - Date.now()) / 1000);
+        this.textContent = '再開';
+        $('timerState').textContent = '一時停止中';
+        drawTimer();
+        return;
+      }
+      if (timerRemain <= 0) setTimerFromInputs();
+      if (timerTotal <= 0) { $('timerState').textContent = '時間を設定してください'; return; }
+      timerRunning = true;
+      timerEndAt = Date.now() + timerRemain * 1000;
+      this.textContent = '一時停止';
+      $('timerState').textContent = '計測中';
+      drawTimer();
+      stopTimerInt();
+      timerInt = setInterval(function(){
+        timerRemain = Math.max(0, (timerEndAt - Date.now()) / 1000);
+        drawTimer();
+        if (timerRemain <= 0) {
+          stopTimerInt(); timerRunning = false;
+          $('timerStart').textContent = 'スタート';
+          $('timerState').textContent = '終了しました';
+          beep();
+        }
+      }, 200);
+    });
+    $('timerReset').addEventListener('click', function(){
+      stopTimerInt(); timerRunning = false;
+      $('timerStart').textContent = 'スタート';
+      $('timerState').textContent = '待機中';
+      setTimerFromInputs();
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('#timerPresets .chip'), function(chip){
+      chip.addEventListener('click', function(){
+        stopTimerInt(); timerRunning = false;
+        $('timerStart').textContent = 'スタート';
+        $('timerState').textContent = '待機中';
+        $('timerMin').value = chip.getAttribute('data-min');
+        $('timerSec').value = '0';
+        setTimerFromInputs();
+      });
+    });
+    $('timerMin').addEventListener('input', function(){ if (!timerRunning) setTimerFromInputs(); });
+    $('timerSec').addEventListener('input', function(){ if (!timerRunning) setTimerFromInputs(); });
+    setTimerFromInputs();
+
+    /* ---------- ストップウォッチ ---------- */
+    var watchRunning = false, watchStartAt = 0, watchElapsed = 0, watchInt = null, lapCount = 0, lastLap = 0;
+    function fmtWatch(ms) {
+      var cs = Math.floor(ms / 10) % 100;
+      var s = Math.floor(ms / 1000) % 60;
+      var m = Math.floor(ms / 60000);
+      function p(n) { return (n < 10 ? '0' : '') + n; }
+      return p(m) + ':' + p(s) + '.' + p(cs);
+    }
+    function drawWatch() { $('watchDisp').textContent = fmtWatch(watchElapsed + (watchRunning ? Date.now() - watchStartAt : 0)); }
+    $('watchStart').addEventListener('click', function(){
+      if (watchRunning) {
+        watchRunning = false;
+        watchElapsed += Date.now() - watchStartAt;
+        if (watchInt) { clearInterval(watchInt); watchInt = null; }
+        this.textContent = '再開';
+        $('watchLap').disabled = true;
+      } else {
+        watchRunning = true;
+        watchStartAt = Date.now();
+        watchInt = setInterval(drawWatch, 31);
+        this.textContent = 'ストップ';
+        $('watchLap').disabled = false;
+      }
+      drawWatch();
+    });
+    $('watchLap').addEventListener('click', function(){
+      if (!watchRunning) return;
+      var now = watchElapsed + (Date.now() - watchStartAt);
+      lapCount++;
+      var li = document.createElement('li');
+      var left = document.createElement('span'); left.textContent = 'ラップ ' + lapCount;
+      var right = document.createElement('span'); right.className = 'mono';
+      right.textContent = fmtWatch(now - lastLap) + '（合計 ' + fmtWatch(now) + '）';
+      li.appendChild(left); li.appendChild(right);
+      $('lapList').insertBefore(li, $('lapList').firstChild);
+      lastLap = now;
+    });
+    $('watchReset').addEventListener('click', function(){
+      watchRunning = false; watchElapsed = 0; lapCount = 0; lastLap = 0;
+      if (watchInt) { clearInterval(watchInt); watchInt = null; }
+      $('watchStart').textContent = 'スタート';
+      $('watchLap').disabled = true;
+      $('lapList').innerHTML = '';
+      drawWatch();
+    });
+    drawWatch();
+
+    /* ---------- 日付計算 ---------- */
+    segWire('dateMode', 'data-dmode', function(m){
+      $('dateDiffBlock').hidden = m !== 'diff';
+      $('dateAddBlock').hidden = m !== 'add';
+    });
+    var WD = ['日', '月', '火', '水', '木', '金', '土'];
+    function parseDateInput(v) {
+      if (!v) return null;
+      var p = v.split('-');
+      return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+    }
+    function fmtDate(d) {
+      return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日（' + WD[d.getDay()] + '）';
+    }
+    function todayStr() {
+      var d = new Date();
+      function p(n) { return (n < 10 ? '0' : '') + n; }
+      return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+    }
+    function updateDateDiff() {
+      var a = parseDateInput($('dateFrom').value);
+      var b = parseDateInput($('dateTo').value);
+      if (!a || !b) { $('dateDiffOut').textContent = '—'; $('dateDiffDetail').textContent = ''; return; }
+      var days = Math.round((b - a) / 86400000);
+      $('dateDiffOut').textContent = num(Math.abs(days)) + ' 日' + (days < 0 ? '（逆向き）' : '');
+      var weeks = Math.floor(Math.abs(days) / 7), rest = Math.abs(days) % 7;
+      $('dateDiffDetail').textContent = fmtDate(a) + ' から ' + fmtDate(b) + ' まで。週に直すと約 ' + num(weeks) + ' 週間と ' + rest + ' 日です。';
+    }
+    function updateDateAdd() {
+      var base = parseDateInput($('dateBase').value);
+      var n = parseInt($('dateDays').value, 10);
+      if (!base || isNaN(n)) { $('dateAddOut').textContent = '—'; return; }
+      var d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + n);
+      $('dateAddOut').textContent = fmtDate(d);
+    }
+    $('dateFrom').value = todayStr();
+    var plus30 = new Date(); plus30.setDate(plus30.getDate() + 30);
+    function p2(n) { return (n < 10 ? '0' : '') + n; }
+    $('dateTo').value = plus30.getFullYear() + '-' + p2(plus30.getMonth() + 1) + '-' + p2(plus30.getDate());
+    $('dateBase').value = todayStr();
+    $('dateFrom').addEventListener('change', updateDateDiff);
+    $('dateTo').addEventListener('change', updateDateDiff);
+    $('dateBase').addEventListener('change', updateDateAdd);
+    $('dateDays').addEventListener('input', updateDateAdd);
+    Array.prototype.forEach.call(document.querySelectorAll('#datePresets .chip'), function(chip){
+      chip.addEventListener('click', function(){ $('dateDays').value = chip.getAttribute('data-days'); updateDateAdd(); });
+    });
+    updateDateDiff();
+    updateDateAdd();
+    </script>
+  </body>
+</html>
