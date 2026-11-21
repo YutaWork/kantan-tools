@@ -713,7 +713,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
                 <div class="result-big" id="dateAddOut">—</div>
               </div>
             </div>
-          </section>
+          
+<p class="note">計算方法：2つの日付の差を日数として数えます。「開始日を含む」を選ぶと、初日を1日目として数えます。</p>
+</section>
 
           <!-- 割引・パーセント -->
           <section class="panel" data-panel="percent" hidden aria-label="割引・パーセント計算">
@@ -794,7 +796,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               </div>
               <p class="note">元の価格 ＝ 割引後の価格 ÷（1 − 割引率 ÷ 100）で計算します。</p>
             </div>
-          </section>
+          
+<p class="note">計算方法：割引後の価格は「元の価格 ×（1 − 割引率）」です。2割引は割引率0.2、20%引きも0.2として計算します。割合の計算は「全体 × 割合 ÷ 100」です。</p>
+</section>
 
           <!-- 時間の計算 -->
           <section class="panel" data-panel="timecalc" hidden aria-label="時間の計算">
@@ -869,7 +873,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               </div>
               <p class="note">退勤時刻が出勤時刻より前の場合は、翌日までとして計算します。休憩を引いた時間が実働時間です。</p>
             </div>
-          </section>
+          
+<p class="note">計算方法：終了時刻が開始時刻より前の場合、終了を翌日として計算します。勤務時間モードでは休憩時間を差し引きます。</p>
+</section>
 
           <!-- 年齢計算 -->
           <section class="panel" data-panel="age" hidden aria-label="年齢計算">
@@ -892,7 +898,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <div class="stat"><div class="slabel">干支</div><div class="svalue mono" id="ageEto">—</div></div>
             </div>
             <p class="note" id="ageDetail"></p>
-          </section>
+          
+<p class="note">計算方法：誕生日を迎えた回数（満年齢）で計算しています。次の誕生日までの日数もあわせて表示します。</p>
+</section>
 
           <!-- 電卓 -->
           <section class="panel" data-panel="calc" hidden aria-label="電卓">
@@ -924,7 +932,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <button data-k=".">.</button>
               <button data-k="=" class="eq">＝</button>
             </div>
-          </section>
+          
+<p class="note">使い方：数式をそのまま入力できます。+ − × ÷ と括弧（ ）が使えます。</p>
+</section>
 
           <!-- ポモドーロ -->
           <section class="panel" data-panel="pomodoro" hidden aria-label="ポモドーロタイマー">
@@ -1007,7 +1017,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               </div>
             </div>
             <p class="note"><strong>ご注意：</strong>単純な掛け算・割り算による概算です。残業代、ボーナス、税金、社会保険料などは含みません。</p>
-          </section>
+          
+<p class="note">計算方法：時給から年収は「時給 × 1日の勤務時間 × 年間の勤務日数」、年収から時給はその逆の割り算です。月収は年収 ÷ 12 の目安で、賞与は分けずに計算しています。</p>
+</section>
 
           <!-- 燃費・ガソリン代 -->
           <section class="panel" data-panel="fuel" hidden aria-label="燃費・ガソリン代計算">
@@ -1033,7 +1045,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <div class="stat"><div class="slabel">1kmあたり</div><div class="svalue mono" id="fuelPerKm">—</div></div>
             </div>
             <p class="note">満タン法（給油量＝使った燃料量とみなす方法）を前提にした概算です。</p>
-          </section>
+          
+<p class="note">計算方法：燃費は「走行距離 ÷ 使ったガソリン量」です。ガソリン代は「走行距離 ÷ 燃費 × ガソリン単価」で計算します。</p>
+</section>
 
           <!-- ルーレット・抽選 -->
           <section class="panel" data-panel="roulette" hidden aria-label="ルーレット・抽選">
@@ -1096,7 +1110,9 @@ Dさん</textarea>
               <div class="stat"><div class="slabel">16進数</div><div class="svalue mono" id="baseOut16">—</div></div>
             </div>
             <p class="note" id="baseMsg">16進数のアルファベット（A〜F）も入力できます。</p>
-          </section>
+          
+<p class="note">変換の考え方：10進数の数を、変換先の基数（2進数なら2）で割り続け、余りを逆順に並べると変換できます。16進数では10〜15をA〜Fで表します。</p>
+</section>
 
           <!-- 平均・合計 -->
           <section class="panel" data-panel="stats" hidden aria-label="平均・合計計算">
@@ -1119,7 +1135,9 @@ Dさん</textarea>
               <div class="stat"><div class="slabel">中央値</div><div class="svalue mono" id="statsMedian">—</div></div>
             </div>
             <p class="note">小数やマイナスの数も使えます。数字でない行は数えません。</p>
-          </section>
+          
+<p class="note">計算方法：平均は「合計 ÷ 個数」、中央値は数を並べ替えた真ん中の値です。標準偏差は、値の散らばりの大きさを表します。</p>
+</section>
         <section class="panel" data-panel="mojihenkan" hidden aria-label="文字変換">
 <h2>文字変換</h2>
 <p class="desc">英字の大文字・小文字、全角・半角、ひらがな・カタカナの変換をまとめた道具です。変換の種類を選ぶと、入力に合わせて自動で変換します。文章はブラウザの中だけで処理されます。</p>
@@ -1153,6 +1171,8 @@ Dさん</textarea>
 - 項目2
 
 > 引用の例です。</textarea></div><div class="mdpreview" id="mdOut"></div>
+
+<p class="note">使い方の例：「# 」で見出し、「**文字**」で太字、「- 」で箇条書き、「[文字](アドレス)」でリンクになります。</p>
 </section>
 <section class="panel" data-panel="dataconv" hidden aria-label="データ変換">
 <h2>データ変換</h2>
