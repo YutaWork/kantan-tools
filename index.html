@@ -299,95 +299,126 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
         </div>
         <div class="catrow" role="group" aria-label="分野で絞り込む">
           <button class="catchip active" data-cat="all">すべて</button>
-          <button class="catchip" data-cat="keisan">計算・お金</button>
-          <button class="catchip" data-cat="bunsho">文章・データ</button>
+          <button class="catchip" data-cat="money">お金・家計</button>
+          <button class="catchip" data-cat="calc">計算・変換</button>
+          <button class="catchip" data-cat="text">文章・テキスト</button>
           <button class="catchip" data-cat="gazou">画像・デザイン</button>
           <button class="catchip" data-cat="seikatsu">生活・健康</button>
+          <button class="catchip" data-cat="data">データ・開発</button>
           <button class="catchip" data-cat="shigoto">仕事・学習</button>
         </div>
       </div>
 
       <div class="layout">
         <nav class="toolnav" id="toolNav" aria-label="ツール一覧">
-          <button class="navbtn active" data-tool="counter" data-cat="bunsho" data-keys="文字数 カウント 文章 文字 もじ 原稿用紙 バイト">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
-            <span><span class="nname">文字数カウンター</span><span class="ndesc">文字数・行数・読了時間の目安</span></span>
-          </button>
-          <button class="navbtn" data-tool="password" data-cat="shigoto" data-keys="パスワード 生成 ランダム 暗証番号 セキュリティ">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>
-            <span><span class="nname">パスワード生成</span><span class="ndesc">安全なランダム文字列を作成</span></span>
-          </button>
-          <button class="navbtn" data-tool="unit" data-cat="keisan" data-keys="単位 変換 長さ 重さ 温度 面積 速さ 坪 インチ ポンド">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13"/><path d="m13 4 4 4-4 4"/><path d="M20 16H7"/><path d="m11 12-4 4 4 4"/></svg>
-            <span><span class="nname">単位変換</span><span class="ndesc">長さ・重さ・温度・面積・速さ</span></span>
-          </button>
-          <button class="navbtn" data-tool="tax" data-cat="keisan" data-keys="消費税 税金 税込 税抜 割り勘 わりかん 割り算 飲み会 お金">
+          <button class="navbtn" data-tool="pricetax" data-cat="money" data-keys="消費税 税金 税込 税抜 割引 お金">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>
-            <span><span class="nname">消費税・割り勘</span><span class="ndesc">税込・税抜と1人あたり金額</span></span>
+            <span><span class="nname">消費税・割引計算</span><span class="ndesc">税込・税抜と割引後の価格</span></span>
           </button>
-          <button class="navbtn" data-tool="loan" data-cat="keisan" data-keys="ローン 住宅ローン 借入 返済 金利 元利均等 シミュレーション">
+          <button class="navbtn" data-tool="warikan" data-cat="money" data-keys="割り勘 わりかん 飲み会 割り算 お金">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.2 14.7c2.2.3 3.7 1.7 4.2 4.3"/></svg>
+            <span><span class="nname">割り勘計算</span><span class="ndesc">合計を人数で割る</span></span>
+          </button>
+          <button class="navbtn" data-tool="loan" data-cat="money" data-keys="ローン 住宅ローン 借入 返済 金利 元利均等 シミュレーション">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
             <span><span class="nname">ローン計算</span><span class="ndesc">毎月の返済額と利息の試算</span></span>
           </button>
-          <button class="navbtn" data-tool="savings" data-cat="keisan" data-keys="積立 つみたて 貯金 投資 運用 複利 シミュレーション nisa">
+          <button class="navbtn" data-tool="savings" data-cat="money" data-keys="積立 つみたて 貯金 投資 運用 複利 シミュレーション nisa">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m6.5 15 4-4.5 3.5 2.5L19 7.5"/><path d="M15.5 7.5H19V11"/></svg>
             <span><span class="nname">積立シミュレーション</span><span class="ndesc">毎月の積立と複利の伸び</span></span>
           </button>
-          <button class="navbtn" data-tool="timer" data-cat="seikatsu" data-keys="タイマー ストップウォッチ 時間 計測 カウントダウン ラップ">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.8 2"/><path d="M9.5 2.5h5"/><path d="M12 2.5v3.5"/></svg>
-            <span><span class="nname">タイマー</span><span class="ndesc">カウントダウンとストップウォッチ</span></span>
-          </button>
-          <button class="navbtn" data-tool="date" data-cat="keisan" data-keys="日付 日数 計算 何日 あと何日 曜日 カレンダー 営業日 祝日">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/></svg>
-            <span><span class="nname">日付計算</span><span class="ndesc">日数の差と◯日後の日付</span></span>
-          </button>
-
-          <button class="navbtn" data-tool="percent" data-cat="keisan" data-keys="割引 パーセント 割合 セール 値引き 何パーセント 逆算">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="17" r="2.6"/><path d="M17 4 7 20"/></svg>
-            <span><span class="nname">割引・パーセント</span><span class="ndesc">割引価格と割合の計算</span></span>
-          </button>
-          <button class="navbtn" data-tool="timecalc" data-cat="keisan" data-keys="時間 時刻 計算 足し算 引き算 差 勤務時間 何時間">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
-            <span><span class="nname">時間の計算</span><span class="ndesc">時刻の差と足し算・引き算</span></span>
-          </button>
-          <button class="navbtn" data-tool="age" data-cat="keisan" data-keys="年齢 生年月日 誕生日 干支 何歳 あと何日">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21h16"/><path d="M5 21v-4.5h14V21"/><path d="M12 12.5v-2"/><circle cx="12" cy="8" r="1.4"/></svg>
-            <span><span class="nname">年齢計算</span><span class="ndesc">満年齢と次の誕生日まで</span></span>
-          </button>
-
-          <button class="navbtn" data-tool="calc" data-cat="keisan" data-keys="電卓 計算機 四則演算 足し算 引き算 掛け算 割り算">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>
-            <span><span class="nname">電卓</span><span class="ndesc">ふつうの四則演算</span></span>
-          </button>
-          <button class="navbtn" data-tool="pomodoro" data-cat="seikatsu" data-keys="ポモドーロ 集中 作業 タイマー 休憩 勉強">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><circle cx="12" cy="13" r="3"/><path d="M12 5.5c.8-1.5 2.2-2.3 4-2.5"/></svg>
-            <span><span class="nname">ポモドーロ</span><span class="ndesc">作業と休憩の繰り返し</span></span>
-          </button>
-          <button class="navbtn" data-tool="salary" data-cat="keisan" data-keys="年収 時給 月給 換算 給料 賃金 収入">
+          <button class="navbtn" data-tool="paytax" data-cat="money" data-keys="給与 税金 手取り ふるさと納税 残業代 賞与 ボーナス 社会保険 所得税 住民税"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span><span class="nname">給与・税金計算</span><span class="ndesc">手取り・ふるさと納税・残業代・賞与</span></span></button>
+          <button class="navbtn" data-tool="salary" data-cat="money" data-keys="年収 時給 月給 換算 給料 賃金 収入">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m9 8.5 3 3.5 3-3.5M12 12v6M9.3 14.8h5.4M9.3 17.2h5.4"/></svg>
             <span><span class="nname">年収・時給換算</span><span class="ndesc">時給と月収・年収の換算</span></span>
           </button>
-          <button class="navbtn" data-tool="paytax" data-cat="keisan" data-keys="給与 税金 手取り ふるさと納税 残業代 賞与 ボーナス 社会保険 所得税 住民税"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span><span class="nname">給与・税金計算</span><span class="ndesc">手取り・ふるさと納税・残業代・賞与</span></span></button>
-
-          <button class="navbtn" data-tool="fuel" data-cat="keisan" data-keys="燃費 ガソリン 燃料代 車 ドライブ 旅行">
+          <button class="navbtn" data-tool="fuel" data-cat="money" data-keys="燃費 ガソリン 燃料代 車 ドライブ 旅行">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M14 9h2.5A1.5 1.5 0 0 1 18 10.5V16a2 2 0 0 0 4 0V9.8a2 2 0 0 0-.6-1.4L19 6"/><path d="M2.5 21h13.5"/><path d="M7 8h4v4H7z"/></svg>
             <span><span class="nname">燃費・ガソリン代</span><span class="ndesc">燃費と燃料代の計算</span></span>
+          </button>
+          <button class="navbtn" data-tool="denki" data-cat="money" data-keys="電気 料金 電気代 家電 試算"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">電気料金の試算</span><span class="ndesc">月の電気料金と家電の電気代</span></span></button>
+          <button class="navbtn" data-tool="unit" data-cat="calc" data-keys="単位 変換 長さ 重さ 温度 面積 速さ 坪 インチ ポンド">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13"/><path d="m13 4 4 4-4 4"/><path d="M20 16H7"/><path d="m11 12-4 4 4 4"/></svg>
+            <span><span class="nname">単位変換</span><span class="ndesc">長さ・重さ・温度・面積・速さ</span></span>
+          </button>
+          <button class="navbtn" data-tool="date" data-cat="calc" data-keys="日付 日数 営業日 カレンダー 何日後 和暦 元号">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/></svg>
+            <span><span class="nname">日付計算</span><span class="ndesc">日数の差と◯日後の日付</span></span>
+          </button>
+          <button class="navbtn" data-tool="timecalc" data-cat="calc" data-keys="時間 時刻 計算 足し算 引き算 差 勤務時間 何時間">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+            <span><span class="nname">時間の計算</span><span class="ndesc">時刻の差と足し算・引き算</span></span>
+          </button>
+          <button class="navbtn" data-tool="age" data-cat="calc" data-keys="年齢 生年月日 誕生日 干支 何歳 あと何日">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21h16"/><path d="M5 21v-4.5h14V21"/><path d="M12 12.5v-2"/><circle cx="12" cy="8" r="1.4"/></svg>
+            <span><span class="nname">年齢計算</span><span class="ndesc">満年齢と次の誕生日まで</span></span>
+          </button>
+          <button class="navbtn" data-tool="calc" data-cat="calc" data-keys="電卓 計算 四則演算 分数 約分">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>
+            <span><span class="nname">電卓</span><span class="ndesc">ふつうの四則演算</span></span>
+          </button>
+          <button class="navbtn" data-tool="percent" data-cat="calc" data-keys="割合 パーセント 増減率 構成比">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="17" r="2.6"/><path d="M17 4 7 20"/></svg>
+            <span><span class="nname">割合計算</span><span class="ndesc">割合と増減率の計算</span></span>
+          </button>
+          <button class="navbtn" data-tool="stats" data-cat="calc" data-keys="平均 合計 最大 最小 中央値 偏差値 統計 標準偏差">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-5"/><path d="M10 20V7"/><path d="M15 20v-8"/><path d="M20 20V4"/></svg>
+            <span><span class="nname">統計・データ集計</span><span class="ndesc">平均・合計・最大・最小・偏差値</span></span>
+          </button>
+          <button class="navbtn" data-tool="base" data-cat="calc" data-keys="進数 変換 2進数 10進数 16進数 バイナリ">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 3.5 12 7 19"/><path d="m17 5 3.5 7L17 19"/></svg>
+            <span><span class="nname">進数変換</span><span class="ndesc">2進・8進・10進・16進</span></span>
+          </button>
+          <button class="navbtn active" data-tool="counter" data-cat="text" data-keys="文字数 カウント 文章 文字 もじ 原稿用紙 バイト">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
+            <span><span class="nname">文字数カウンター</span><span class="ndesc">文字数・行数・読了時間の目安</span></span>
+          </button>
+          <button class="navbtn" data-tool="mojihenkan" data-cat="text" data-keys="文字 変換 大文字 小文字 全角 半角 ひらがな カタカナ 英語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文字変換</span><span class="ndesc">大文字・小文字、全角・半角、かな変換</span></span></button>
+          <button class="navbtn" data-tool="textseiri" data-cat="text" data-keys="テキスト 整理 空白 改行 重複 削除 並べ替え 行番号 置換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">テキスト整理</span><span class="ndesc">空白整理・重複削除・並べ替え・置換</span></span></button>
+          <button class="navbtn" data-tool="diff" data-cat="text" data-keys="比較 違い 差分 文章"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文章比較</span><span class="ndesc">2つの文章の違いを表示</span></span></button>
+          <button class="navbtn" data-tool="markdown" data-cat="text" data-keys="Markdown マークダウン プレビュー 記法"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">Markdownプレビュー</span><span class="ndesc">Markdownの表示を確認</span></span></button>
+          <button class="navbtn" data-tool="encode" data-cat="text" data-keys="URL HTML Base64 エンコード デコード 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">エンコード・デコード</span><span class="ndesc">URL・HTML・Base64の変換</span></span></button>
+          <button class="navbtn" data-tool="imageconv" data-cat="gazou" data-keys="画像 圧縮 リサイズ 形式 変換 トリミング 切り抜き 写真 モザイク 証明写真 EXIF 記録情報 位置情報 連結"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像加工</span><span class="ndesc">圧縮・大きさ・形式・切り抜き</span></span></button>
+          <button class="navbtn" data-tool="colortools" data-cat="gazou" data-keys="色 カラー 色番号 配色 コントラスト 画像 色抽出 カラーピッカー"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">色ツール</span><span class="ndesc">色番号・配色・画像から色抽出</span></span></button>
+          <button class="navbtn" data-tool="imgpdf" data-cat="gazou" data-keys="画像 PDF 作成 変換 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像からPDF作成</span><span class="ndesc">画像をPDFにまとめる</span></span></button>
+          <button class="navbtn" data-tool="cssgen" data-cat="gazou" data-keys="CSS グラデーション 影 デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">CSS生成</span><span class="ndesc">グラデーションと文字の影</span></span></button>
+          <button class="navbtn" data-tool="timer" data-cat="seikatsu" data-keys="タイマー ストップウォッチ ポモドーロ 集中 キッチンタイマー">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.8 2"/><path d="M9.5 2.5h5"/><path d="M12 2.5v3.5"/></svg>
+            <span><span class="nname">タイマー</span><span class="ndesc">カウントダウン・ストップウォッチ・ポモドーロ</span></span>
           </button>
           <button class="navbtn" data-tool="roulette" data-cat="seikatsu" data-keys="ルーレット 抽選 ランダム くじ 順番 決める">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="1.6"/><path d="M12 3.5v5M19.5 16.5l-4.5-2M4.5 16.5l4.5-2"/></svg>
             <span><span class="nname">ルーレット・抽選</span><span class="ndesc">候補からランダムに1つ選ぶ</span></span>
           </button>
-          <button class="navbtn" data-tool="base" data-cat="keisan" data-keys="進数 変換 2進数 10進数 16進数 バイナリ">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 3.5 12 7 19"/><path d="m17 5 3.5 7L17 19"/></svg>
-            <span><span class="nname">進数変換</span><span class="ndesc">2進・8進・10進・16進</span></span>
+          <button class="navbtn" data-tool="listkanri" data-cat="seikatsu" data-keys="リスト 買い物 チェックリスト 荷造り 引っ越し 冷蔵庫 在庫"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">リスト管理</span><span class="ndesc">買い物・チェックリスト・冷蔵庫在庫</span></span></button>
+          <button class="navbtn" data-tool="mealplan" data-cat="seikatsu" data-keys="献立 料理 ローテーション メニュー"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">献立プラン</span><span class="ndesc">数日分の献立の組み合わせ</span></span></button>
+          <button class="navbtn" data-tool="chores" data-cat="seikatsu" data-keys="家事 分担 当番 掃除">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M6 20v-6l6-9 6 9v6"/><path d="M10 20v-4h4v4"/></svg>
+            <span><span class="nname">家事分担表</span><span class="ndesc">家事の担当を割り当てる</span></span>
           </button>
-
-          <button class="navbtn" data-tool="stats" data-cat="keisan" data-keys="平均 合計 最大 最小 中央値 データ 集計 平均点 偏差値 分数">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-5"/><path d="M10 20V7"/><path d="M15 20v-8"/><path d="M20 20V4"/></svg>
-            <span><span class="nname">平均・合計</span><span class="ndesc">平均・最大・最小・中央値</span></span>
+          <button class="navbtn" data-tool="worldclock" data-cat="seikatsu" data-keys="世界時計 時差 海外 時刻 ロンドン ニューヨーク">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+            <span><span class="nname">世界時計</span><span class="ndesc">世界の都市の現在時刻</span></span>
           </button>
-        <button class="navbtn" data-tool="mojihenkan" data-cat="bunsho" data-keys="文字 変換 大文字 小文字 全角 半角 ひらがな カタカナ 英語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文字変換</span><span class="ndesc">大文字・小文字、全角・半角、かな変換</span></span></button><button class="navbtn" data-tool="textseiri" data-cat="bunsho" data-keys="テキスト 整理 空白 改行 重複 削除 並べ替え 行番号 置換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">テキスト整理</span><span class="ndesc">空白整理・重複削除・並べ替え・置換</span></span></button><button class="navbtn" data-tool="diff" data-cat="bunsho" data-keys="比較 違い 差分 文章"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文章比較</span><span class="ndesc">2つの文章の違いを表示</span></span></button><button class="navbtn" data-tool="markdown" data-cat="bunsho" data-keys="Markdown マークダウン プレビュー 記法"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">Markdownプレビュー</span><span class="ndesc">Markdownの表示を確認</span></span></button><button class="navbtn" data-tool="dataconv" data-cat="bunsho" data-keys="JSON CSV TSV 変換 整形 データ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">データ変換</span><span class="ndesc">JSON・CSV・TSVの変換と整形</span></span></button><button class="navbtn" data-tool="csvtools" data-cat="bunsho" data-keys="CSV 列 抽出 閲覧 表 ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">CSV加工・閲覧</span><span class="ndesc">列の取り出しと表での確認</span></span></button><button class="navbtn" data-tool="encode" data-cat="bunsho" data-keys="URL HTML Base64 エンコード デコード 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">エンコード・デコード</span><span class="ndesc">URL・HTML・Base64の変換</span></span></button><button class="navbtn" data-tool="filecheck" data-cat="bunsho" data-keys="ファイル 情報 容量 ハッシュ SHA 確認"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">ファイル確認</span><span class="ndesc">容量・種類・SHA-256を確認</span></span></button><button class="navbtn" data-tool="imageconv" data-cat="gazou" data-keys="画像 圧縮 リサイズ 形式 変換 トリミング 切り抜き 写真 モザイク 証明写真 EXIF 記録情報 位置情報 連結"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像加工</span><span class="ndesc">圧縮・大きさ・形式・切り抜き</span></span></button><button class="navbtn" data-tool="colorpick" data-cat="gazou" data-keys="画像 色 抽出 カラー 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像から色を取り出す</span><span class="ndesc">使われている色を調べる</span></span></button><button class="navbtn" data-tool="imgpdf" data-cat="gazou" data-keys="画像 PDF 作成 変換 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像からPDF作成</span><span class="ndesc">画像をPDFにまとめる</span></span></button><button class="navbtn" data-tool="colortools" data-cat="gazou" data-keys="色 カラー 配色 コントラスト デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">色の道具</span><span class="ndesc">色番号の変換・配色・コントラスト</span></span></button><button class="navbtn" data-tool="cssgen" data-cat="gazou" data-keys="CSS グラデーション 影 デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">CSS生成</span><span class="ndesc">グラデーションと文字の影</span></span></button><button class="navbtn" data-tool="devtools" data-cat="shigoto" data-keys="正規表現 UUID JWT HTML Favicon 開発 時刻 UNIX URL パラメータ サブネット SQL YAML JSON"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">開発補助</span><span class="ndesc">正規表現・UUID・JWTなど</span></span></button><button class="navbtn" data-tool="listkanri" data-cat="seikatsu" data-keys="リスト 買い物 チェックリスト 荷造り 引っ越し 冷蔵庫 在庫"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">リスト管理</span><span class="ndesc">買い物・チェックリスト・冷蔵庫在庫</span></span></button><button class="navbtn" data-tool="planmake" data-cat="seikatsu" data-keys="献立 分担 家事 料理 プラン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">献立・分担プラン</span><span class="ndesc">献立ローテーションと家事分担表</span></span></button><button class="navbtn" data-tool="flashcard" data-cat="shigoto" data-keys="暗記 カード 学習 テスト 単語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">暗記カード</span><span class="ndesc">めくって覚える学習とテスト</span></span></button><button class="navbtn" data-tool="diagram" data-cat="shigoto" data-keys="図表 ガント マインドマップ 予定 整理"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">図表作成</span><span class="ndesc">ガント表とマインドマップ</span></span></button><button class="navbtn" data-tool="templates" data-cat="shigoto" data-keys="議事録 テンプレート 意思決定 マトリクス SWOT 会議"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">文書テンプレート・意思決定</span><span class="ndesc">議事録・意思決定マトリクス・SWOT</span></span></button>
-<button class="navbtn" data-tool="invoice" data-cat="shigoto" data-keys="請求書 見積書 書類 印刷 フリーランス 仕事"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">請求書・見積書</span><span class="ndesc">金額を入れて印刷できる書類を作る</span></span></button><button class="navbtn" data-tool="datetools" data-cat="seikatsu" data-keys="日時 和暦 世界時計 睡眠 サイクル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">日時ツール</span><span class="ndesc">和暦変換・世界時計・睡眠サイクル</span></span></button><button class="navbtn" data-tool="health" data-cat="seikatsu" data-keys="健康 BMI 体重 基礎代謝 カロリー"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">健康計算</span><span class="ndesc">BMI・基礎代謝・消費カロリー</span></span></button><button class="navbtn" data-tool="denki" data-cat="keisan" data-keys="電気 料金 電気代 家電 試算"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">電気料金の試算</span><span class="ndesc">月の電気料金と家電の電気代</span></span></button><button class="navbtn" data-tool="ziptool" data-cat="bunsho" data-keys="ZIP 圧縮 解凍 まとめる ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 9v3M12 15v3"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg><span><span class="nname">ZIP作成・解凍</span><span class="ndesc">ファイルをまとめる・取り出す</span></span></button></nav>
+          <button class="navbtn" data-tool="health" data-cat="seikatsu" data-keys="健康 BMI 適正体重 基礎代謝 カロリー 睡眠 サイクル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">健康計算</span><span class="ndesc">BMI・基礎代謝・消費カロリー</span></span></button>
+          <button class="navbtn" data-tool="password" data-cat="data" data-keys="パスワード 生成 ランダム 暗証番号 セキュリティ">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>
+            <span><span class="nname">パスワード生成</span><span class="ndesc">安全なランダム文字列を作成</span></span>
+          </button>
+          <button class="navbtn" data-tool="devtools" data-cat="data" data-keys="開発 正規表現 UUID JWT サブネット SQL 時刻変換 URLパラメータ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">開発者ツール</span><span class="ndesc">正規表現・UUID・JWT・サブネットなど</span></span></button>
+          <button class="navbtn" data-tool="dataconv" data-cat="data" data-keys="データ変換 JSON CSV TSV YAML 整形 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">データ変換</span><span class="ndesc">JSON・CSV・TSVの変換と整形</span></span></button>
+          <button class="navbtn" data-tool="csvtools" data-cat="data" data-keys="CSV 列 抽出 閲覧 表 ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">CSV加工・閲覧</span><span class="ndesc">列の取り出しと表での確認</span></span></button>
+          <button class="navbtn" data-tool="filecheck" data-cat="data" data-keys="ファイル 情報 容量 ハッシュ SHA 確認"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">ファイル確認</span><span class="ndesc">容量・種類・SHA-256を確認</span></span></button>
+          <button class="navbtn" data-tool="ziptool" data-cat="data" data-keys="ZIP 圧縮 解凍 まとめる ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 9v3M12 15v3"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg><span><span class="nname">ZIP作成・解凍</span><span class="ndesc">ファイルをまとめる・取り出す</span></span></button>
+          <button class="navbtn" data-tool="flashcard" data-cat="shigoto" data-keys="暗記 カード 学習 テスト 単語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">暗記カード</span><span class="ndesc">めくって覚える学習とテスト</span></span></button>
+          <button class="navbtn" data-tool="diagram" data-cat="shigoto" data-keys="図表 ガント マインドマップ 予定 整理"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">図表作成</span><span class="ndesc">ガント表とマインドマップ</span></span></button>
+          <button class="navbtn" data-tool="templates" data-cat="shigoto" data-keys="議事録 文書 テンプレート 会議"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">文書テンプレート</span><span class="ndesc">議事録の型を作る</span></span></button>
+          <button class="navbtn" data-tool="decision" data-cat="shigoto" data-keys="意思決定 比較 SWOT 分析 マトリクス">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-2.5 5a3.5 3.5 0 0 0 5 0L5 7Z"/><path d="m19 7-2.5 5a3.5 3.5 0 0 0 5 0L19 7Z"/><path d="M8 21h8"/></svg>
+            <span><span class="nname">意思決定ツール</span><span class="ndesc">候補の比較とSWOT分析</span></span>
+          </button>
+          <button class="navbtn" data-tool="invoice" data-cat="shigoto" data-keys="請求書 見積書 書類 印刷 フリーランス 仕事"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">請求書・見積書</span><span class="ndesc">金額を入れて印刷できる書類を作る</span></span></button>
+        </nav>
 
         <main id="panels">
           <div class="nohit" id="noHit">条件に合うツールが見つかりませんでした。別の言葉で検索してみてください。</div>
@@ -491,12 +522,13 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
           </section>
 
           <!-- 消費税・割り勘 -->
-          <section class="panel" data-panel="tax" hidden aria-label="消費税・割り勘計算">
-            <h2>消費税・割り勘</h2>
-            <p class="sub">税込・税抜の換算と、飲み会などの割り勘計算です。</p>
+          <section class="panel" data-panel="pricetax" hidden aria-label="消費税・割引計算">
+            <h2>消費税・割引計算</h2>
+            <p class="sub">税込・税抜の換算と、割引後の価格、元の価格の逆算ができます。</p>
             <div class="seg" id="taxMode">
               <button data-mode="tax" class="active">消費税</button>
-              <button data-mode="split">割り勘</button>
+              <button data-mode="off">割引</button>
+              <button data-mode="back">元の価格を逆算</button>
             </div>
 
             <div id="taxBlock">
@@ -521,7 +553,45 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <p class="note">消費税額は円未満を切り捨てて計算しています。お店や事業者の端数処理によって1円前後異なる場合があります。</p>
             </div>
 
-            <div id="splitBlock" hidden>
+            
+          <div id="pctOffBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="pctOffPrice">元の価格</label>
+                  <div class="withunit"><input type="number" id="pctOffPrice" value="10000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+                </div>
+                <div class="field">
+                  <label for="pctOffRate">割引率</label>
+                  <div class="withunit"><input type="number" id="pctOffRate" value="20" min="0" max="100" step="1" inputmode="decimal" /><span class="unit">%</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">支払う金額</div><div class="svalue mono" id="pctOffPay">—</div></div>
+                <div class="stat"><div class="slabel">割引される額</div><div class="svalue mono" id="pctOffAmt">—</div></div>
+              </div>
+            </div>
+<div id="pctBackBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="pctBackPrice">割引後の価格</label>
+                  <div class="withunit"><input type="number" id="pctBackPrice" value="8000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+                </div>
+                <div class="field">
+                  <label for="pctBackRate">割引率</label>
+                  <div class="withunit"><input type="number" id="pctBackRate" value="20" min="0" max="99" step="1" inputmode="decimal" /><span class="unit">%</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">元の価格</div><div class="svalue mono" id="pctBackOut">—</div></div>
+                <div class="stat"><div class="slabel">割引されていた額</div><div class="svalue mono" id="pctBackAmt">—</div></div>
+              </div>
+              <p class="note">元の価格 ＝ 割引後の価格 ÷（1 − 割引率 ÷ 100）で計算します。</p>
+            </div>
+</section>
+<section class="panel" data-panel="warikan" hidden aria-label="割り勘計算">
+<h2>割り勘計算</h2>
+<p class="sub">合計金額を人数で割り、1人あたりの金額を計算します。</p>
+<div id="splitBlock">
               <div class="row2">
                 <div class="field">
                   <label for="splitTotal">合計金額</label>
@@ -545,7 +615,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               </div>
               <p class="note">切り上げ方式では、集まる合計が請求額を上回る分が「余り」になります。余りは幹事の負担軽減や次回の足しに充てるのが一般的です。</p>
             </div>
-          </section>
+</section>
 
           <!-- ローン計算 -->
           <section class="panel" data-panel="loan" hidden aria-label="ローン計算">
@@ -621,10 +691,11 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
           <!-- タイマー -->
           <section class="panel" data-panel="timer" hidden aria-label="タイマーとストップウォッチ">
             <h2>タイマー</h2>
-            <p class="sub">カウントダウンタイマーとストップウォッチです。</p>
+            <p class="sub">カウントダウンタイマーとストップウォッチ、作業と休憩を繰り返すポモドーロタイマーです。</p>
             <div class="seg" id="timerMode">
               <button data-tmode="count" class="active">タイマー</button>
               <button data-tmode="watch">ストップウォッチ</button>
+              <button data-tmode="pomo">ポモドーロ</button>
             </div>
 
             <div id="countBlock">
@@ -677,15 +748,41 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               </div>
               <ul class="laplist" id="lapList" aria-label="ラップタイム"></ul>
             </div>
-          </section>
+          <div id="pomoBlock" hidden>
+<div class="pomodisp">
+              <div class="t mono" id="pomoDisp">25:00</div>
+              <div class="s" id="pomoPhase">作業の時間です</div>
+            </div>
+            <div class="meter" aria-hidden="true"><div id="pomoBar" style="width:100%"></div></div>
+            <div class="row2" style="margin-top:16px">
+              <div class="field">
+                <label for="pomoWork">作業の長さ</label>
+                <div class="withunit"><input type="number" id="pomoWork" value="25" min="1" max="180" step="1" inputmode="numeric" /><span class="unit">分</span></div>
+              </div>
+              <div class="field">
+                <label for="pomoBreak">休憩の長さ</label>
+                <div class="withunit"><input type="number" id="pomoBreak" value="5" min="1" max="60" step="1" inputmode="numeric" /><span class="unit">分</span></div>
+              </div>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">完了した作業の回数</div><div class="svalue mono" id="pomoRound">0 回</div></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn" id="pomoStart">スタート</button>
+              <button class="btn plain" id="pomoReset">リセット</button>
+            </div>
+            <p class="note">画面を開いたまま使う想定です。画面を閉じたり、スマホがスリープしたりすると、音が鳴らない場合があります。</p>
+          </div>
+</section>
 
           <!-- 日付計算 -->
           <section class="panel" data-panel="date" hidden aria-label="日付計算">
             <h2>日付計算</h2>
-            <p class="sub">2つの日付の間の日数や、◯日後の日付を調べます。</p>
+            <p class="sub">2つの日付の間の日数や、◯日後の日付、営業日、和暦への変換を調べます。</p>
             <div class="seg" id="dateMode">
               <button data-dmode="diff" class="active">日数の差</button>
               <button data-dmode="add">日付の加減</button>
+              <button data-dmode="wareki">和暦変換</button>
             </div>
 
             <div id="dateDiffBlock">
@@ -732,6 +829,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               </div>
             </div>
           
+<div id="dateWarekiBlock" hidden><div class="row"><div class="field"><label>西暦の日付</label><input type="date" id="wkDate"></div></div><div class="btnrow"><button class="btn" id="wkRun">和暦に直す</button></div><p class="note" id="wkOut"></p><div class="row"><div class="field"><label>元号</label><select id="wkEra"><option value="2019">令和</option><option value="1989">平成</option><option value="1926">昭和</option><option value="1912">大正</option><option value="1868">明治</option></select></div><div class="field"><label>年（元年は1）</label><input type="number" id="wkYear" value="7" min="1"></div><div class="field"><label>月</label><input type="number" id="wkMonth" value="1" min="1" max="12"></div><div class="field"><label>日</label><input type="number" id="wkDay" value="1" min="1" max="31"></div></div><div class="btnrow"><button class="btn" id="wkRun2">西暦に直す</button></div><p class="note" id="wkOut2"></p><p class="note">元号が始まった年は、途中からその元号になります（例：平成元年は1989年1月8日から）。</p></div>
 <p class="note">計算方法：2つの日付の差を日数として数えます。「開始日を含む」を選ぶと、初日を1日目として数えます。</p>
 
 <div style="margin-top:22px">
@@ -745,34 +843,24 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 <p class="note">土曜日・日曜日を休みとして数えます。祝日の一覧は2025年と2026年の分を用意しています。それ以外の年は土日だけで計算します。</p>
 </div>
 </section>
+<section class="panel" data-panel="worldclock" hidden aria-label="世界時計">
+<h2>世界時計</h2>
+<p class="desc">世界の都市の現在時刻を表示します。</p>
+<div id="dtWorld"><div id="worldOut"></div><p class="note">あなたの端末の時刻をもとに、各都市の時刻を表示しています。</p></div>
+</section>
 
           <!-- 割引・パーセント -->
-          <section class="panel" data-panel="percent" hidden aria-label="割引・パーセント計算">
-            <h2>割引・パーセント</h2>
-            <p class="sub">割引後の価格、割合、元の価格の逆算ができます。</p>
+          <section class="panel" data-panel="percent" hidden aria-label="割合計算">
+            <h2>割合計算</h2>
+            <p class="sub">割合と増減率（何％増えた・減った）の計算ができます。</p>
             <div class="seg" id="pctMode">
-              <button data-pmode="off" class="active">割引</button>
-              <button data-pmode="up">割増</button>
+              
+              <button data-pmode="up" class="active">割増・増減率</button>
               <button data-pmode="ratio">割合</button>
-              <button data-pmode="back">元の価格を逆算</button>
+              
             </div>
 
-            <div id="pctOffBlock">
-              <div class="row2">
-                <div class="field">
-                  <label for="pctOffPrice">元の価格</label>
-                  <div class="withunit"><input type="number" id="pctOffPrice" value="10000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
-                </div>
-                <div class="field">
-                  <label for="pctOffRate">割引率</label>
-                  <div class="withunit"><input type="number" id="pctOffRate" value="20" min="0" max="100" step="1" inputmode="decimal" /><span class="unit">%</span></div>
-                </div>
-              </div>
-              <div class="statgrid">
-                <div class="stat"><div class="slabel">支払う金額</div><div class="svalue mono" id="pctOffPay">—</div></div>
-                <div class="stat"><div class="slabel">割引される額</div><div class="svalue mono" id="pctOffAmt">—</div></div>
-              </div>
-            </div>
+            
 
             <div id="pctUpBlock" hidden>
               <div class="row2">
@@ -808,23 +896,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <p class="note">割合（％）＝ A ÷ B × 100 で計算します。</p>
             </div>
 
-            <div id="pctBackBlock" hidden>
-              <div class="row2">
-                <div class="field">
-                  <label for="pctBackPrice">割引後の価格</label>
-                  <div class="withunit"><input type="number" id="pctBackPrice" value="8000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
-                </div>
-                <div class="field">
-                  <label for="pctBackRate">割引率</label>
-                  <div class="withunit"><input type="number" id="pctBackRate" value="20" min="0" max="99" step="1" inputmode="decimal" /><span class="unit">%</span></div>
-                </div>
-              </div>
-              <div class="statgrid">
-                <div class="stat"><div class="slabel">元の価格</div><div class="svalue mono" id="pctBackOut">—</div></div>
-                <div class="stat"><div class="slabel">割引されていた額</div><div class="svalue mono" id="pctBackAmt">—</div></div>
-              </div>
-              <p class="note">元の価格 ＝ 割引後の価格 ÷（1 − 割引率 ÷ 100）で計算します。</p>
-            </div>
+            
           
 <p class="note">計算方法：割引後の価格は「元の価格 ×（1 − 割引率）」です。2割引は割引率0.2、20%引きも0.2として計算します。割合の計算は「全体 × 割合 ÷ 100」です。</p>
 </section>
@@ -934,7 +1006,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
           <!-- 電卓 -->
           <section class="panel" data-panel="calc" hidden aria-label="電卓">
             <h2>電卓</h2>
-            <p class="sub">ふつうの四則演算ができる電卓です。</p>
+            <p class="sub">ふつうの四則演算ができる電卓です。分数の計算もできます。</p>
             <div class="calcdisp">
               <div class="expr mono" id="calcExpr"></div>
               <div class="val mono" id="calcDisp">0</div>
@@ -963,36 +1035,18 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
             </div>
           
 <p class="note">使い方：数式をそのまま入力できます。+ − × ÷ と括弧（ ）が使えます。</p>
+<h3 style="margin-top:22px">分数の計算</h3>
+<div class="row3">
+<label class="field">分数1（分子／分母）<span style="display:flex;gap:6px;align-items:center"><input type="number" id="frN1" value="1"><span>／</span><input type="number" id="frD1" value="2"></span></label>
+<label class="field">計算<select id="frOp"><option value="add" selected>足す</option><option value="sub">引く</option><option value="mul">掛ける</option><option value="div">割る</option></select></label>
+<label class="field">分数2（分子／分母）<span style="display:flex;gap:6px;align-items:center"><input type="number" id="frN2" value="1"><span>／</span><input type="number" id="frD2" value="3"></span></label>
+</div>
+<p class="note">結果：<strong id="frOut">-</strong></p>
+
 </section>
 
           <!-- ポモドーロ -->
-          <section class="panel" data-panel="pomodoro" hidden aria-label="ポモドーロタイマー">
-            <h2>ポモドーロ</h2>
-            <p class="sub">作業と休憩を繰り返して集中するタイマーです。区切りごとに音が鳴ります。</p>
-            <div class="pomodisp">
-              <div class="t mono" id="pomoDisp">25:00</div>
-              <div class="s" id="pomoPhase">作業の時間です</div>
-            </div>
-            <div class="meter" aria-hidden="true"><div id="pomoBar" style="width:100%"></div></div>
-            <div class="row2" style="margin-top:16px">
-              <div class="field">
-                <label for="pomoWork">作業の長さ</label>
-                <div class="withunit"><input type="number" id="pomoWork" value="25" min="1" max="180" step="1" inputmode="numeric" /><span class="unit">分</span></div>
-              </div>
-              <div class="field">
-                <label for="pomoBreak">休憩の長さ</label>
-                <div class="withunit"><input type="number" id="pomoBreak" value="5" min="1" max="60" step="1" inputmode="numeric" /><span class="unit">分</span></div>
-              </div>
-            </div>
-            <div class="statgrid">
-              <div class="stat"><div class="slabel">完了した作業の回数</div><div class="svalue mono" id="pomoRound">0 回</div></div>
-            </div>
-            <div class="btnrow">
-              <button class="btn" id="pomoStart">スタート</button>
-              <button class="btn plain" id="pomoReset">リセット</button>
-            </div>
-            <p class="note">画面を開いたまま使う想定です。画面を閉じたり、スマホがスリープしたりすると、音が鳴らない場合があります。</p>
-          </section>
+          
 
           <!-- 年収・時給換算 -->
           <section class="panel" data-panel="salary" hidden aria-label="年収・時給換算">
@@ -1144,8 +1198,8 @@ Dさん</textarea>
 </section>
 
           <!-- 平均・合計 -->
-          <section class="panel" data-panel="stats" hidden aria-label="平均・合計計算">
-            <h2>平均・合計</h2>
+          <section class="panel" data-panel="stats" hidden aria-label="統計・データ集計">
+            <h2>統計・データ集計</h2>
             <p class="sub">数字を1行に1つずつ入力すると、合計・平均・最大・最小・中央値を計算します。</p>
             <div class="field">
               <label for="statsInput">数字（1行に1つ）</label>
@@ -1173,13 +1227,6 @@ Dさん</textarea>
 <label class="field">標準偏差<input type="number" id="stSd" value="10"></label>
 </div>
 <p class="note">偏差値：<strong id="stHensachi">-</strong>（計算方法：50 ＋ 10 ×（自分の点数 − 平均点）÷ 標準偏差）</p>
-<h3 style="margin-top:22px">分数の計算</h3>
-<div class="row3">
-<label class="field">分数1（分子／分母）<span style="display:flex;gap:6px;align-items:center"><input type="number" id="frN1" value="1"><span>／</span><input type="number" id="frD1" value="2"></span></label>
-<label class="field">計算<select id="frOp"><option value="add" selected>足す</option><option value="sub">引く</option><option value="mul">掛ける</option><option value="div">割る</option></select></label>
-<label class="field">分数2（分子／分母）<span style="display:flex;gap:6px;align-items:center"><input type="number" id="frN2" value="1"><span>／</span><input type="number" id="frD2" value="3"></span></label>
-</div>
-<p class="note">結果：<strong id="frOut">-</strong></p>
 </section>
         <section class="panel" data-panel="mojihenkan" hidden aria-label="文字変換">
 <h2>文字変換</h2>
@@ -1219,8 +1266,25 @@ Dさん</textarea>
 </section>
 <section class="panel" data-panel="dataconv" hidden aria-label="データ変換">
 <h2>データ変換</h2>
-<p class="desc">JSONの整形・圧縮、JSONとCSVの相互変換、CSVとTSVの相互変換をまとめた道具です。データはブラウザの中だけで処理されます。</p>
-<div class="seg" id="dcMode"><button data-mode="pretty" class="active">JSONを整える</button><button data-mode="min">JSONを圧縮</button><button data-mode="j2c">JSON → CSV</button><button data-mode="c2j">CSV → JSON</button><button data-mode="c2t">CSV → TSV</button><button data-mode="t2c">TSV → CSV</button></div><div class="field"><label>変換したいデータ</label><textarea class="ta" id="dcIn" rows="6">{"name":"山田","age":30}</textarea></div><div class="btnrow"><button class="btn" id="dcRun">変換する</button></div><div class="field"><label>結果</label><textarea class="ta" id="dcOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="dcOut">結果をコピー</button></div><p class="note" id="dcOutNote"></p>
+<p class="desc">JSONの整形・圧縮、JSONとCSVの相互変換、CSVとTSVの相互変換、YAMLとJSONの相互変換をまとめた道具です。データはブラウザの中だけで処理されます。</p>
+<div class="seg" id="dcMode"><button data-mode="pretty" class="active">JSONを整える</button><button data-mode="min">JSONを圧縮</button><button data-mode="j2c">JSON → CSV</button><button data-mode="c2j">CSV → JSON</button><button data-mode="c2t">CSV → TSV</button><button data-mode="t2c">TSV → CSV</button><button data-mode="yaml">YAML・JSON変換</button></div><div id="dcStd"><div class="field"><label>変換したいデータ</label><textarea class="ta" id="dcIn" rows="6">{"name":"山田","age":30}</textarea></div><div class="btnrow"><button class="btn" id="dcRun">変換する</button></div><div class="field"><label>結果</label><textarea class="ta" id="dcOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="dcOut">結果をコピー</button></div><p class="note" id="dcOutNote"></p>
+</div>
+<div id="dcYaml" hidden>
+<div class="seg" id="yamlDir"><button data-mode="y2j" class="active">YAML → JSON</button><button data-mode="j2y">JSON → YAML</button></div>
+<div class="field"><label>入力</label><textarea class="ta" id="ymIn" rows="7">name: sample
+age: 30
+tags:
+  - tools
+  - web
+address:
+  city: Tokyo
+  zip: 100-0001</textarea></div>
+<div class="btnrow"><button class="btn" id="ymRun">変換する</button></div>
+<div class="field"><label>結果</label><textarea class="ta" id="ymOut" rows="7" readonly></textarea></div>
+<div class="btnrow"><button class="btn ghost" data-copy="ymOut">結果をコピー</button></div>
+<p class="note" id="ymNote"></p>
+<p class="note">対応しているのは、項目と値、入れ子、箇条書き（- ）の基本的な形です。複数行の文章や特殊な書き方には対応していません。</p>
+</div>
 </section>
 <section class="panel" data-panel="csvtools" hidden aria-label="CSV加工・閲覧">
 <h2>CSV加工・閲覧</h2>
@@ -1248,30 +1312,29 @@ Dさん</textarea>
 <div id="icOptJoin" hidden><div class="field"><label>連結する画像（複数選択できます）</label><input type="file" id="jnFile" accept="image/*" multiple></div><div class="seg" id="jnDir"><button data-mode="h" class="active">横に並べる</button><button data-mode="v">縦に並べる</button></div><div class="btnrow"><button class="btn" id="jnRun">連結する</button></div><p class="note" id="jnNote"></p><div id="jnPreview"></div><div class="btnrow" id="jnDlRow"></div></div>
 <div class="btnrow"><button class="btn" id="icRun">実行する</button></div><p class="note" id="icNote"></p><div id="icPreview"></div><div class="btnrow" id="icDlRow"></div>
 </section>
-<section class="panel" data-panel="colorpick" hidden aria-label="画像から色を取り出す">
-<h2>画像から色を取り出す</h2>
-<p class="desc">画像でよく使われている色と、その色番号（16進数）を調べます。画像は外部に送られません。</p>
-<div class="field"><label>画像を選ぶ</label><input type="file" id="cpFile" accept="image/*"></div><p class="note" id="cpNote"></p><div id="cpOut"></div>
-</section>
+
 <section class="panel" data-panel="imgpdf" hidden aria-label="画像からPDF作成">
 <h2>画像からPDF作成</h2>
 <p class="desc">複数の画像を、1つのPDFにまとめます（1画像＝1ページ）。画像は外部に送られません。</p>
 <div class="field"><label>画像を選ぶ（複数選択できます）</label><input type="file" id="ipFile" accept="image/*" multiple></div><div class="btnrow"><button class="btn" id="ipRun">PDFを作る</button></div><p class="note" id="ipNote"></p><div class="btnrow" id="ipDlRow"></div>
 </section>
-<section class="panel" data-panel="colortools" hidden aria-label="色の道具">
-<h2>色の道具</h2>
-<p class="desc">色番号の変換、配色の作成、文字と背景のコントラスト判定をまとめた道具です。</p>
+<section class="panel" data-panel="colortools" hidden aria-label="色ツール">
+<h2>色ツール</h2>
+<p class="desc">色番号の変換、配色の作成、文字と背景のコントラスト判定、画像で使われている色の抽出をまとめた道具です。</p>
 <h3>色番号の変換</h3><div class="row"><div class="field"><label>色を選ぶ</label><input type="color" id="ctPicker" value="#2f6f5e"></div><div class="field"><label>色番号（16進数）</label><input type="text" id="ctHex" value="#2f6f5e"></div></div><div class="statgrid" id="ctGrid"></div><h3 style="margin-top:20px">配色を作る</h3><div class="seg" id="palMode"><button data-mode="analog" class="active">類似色</button><button data-mode="comp">補色</button><button data-mode="triad">3色配色</button><button data-mode="mono">濃淡</button></div><div id="palOut"></div><h3 style="margin-top:20px">コントラスト判定</h3><div class="row"><div class="field"><label>文字の色</label><input type="color" id="ccText" value="#333333"></div><div class="field"><label>背景の色</label><input type="color" id="ccBg" value="#ffffff"></div></div><div class="statgrid" id="ccGrid"></div><p class="note">判定の目安：比率4.5以上で通常の文字でも読みやすい（AA）、7以上で最も厳しい基準（AAA）を満たします。</p>
+<h3 style="margin-top:20px">画像から色を取り出す</h3>
+<div class="field"><label>画像を選ぶ</label><input type="file" id="cpFile" accept="image/*"></div><p class="note" id="cpNote"></p><div id="cpOut"></div>
+
 </section>
 <section class="panel" data-panel="cssgen" hidden aria-label="CSS生成">
 <h2>CSS生成</h2>
 <p class="desc">背景のグラデーションと、文字の影のCSSを作ります。できたCSSはコピーして使えます。</p>
 <div class="seg" id="cssMode"><button data-mode="grad" class="active">グラデーション</button><button data-mode="shadow">文字の影</button></div><div id="cssOptGrad"><div class="row"><div class="field"><label>色1</label><input type="color" id="grC1" value="#2f6f5e"></div><div class="field"><label>色2</label><input type="color" id="grC2" value="#a8d5ba"></div><div class="field"><label>色3（使わない場合は色2と同じにしてください）</label><input type="color" id="grC3" value="#a8d5ba"></div></div><div class="seg" id="grDir"><button data-mode="90deg" class="active">左 → 右</button><button data-mode="180deg">上 → 下</button><button data-mode="45deg">斜め</button></div><div class="gradprev" id="grPrev"></div></div><div id="cssOptShadow" hidden><div class="field"><label>試す文字</label><input type="text" id="shText" value="サンプル文字"></div><div class="row"><div class="field"><label>横のずれ</label><input type="number" id="shX" value="2"></div><div class="field"><label>縦のずれ</label><input type="number" id="shY" value="2"></div></div><div class="row"><div class="field"><label>ぼかし</label><input type="number" id="shBlur" value="3"></div><div class="field"><label>影の色</label><input type="color" id="shColor" value="#999999"></div></div><div class="shadowprev" id="shPrev">サンプル文字</div></div><div class="cssout" id="cssOut"></div><div class="btnrow"><button class="btn ghost" id="cssCopy">CSSをコピー</button></div><p class="note" id="cssNote"></p>
 </section>
-<section class="panel" data-panel="devtools" hidden aria-label="開発補助">
+<section class="panel" data-panel="devtools" hidden aria-label="開発者ツール">
 <h2>開発補助</h2>
 <p class="desc">正規表現のテスト、UUIDの生成、JWTの内容確認、HTMLのプレビュー、Faviconの作成をまとめた道具です。入力した内容はブラウザの中だけで処理されます。</p>
-<div class="seg" id="devMode"><button data-mode="regex" class="active">正規表現</button><button data-mode="uuid">UUID生成</button><button data-mode="jwt">JWTデコード</button><button data-mode="htmlprev">HTMLプレビュー</button><button data-mode="favicon">Favicon作成</button><button data-mode="ts">時刻変換</button><button data-mode="urlprm">URLパラメータ</button><button data-mode="subnet">サブネット</button><button data-mode="sqlfmt">SQL整形</button><button data-mode="yaml">YAML・JSON</button></div><div id="devOptRegex"><div class="row"><div class="field"><label>正規表現</label><input type="text" id="rePattern" value="\d+"></div><div class="field"><label>オプション（g, i, m など）</label><input type="text" id="reFlags" value="g"></div></div><div class="field"><label>テストする文章</label><textarea class="ta" id="reText" rows="4">注文番号は12345で、金額は9800円です。</textarea></div><div class="btnrow"><button class="btn" id="reRun">テストする</button></div><p class="note" id="reNote"></p><div id="reOut" style="white-space:pre-wrap;word-break:break-all"></div></div><div id="devOptUuid" hidden><div class="row"><div class="field"><label>作る個数</label><input type="number" id="uuidCount" value="5" min="1" max="100"></div></div><div class="btnrow"><button class="btn" id="uuidRun">生成する</button></div><div class="field"><label>結果</label><textarea class="ta" id="uuidOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="uuidOut">結果をコピー</button></div><p class="note" id="uuidOutNote"></p></div><div id="devOptJwt" hidden><div class="field"><label>JWT</label><textarea class="ta" id="jwtIn" rows="4">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea></div><div class="btnrow"><button class="btn" id="jwtRun">内容を見る</button></div><div class="field"><label>結果</label><textarea class="ta" id="jwtOut" rows="8" readonly></textarea></div><p class="note" id="jwtNote"></p></div><div id="devOptHtml" hidden><div class="field"><label>HTML</label><textarea class="ta" id="hpIn" rows="6"><h1 style="color:#2f6f5e">見出し</h1><p>段落の例です。</p></textarea></div><div class="btnrow"><button class="btn" id="hpRun">プレビューする</button></div><iframe id="hpFrame" sandbox="allow-scripts" style="width:100%;height:220px;border:1px solid var(--line);border-radius:10px;background:#fff"></iframe><p class="note">プレビューは隔離された枠の中で表示されます。このページ自体には影響しません。</p></div><div id="devOptFavicon" hidden><div class="row"><div class="field"><label>文字（1〜2文字）</label><input type="text" id="fvText" value="か" maxlength="2"></div><div class="field"><label>背景の色</label><input type="color" id="fvBg" value="#2f6f5e"></div><div class="field"><label>文字の色</label><input type="color" id="fvColor" value="#ffffff"></div></div><div class="btnrow"><button class="btn" id="fvRun">作成する</button></div><p class="note" id="fvNote"></p><div id="fvPreview"></div><div class="btnrow" id="fvDlRow"></div></div>
+<div class="seg" id="devMode"><button data-mode="regex" class="active">正規表現</button><button data-mode="uuid">UUID生成</button><button data-mode="jwt">JWTデコード</button><button data-mode="htmlprev">HTMLプレビュー</button><button data-mode="favicon">Favicon作成</button><button data-mode="ts">時刻変換</button><button data-mode="urlprm">URLパラメータ</button><button data-mode="subnet">サブネット</button><button data-mode="sqlfmt">SQL整形</button></div><div id="devOptRegex"><div class="row"><div class="field"><label>正規表現</label><input type="text" id="rePattern" value="\d+"></div><div class="field"><label>オプション（g, i, m など）</label><input type="text" id="reFlags" value="g"></div></div><div class="field"><label>テストする文章</label><textarea class="ta" id="reText" rows="4">注文番号は12345で、金額は9800円です。</textarea></div><div class="btnrow"><button class="btn" id="reRun">テストする</button></div><p class="note" id="reNote"></p><div id="reOut" style="white-space:pre-wrap;word-break:break-all"></div></div><div id="devOptUuid" hidden><div class="row"><div class="field"><label>作る個数</label><input type="number" id="uuidCount" value="5" min="1" max="100"></div></div><div class="btnrow"><button class="btn" id="uuidRun">生成する</button></div><div class="field"><label>結果</label><textarea class="ta" id="uuidOut" rows="6" readonly></textarea></div><div class="btnrow"><button class="btn ghost" data-copy="uuidOut">結果をコピー</button></div><p class="note" id="uuidOutNote"></p></div><div id="devOptJwt" hidden><div class="field"><label>JWT</label><textarea class="ta" id="jwtIn" rows="4">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea></div><div class="btnrow"><button class="btn" id="jwtRun">内容を見る</button></div><div class="field"><label>結果</label><textarea class="ta" id="jwtOut" rows="8" readonly></textarea></div><p class="note" id="jwtNote"></p></div><div id="devOptHtml" hidden><div class="field"><label>HTML</label><textarea class="ta" id="hpIn" rows="6"><h1 style="color:#2f6f5e">見出し</h1><p>段落の例です。</p></textarea></div><div class="btnrow"><button class="btn" id="hpRun">プレビューする</button></div><iframe id="hpFrame" sandbox="allow-scripts" style="width:100%;height:220px;border:1px solid var(--line);border-radius:10px;background:#fff"></iframe><p class="note">プレビューは隔離された枠の中で表示されます。このページ自体には影響しません。</p></div><div id="devOptFavicon" hidden><div class="row"><div class="field"><label>文字（1〜2文字）</label><input type="text" id="fvText" value="か" maxlength="2"></div><div class="field"><label>背景の色</label><input type="color" id="fvBg" value="#2f6f5e"></div><div class="field"><label>文字の色</label><input type="color" id="fvColor" value="#ffffff"></div></div><div class="btnrow"><button class="btn" id="fvRun">作成する</button></div><p class="note" id="fvNote"></p><div id="fvPreview"></div><div class="btnrow" id="fvDlRow"></div></div>
 <div id="devOptTs" hidden>
 <div class="row"><div class="field"><label>UNIX時刻（秒）</label><input type="number" id="tsSec"></div><div class="field"><label>日時</label><input type="datetime-local" id="tsDate"></div></div>
 <div class="btnrow"><button class="btn" id="tsNow">現在時刻を入れる</button><button class="btn ghost" id="tsConv">変換する</button></div>
@@ -1293,38 +1356,28 @@ Dさん</textarea>
 <div class="field"><label>結果</label><textarea class="ta" id="sqlOut" rows="7" readonly></textarea></div>
 <div class="btnrow"><button class="btn ghost" data-copy="sqlOut">結果をコピー</button></div>
 </div>
-<div id="devOptYaml" hidden>
-<div class="seg" id="yamlDir"><button data-mode="y2j" class="active">YAML → JSON</button><button data-mode="j2y">JSON → YAML</button></div>
-<div class="field"><label>入力</label><textarea class="ta" id="ymIn" rows="7">name: sample
-age: 30
-tags:
-  - tools
-  - web
-address:
-  city: Tokyo
-  zip: 100-0001</textarea></div>
-<div class="btnrow"><button class="btn" id="ymRun">変換する</button></div>
-<div class="field"><label>結果</label><textarea class="ta" id="ymOut" rows="7" readonly></textarea></div>
-<div class="btnrow"><button class="btn ghost" data-copy="ymOut">結果をコピー</button></div>
-<p class="note" id="ymNote"></p>
-<p class="note">対応しているのは、項目と値、入れ子、箇条書き（- ）の基本的な形です。複数行の文章や特殊な書き方には対応していません。</p>
-</div>
+
 </section>
 <section class="panel" data-panel="listkanri" hidden aria-label="リスト管理">
 <h2>リスト管理</h2>
 <p class="desc">買い物リスト、荷造りや引っ越しのチェックリスト、冷蔵庫の在庫をまとめて管理できます。内容はこのブラウザの中にだけ保存され、外部には送られません（ブラウザのデータを消すと消えます）。</p>
 <div class="seg" id="listMode"><button data-mode="shop" class="active">買い物リスト</button><button data-mode="check">チェックリスト</button><button data-mode="fridge">冷蔵庫の在庫</button></div><div id="listTplRow" hidden><div class="row"><div class="field"><label>型を選んで一括で入れる</label><select id="tplSel"><option value="trip">旅行・出張の荷造り</option><option value="move">引っ越し作業</option><option value="camp">キャンプの持ち物</option></select></div></div><div class="btnrow"><button class="btn ghost" id="tplAdd">型を入れる</button></div></div><div class="row"><div class="field"><label>項目</label><input type="text" id="listItem" placeholder="例：牛乳"></div><div class="field" id="listDateWrap" hidden><label>期限（冷蔵庫の在庫用）</label><input type="date" id="listDate"></div></div><div class="btnrow"><button class="btn" id="listAdd">追加する</button><button class="btn ghost" id="listClearDone">済んだ項目を消す</button><button class="btn ghost" id="listClearAll">全部消す</button></div><p class="note" id="listNote"></p><div id="listOut"></div>
 </section>
-<section class="panel" data-panel="planmake" hidden aria-label="献立・分担プラン">
-<h2>献立・分担プラン</h2>
-<p class="desc">数日分の献立の組み合わせと、家事の分担表を作ります。</p>
-<div class="seg" id="planMode"><button data-mode="menu" class="active">献立ローテーション</button><button data-mode="chores">家事分担表</button></div><div id="planOptMenu"><div class="field"><label>料理の候補（1行に1つ）</label><textarea class="ta" id="menuDishes" rows="6">カレーライス
+<section class="panel" data-panel="mealplan" hidden aria-label="献立プラン">
+<h2>献立プラン</h2>
+<p class="desc">数日分の献立の組み合わせを作ります。</p>
+<div id="planOptMenu"><div class="field"><label>料理の候補（1行に1つ）</label><textarea class="ta" id="menuDishes" rows="6">カレーライス
 焼き魚
 肉じゃが
 パスタ
 味噌汁とご飯
 唐揚げ
-うどん</textarea></div><div class="row"><div class="field"><label>日数</label><input type="number" id="menuDays" value="7" min="1" max="31"></div></div><div class="btnrow"><button class="btn" id="menuRun">献立を作る</button></div><div class="tblwrap" id="menuOut"></div></div><div id="planOptChores" hidden><div class="field"><label>家事の項目（1行に1つ）</label><textarea class="ta" id="choreItems" rows="5">料理
+うどん</textarea></div><div class="row"><div class="field"><label>日数</label><input type="number" id="menuDays" value="7" min="1" max="31"></div></div><div class="btnrow"><button class="btn" id="menuRun">献立を作る</button></div><div class="tblwrap" id="menuOut"></div></div>
+</section>
+<section class="panel" data-panel="chores" hidden aria-label="家事分担表">
+<h2>家事分担表</h2>
+<p class="desc">家事の分担表を作ります。</p>
+<div id="planOptChores"><div class="field"><label>家事の項目（1行に1つ）</label><textarea class="ta" id="choreItems" rows="5">料理
 洗濯
 掃除
 買い物
@@ -1351,25 +1404,29 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
   交通費
   宿泊費</textarea></div><div class="btnrow"><button class="btn" id="mmRun">マインドマップを作る</button></div><div class="mm" id="mmOut"></div></div>
 </section>
-<section class="panel" data-panel="templates" hidden aria-label="文書テンプレート・意思決定">
-<h2>文書テンプレート・意思決定</h2>
-<p class="desc">議事録の型、意思決定マトリクス、SWOT分析の枠を作ります。</p>
-<div class="seg" id="tpMode"><button data-mode="minutes" class="active">議事録</button><button data-mode="matrix">意思決定マトリクス</button><button data-mode="swot">SWOT分析</button></div><div id="tpMinutes"><div class="row"><div class="field"><label>会議名</label><input type="text" id="mtTitle" value="定例会議"></div><div class="field"><label>日付</label><input type="date" id="mtDate"></div></div><div class="field"><label>参加者</label><input type="text" id="mtMembers" placeholder="例：田中、佐藤"></div><div class="field"><label>議題（1行に1つ）</label><textarea class="ta" id="mtAgenda" rows="3">進捗の確認
-来月の予定</textarea></div><div class="btnrow"><button class="btn" id="mtRun">議事録の型を作る</button></div><textarea class="ta" id="mtOut" rows="12" readonly></textarea><div class="btnrow"><button class="btn ghost" data-copy="mtOut">文章をコピー</button></div></div><div id="tpMatrix" hidden><div class="field"><label>候補（1行に1つ）</label><textarea class="ta" id="mxOptions" rows="3">候補A
+<section class="panel" data-panel="templates" hidden aria-label="文書テンプレート">
+<h2>文書テンプレート</h2>
+<p class="desc">議事録の型を作ります。</p>
+<div id="tpMinutes"><div class="row"><div class="field"><label>会議名</label><input type="text" id="mtTitle" value="定例会議"></div><div class="field"><label>日付</label><input type="date" id="mtDate"></div></div><div class="field"><label>参加者</label><input type="text" id="mtMembers" placeholder="例：田中、佐藤"></div><div class="field"><label>議題（1行に1つ）</label><textarea class="ta" id="mtAgenda" rows="3">進捗の確認
+来月の予定</textarea></div><div class="btnrow"><button class="btn" id="mtRun">議事録の型を作る</button></div><textarea class="ta" id="mtOut" rows="12" readonly></textarea><div class="btnrow"><button class="btn ghost" data-copy="mtOut">文章をコピー</button></div></div>
+</section>
+<section class="panel" data-panel="decision" hidden aria-label="意思決定ツール">
+<h2>意思決定ツール</h2>
+<p class="desc">候補を点数で比べる表と、SWOT分析の枠を作ります。</p>
+<div class="seg" id="decMode"><button data-mode="matrix" class="active">意思決定マトリクス</button><button data-mode="swot">SWOT分析</button></div>
+<div id="tpMatrix"><div class="field"><label>候補（1行に1つ）</label><textarea class="ta" id="mxOptions" rows="3">候補A
 候補B</textarea></div><div class="field"><label>判断の物差しと重み（1行に1つ。「物差し,重み」）</label><textarea class="ta" id="mxCriteria" rows="3">価格,3
 品質,2
 早さ,1</textarea></div><div class="field"><label>点数（候補×物差しの順に、カンマ区切りで候補ごとに1行。5点満点）</label><textarea class="ta" id="mxScores" rows="3">4,5,3
-5,3,4</textarea></div><div class="btnrow"><button class="btn" id="mxRun">計算する</button></div><div class="tblwrap" id="mxOut"></div><p class="note" id="mxNote"></p></div><div id="tpSwot" hidden><div class="swotgrid"><div class="swotcell"><h3>強み（内部）</h3><textarea class="ta" id="swS" rows="3"></textarea></div><div class="swotcell"><h3>弱み（内部）</h3><textarea class="ta" id="swW" rows="3"></textarea></div><div class="swotcell"><h3>機会（外部）</h3><textarea class="ta" id="swO" rows="3"></textarea></div><div class="swotcell"><h3>脅威（外部）</h3><textarea class="ta" id="swT" rows="3"></textarea></div></div><div class="btnrow"><button class="btn" id="swRun">表にまとめる</button></div><div id="swOut"></div></div>
+5,3,4</textarea></div><div class="btnrow"><button class="btn" id="mxRun">計算する</button></div><div class="tblwrap" id="mxOut"></div><p class="note" id="mxNote"></p></div>
+<div id="tpSwot" hidden><div class="swotgrid"><div class="swotcell"><h3>強み（内部）</h3><textarea class="ta" id="swS" rows="3"></textarea></div><div class="swotcell"><h3>弱み（内部）</h3><textarea class="ta" id="swW" rows="3"></textarea></div><div class="swotcell"><h3>機会（外部）</h3><textarea class="ta" id="swO" rows="3"></textarea></div><div class="swotcell"><h3>脅威（外部）</h3><textarea class="ta" id="swT" rows="3"></textarea></div></div><div class="btnrow"><button class="btn" id="swRun">表にまとめる</button></div><div id="swOut"></div></div>
 </section>
-<section class="panel" data-panel="datetools" hidden aria-label="日時ツール">
-<h2>日時ツール</h2>
-<p class="desc">和暦と西暦の変換、世界の都市の現在時刻、睡眠サイクルから寝る時刻・起きる時刻の目安を出します。</p>
-<div class="seg" id="dtMode"><button data-mode="wareki" class="active">和暦変換</button><button data-mode="world">世界時計</button><button data-mode="sleep">睡眠サイクル</button></div><div id="dtWareki"><div class="row"><div class="field"><label>西暦の日付</label><input type="date" id="wkDate"></div></div><div class="btnrow"><button class="btn" id="wkRun">和暦に直す</button></div><p class="note" id="wkOut"></p><div class="row"><div class="field"><label>元号</label><select id="wkEra"><option value="2019">令和</option><option value="1989">平成</option><option value="1926">昭和</option><option value="1912">大正</option><option value="1868">明治</option></select></div><div class="field"><label>年（元年は1）</label><input type="number" id="wkYear" value="7" min="1"></div><div class="field"><label>月</label><input type="number" id="wkMonth" value="1" min="1" max="12"></div><div class="field"><label>日</label><input type="number" id="wkDay" value="1" min="1" max="31"></div></div><div class="btnrow"><button class="btn" id="wkRun2">西暦に直す</button></div><p class="note" id="wkOut2"></p><p class="note">元号が始まった年は、途中からその元号になります（例：平成元年は1989年1月8日から）。</p></div><div id="dtWorld" hidden><div id="worldOut"></div><p class="note">あなたの端末の時刻をもとに、各都市の時刻を表示しています。</p></div><div id="dtSleep" hidden><div class="row"><div class="field"><label>起きる時刻</label><input type="time" id="slWake" value="07:00"></div></div><div class="btnrow"><button class="btn" id="slRun">寝る時刻の目安を出す</button></div><div class="tblwrap" id="slOut"></div><p class="note">眠りは約90分の周期で浅くなると言われます。寝つくまでの15分を見込んで計算しています。あくまで目安です。</p></div>
-</section>
+
 <section class="panel" data-panel="health" hidden aria-label="健康計算">
 <h2>健康計算</h2>
-<p class="desc">BMIと適正体重、基礎代謝と1日の消費カロリーの目安を計算します。医療の判断には使えません。</p>
-<div class="seg" id="heMode"><button data-mode="bmi" class="active">BMI・適正体重</button><button data-mode="bmr">基礎代謝・消費カロリー</button></div><div class="row"><div class="field"><label>身長（cm）</label><input type="number" id="heHeight" value="170" step="0.1"></div><div class="field"><label>体重（kg）</label><input type="number" id="heWeight" value="65" step="0.1"></div></div><div id="heBmrFields" hidden><div class="row"><div class="field"><label>年齢</label><input type="number" id="heAge" value="35"></div><div class="field"><label>性別</label><select id="heSex"><option value="m">男性</option><option value="f">女性</option></select></div></div><div class="field"><label>ふだんの活動量</label><select id="heAct"><option value="1.2">ほぼ運動しない</option><option value="1.375">軽い運動（週1〜3日）</option><option value="1.55" selected>中くらいの運動（週3〜5日）</option><option value="1.725">激しい運動（週6〜7日）</option></select></div></div><div class="btnrow"><button class="btn" id="heRun">計算する</button></div><div class="statgrid"><div class="stat"><span class="k" id="heK1">BMI</span><span class="v" id="heV1">-</span></div><div class="stat"><span class="k" id="heK2">判定・適正体重</span><span class="v" id="heV2" style="font-size:1rem">-</span></div></div><p class="note" id="heNote"></p>
+<p class="desc">BMIと適正体重、基礎代謝と1日の消費カロリー、睡眠サイクルの目安を計算します。医療の判断には使えません。</p>
+<div class="seg" id="heMode"><button data-mode="bmi" class="active">BMI・適正体重</button><button data-mode="bmr">基礎代謝・消費カロリー</button><button data-mode="sleep">睡眠サイクル</button></div><div id="heCalc"><div class="row"><div class="field"><label>身長（cm）</label><input type="number" id="heHeight" value="170" step="0.1"></div><div class="field"><label>体重（kg）</label><input type="number" id="heWeight" value="65" step="0.1"></div></div><div id="heBmrFields" hidden><div class="row"><div class="field"><label>年齢</label><input type="number" id="heAge" value="35"></div><div class="field"><label>性別</label><select id="heSex"><option value="m">男性</option><option value="f">女性</option></select></div></div><div class="field"><label>ふだんの活動量</label><select id="heAct"><option value="1.2">ほぼ運動しない</option><option value="1.375">軽い運動（週1〜3日）</option><option value="1.55" selected>中くらいの運動（週3〜5日）</option><option value="1.725">激しい運動（週6〜7日）</option></select></div></div><div class="btnrow"><button class="btn" id="heRun">計算する</button></div><div class="statgrid"><div class="stat"><span class="k" id="heK1">BMI</span><span class="v" id="heV1">-</span></div><div class="stat"><span class="k" id="heK2">判定・適正体重</span><span class="v" id="heV2" style="font-size:1rem">-</span></div></div><p class="note" id="heNote"></p></div>
+<div id="heSleep" hidden><div class="row"><div class="field"><label>起きる時刻</label><input type="time" id="slWake" value="07:00"></div></div><div class="btnrow"><button class="btn" id="slRun">寝る時刻の目安を出す</button></div><div class="tblwrap" id="slOut"></div><p class="note">眠りは約90分の周期で浅くなると言われます。寝つくまでの15分を見込んで計算しています。あくまで目安です。</p></div>
 </section>
 <section class="panel" data-panel="denki" hidden aria-label="電気料金の試算">
 <h2>電気料金の試算</h2>
@@ -1529,11 +1586,28 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         }
       });
     });
+    var TOOL_ALIAS = { tax: 'pricetax', colorpick: 'colortools', planmake: 'mealplan' };
+    function openAliased(k){
+      if (k === 'pomodoro') {
+        activateTool('timer');
+        var pb = document.querySelector('#timerMode button[data-tmode="pomo"]');
+        if (pb) pb.click();
+        return true;
+      }
+      if (k === 'datetools') {
+        activateTool('date');
+        var wb = document.querySelector('#dateMode button[data-dmode="wareki"]');
+        if (wb) wb.click();
+        return true;
+      }
+      if (TOOL_ALIAS[k]) { activateTool(TOOL_ALIAS[k]); return true; }
+      return false;
+    }
     var initialTool = (location.hash || '').replace('#', '');
-    if (panels[initialTool]) activateTool(initialTool);
+    if (!openAliased(initialTool) && panels[initialTool]) activateTool(initialTool);
     window.addEventListener('hashchange', function(){
       var k = (location.hash || '').replace('#', '');
-      if (panels[k]) activateTool(k);
+      if (!openAliased(k) && panels[k]) activateTool(k);
     });
     var currentCat = 'all';
     function applyFilter(){
@@ -1764,7 +1838,8 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     }
     segWire('taxMode', 'data-mode', function(m){
       $('taxBlock').hidden = m !== 'tax';
-      $('splitBlock').hidden = m !== 'split';
+      $('pctOffBlock').hidden = m !== 'off';
+      $('pctBackBlock').hidden = m !== 'back';
     });
     segWire('taxDir', 'data-dir', function(d){
       taxDir = d;
@@ -1902,6 +1977,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     segWire('timerMode', 'data-tmode', function(m){
       $('countBlock').hidden = m !== 'count';
       $('watchBlock').hidden = m !== 'watch';
+      $('pomoBlock').hidden = m !== 'pomo';
     });
     var CIRC = 628.3;
     var timerTotal = 300, timerRemain = 300, timerEndAt = 0, timerRunning = false, timerInt = null;
@@ -2040,6 +2116,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     segWire('dateMode', 'data-dmode', function(m){
       $('dateDiffBlock').hidden = m !== 'diff';
       $('dateAddBlock').hidden = m !== 'add';
+      $('dateWarekiBlock').hidden = m !== 'wareki';
     });
     var WD = ['日', '月', '火', '水', '木', '金', '土'];
     function parseDateInput(v) {
@@ -2115,10 +2192,8 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       $('pctBackAmt').textContent = yen(orig - p);
     }
     segWire('pctMode', 'data-pmode', function(m){
-      $('pctOffBlock').hidden = m !== 'off';
       $('pctUpBlock').hidden = m !== 'up';
       $('pctRatioBlock').hidden = m !== 'ratio';
-      $('pctBackBlock').hidden = m !== 'back';
     });
     ['pctOffPrice','pctOffRate'].forEach(function(id){ $(id).addEventListener('input', updatePctOff); });
     ['pctUpPrice','pctUpRate'].forEach(function(id){ $(id).addEventListener('input', updatePctUp); });
@@ -2618,7 +2693,7 @@ function parseDelimited(text, delim){
 function csvEscape(v){ v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
 function rowsToCsv(rows){ return rows.map(r => r.map(csvEscape).join(',')).join('\n'); }
 let dcMode = 'pretty';
-segWire('dcMode', 'data-mode', v => { dcMode = v; });
+segWire('dcMode', 'data-mode', v => { dcMode = v; $('dcStd').hidden = v === 'yaml'; $('dcYaml').hidden = v !== 'yaml'; });
 $('dcRun').addEventListener('click', () => {
   const src = $('dcIn').value;
   try {
@@ -3007,7 +3082,6 @@ $('devOptTs').hidden = v!== 'ts';
 $('devOptUrlprm').hidden = v!== 'urlprm';
 $('devOptSubnet').hidden = v!== 'subnet';
 $('devOptSql').hidden = v!== 'sqlfmt';
-$('devOptYaml').hidden = v!== 'yaml';
 });
 $('reRun').addEventListener('click', () => {
 try {
@@ -3139,11 +3213,7 @@ $('listClearAll').addEventListener('click', () => {
 renderList();
 
 let planMode = 'menu';
-segWire('planMode', 'data-mode', v => {
-  planMode = v;
-  $('planOptMenu').hidden = v !== 'menu';
-  $('planOptChores').hidden = v !== 'chores';
-});
+
 $('menuRun').addEventListener('click', () => {
   const dishes = $('menuDishes').value.split('\n').map(x => x.trim()).filter(x => x);
   const days = Math.min(31, Math.max(1, parseInt($('menuDays').value, 10) || 7));
@@ -3271,8 +3341,7 @@ $('mmRun').addEventListener('click', () => {
   $('mmOut').innerHTML = html;
 });
 
-segWire('tpMode', 'data-mode', v => {
-  $('tpMinutes').hidden = v !== 'minutes';
+segWire('decMode', 'data-mode', v => {
   $('tpMatrix').hidden = v !== 'matrix';
   $('tpSwot').hidden = v !== 'swot';
 });
@@ -3313,11 +3382,7 @@ $('swRun').addEventListener('click', () => {
 
 
 /* ===== batch G: supplement tools ===== */
-segWire('dtMode', 'data-mode', v => {
-  $('dtWareki').hidden = v !== 'wareki';
-  $('dtWorld').hidden = v !== 'world';
-  $('dtSleep').hidden = v !== 'sleep';
-});
+
 $('wkDate').value = todayStr();
 $('wkRun').addEventListener('click', () => {
   const d = parseDateInput($('wkDate').value);
@@ -3361,6 +3426,8 @@ $('slRun').addEventListener('click', () => {
 let heMode = 'bmi';
 segWire('heMode', 'data-mode', v => {
   heMode = v;
+  $('heCalc').hidden = v === 'sleep';
+  $('heSleep').hidden = v !== 'sleep';
   $('heBmrFields').hidden = v !== 'bmr';
   $('heK1').textContent = v === 'bmi' ? 'BMI' : '基礎代謝（kcal/日）';
   $('heK2').textContent = v === 'bmi' ? '判定・適正体重' : '消費カロリー（kcal/日）';
