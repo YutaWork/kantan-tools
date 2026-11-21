@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yutawork.github.io/kantan-tools/sitemap.xml

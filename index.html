@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算が無料で使えるツール集です。" />
-    <link rel="icon" href="data:," />
+    <link rel="canonical" href="https://yutawork.github.io/kantan-tools/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="かんたんツール集" />
+    <meta property="og:title" content="かんたんツール集" />
+    <meta property="og:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算が無料で使えるツール集です。" />
+    <meta property="og:url" content="https://yutawork.github.io/kantan-tools/" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="かんたんツール集" />
+    <meta name="twitter:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算が無料で使えるツール集です。" />
+    <meta name="theme-color" content="#0b7560" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <title>かんたんツール集</title>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "description": "文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算が無料で使えるツール集です。"}, {"@type": "WebPage", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/", "inLanguage": "ja", "isPartOf": {"@type": "WebSite", "name": "かんたんツール集", "url": "https://yutawork.github.io/kantan-tools/"}}]}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -640,9 +654,16 @@
     function activateTool(key) {
       navBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tool') === key); });
       Object.keys(panels).forEach(function(k){ panels[k].hidden = k !== key; });
+      if (location.hash !== '#' + key) { history.replaceState(null, '', '#' + key); }
     }
     navBtns.forEach(function(b){
       b.addEventListener('click', function(){ activateTool(b.getAttribute('data-tool')); });
+    });
+    var initialTool = (location.hash || '').replace('#', '');
+    if (panels[initialTool]) activateTool(initialTool);
+    window.addEventListener('hashchange', function(){
+      var k = (location.hash || '').replace('#', '');
+      if (panels[k]) activateTool(k);
     });
     $('toolSearch').addEventListener('input', function(){
       var q = this.value.trim().toLowerCase();
