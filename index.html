@@ -246,6 +246,17 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 .listrow.done .grow{color:var(--muted);text-decoration:line-through}
 .delbtn{border:1px solid var(--line);background:#fff;border-radius:6px;padding:2px 8px;cursor:pointer}
 .expired{color:#b3261e;font-weight:700}
+
+.flashcard{border:2px solid var(--accent);border-radius:14px;padding:26px 18px;text-align:center;font-size:1.15rem;font-weight:700;min-height:110px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer}
+.ganttrow{display:flex;align-items:center;gap:8px;margin:5px 0}
+.ganttrow .gname{width:110px;flex:none;font-size:.85rem}
+.gantttrack{flex:1;position:relative;height:20px;background:var(--surface-2);border-radius:6px}
+.ganttbar{position:absolute;top:3px;height:14px;border-radius:5px;background:var(--accent)}
+.swotgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swotcell{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+.swotcell h3{margin:0 0 6px;font-size:.95rem}
+.mm ul{margin:4px 0 4px 18px}
+
       footer.site { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 13px; }
       footer.site p { margin: 0 0 6px; }
 
@@ -358,7 +369,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-5"/><path d="M10 20V7"/><path d="M15 20v-8"/><path d="M20 20V4"/></svg>
             <span><span class="nname">平均・合計</span><span class="ndesc">平均・最大・最小・中央値</span></span>
           </button>
-        <button class="navbtn" data-tool="mojihenkan" data-keys="文字 変換 大文字 小文字 全角 半角 ひらがな カタカナ 英語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文字変換</span><span class="ndesc">大文字・小文字、全角・半角、かな変換</span></span></button><button class="navbtn" data-tool="textseiri" data-keys="テキスト 整理 空白 改行 重複 削除 並べ替え 行番号 置換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">テキスト整理</span><span class="ndesc">空白整理・重複削除・並べ替え・置換</span></span></button><button class="navbtn" data-tool="diff" data-keys="比較 違い 差分 文章"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文章比較</span><span class="ndesc">2つの文章の違いを表示</span></span></button><button class="navbtn" data-tool="markdown" data-keys="Markdown マークダウン プレビュー 記法"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">Markdownプレビュー</span><span class="ndesc">Markdownの表示を確認</span></span></button><button class="navbtn" data-tool="dataconv" data-keys="JSON CSV TSV 変換 整形 データ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">データ変換</span><span class="ndesc">JSON・CSV・TSVの変換と整形</span></span></button><button class="navbtn" data-tool="csvtools" data-keys="CSV 列 抽出 閲覧 表 ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">CSV加工・閲覧</span><span class="ndesc">列の取り出しと表での確認</span></span></button><button class="navbtn" data-tool="encode" data-keys="URL HTML Base64 エンコード デコード 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">エンコード・デコード</span><span class="ndesc">URL・HTML・Base64の変換</span></span></button><button class="navbtn" data-tool="filecheck" data-keys="ファイル 情報 容量 ハッシュ SHA 確認"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">ファイル確認</span><span class="ndesc">容量・種類・SHA-256を確認</span></span></button><button class="navbtn" data-tool="imageconv" data-keys="画像 圧縮 リサイズ 形式 変換 トリミング 切り抜き 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像加工</span><span class="ndesc">圧縮・大きさ・形式・切り抜き</span></span></button><button class="navbtn" data-tool="colorpick" data-keys="画像 色 抽出 カラー 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像から色を取り出す</span><span class="ndesc">使われている色を調べる</span></span></button><button class="navbtn" data-tool="imgpdf" data-keys="画像 PDF 作成 変換 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像からPDF作成</span><span class="ndesc">画像をPDFにまとめる</span></span></button><button class="navbtn" data-tool="colortools" data-keys="色 カラー 配色 コントラスト デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">色の道具</span><span class="ndesc">色番号の変換・配色・コントラスト</span></span></button><button class="navbtn" data-tool="cssgen" data-keys="CSS グラデーション 影 デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">CSS生成</span><span class="ndesc">グラデーションと文字の影</span></span></button><button class="navbtn" data-tool="devtools" data-keys="正規表現 UUID JWT HTML Favicon 開発"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">開発補助</span><span class="ndesc">正規表現・UUID・JWTなど</span></span></button><button class="navbtn" data-tool="listkanri" data-keys="リスト 買い物 チェックリスト 荷造り 引っ越し 冷蔵庫 在庫"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">リスト管理</span><span class="ndesc">買い物・チェックリスト・冷蔵庫在庫</span></span></button><button class="navbtn" data-tool="planmake" data-keys="献立 分担 家事 料理 プラン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">献立・分担プラン</span><span class="ndesc">献立ローテーションと家事分担表</span></span></button></nav>
+        <button class="navbtn" data-tool="mojihenkan" data-keys="文字 変換 大文字 小文字 全角 半角 ひらがな カタカナ 英語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文字変換</span><span class="ndesc">大文字・小文字、全角・半角、かな変換</span></span></button><button class="navbtn" data-tool="textseiri" data-keys="テキスト 整理 空白 改行 重複 削除 並べ替え 行番号 置換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">テキスト整理</span><span class="ndesc">空白整理・重複削除・並べ替え・置換</span></span></button><button class="navbtn" data-tool="diff" data-keys="比較 違い 差分 文章"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文章比較</span><span class="ndesc">2つの文章の違いを表示</span></span></button><button class="navbtn" data-tool="markdown" data-keys="Markdown マークダウン プレビュー 記法"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">Markdownプレビュー</span><span class="ndesc">Markdownの表示を確認</span></span></button><button class="navbtn" data-tool="dataconv" data-keys="JSON CSV TSV 変換 整形 データ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">データ変換</span><span class="ndesc">JSON・CSV・TSVの変換と整形</span></span></button><button class="navbtn" data-tool="csvtools" data-keys="CSV 列 抽出 閲覧 表 ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">CSV加工・閲覧</span><span class="ndesc">列の取り出しと表での確認</span></span></button><button class="navbtn" data-tool="encode" data-keys="URL HTML Base64 エンコード デコード 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">エンコード・デコード</span><span class="ndesc">URL・HTML・Base64の変換</span></span></button><button class="navbtn" data-tool="filecheck" data-keys="ファイル 情報 容量 ハッシュ SHA 確認"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">ファイル確認</span><span class="ndesc">容量・種類・SHA-256を確認</span></span></button><button class="navbtn" data-tool="imageconv" data-keys="画像 圧縮 リサイズ 形式 変換 トリミング 切り抜き 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像加工</span><span class="ndesc">圧縮・大きさ・形式・切り抜き</span></span></button><button class="navbtn" data-tool="colorpick" data-keys="画像 色 抽出 カラー 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像から色を取り出す</span><span class="ndesc">使われている色を調べる</span></span></button><button class="navbtn" data-tool="imgpdf" data-keys="画像 PDF 作成 変換 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像からPDF作成</span><span class="ndesc">画像をPDFにまとめる</span></span></button><button class="navbtn" data-tool="colortools" data-keys="色 カラー 配色 コントラスト デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">色の道具</span><span class="ndesc">色番号の変換・配色・コントラスト</span></span></button><button class="navbtn" data-tool="cssgen" data-keys="CSS グラデーション 影 デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">CSS生成</span><span class="ndesc">グラデーションと文字の影</span></span></button><button class="navbtn" data-tool="devtools" data-keys="正規表現 UUID JWT HTML Favicon 開発"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">開発補助</span><span class="ndesc">正規表現・UUID・JWTなど</span></span></button><button class="navbtn" data-tool="listkanri" data-keys="リスト 買い物 チェックリスト 荷造り 引っ越し 冷蔵庫 在庫"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">リスト管理</span><span class="ndesc">買い物・チェックリスト・冷蔵庫在庫</span></span></button><button class="navbtn" data-tool="planmake" data-keys="献立 分担 家事 料理 プラン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">献立・分担プラン</span><span class="ndesc">献立ローテーションと家事分担表</span></span></button><button class="navbtn" data-tool="flashcard" data-keys="暗記 カード 学習 テスト 単語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">暗記カード</span><span class="ndesc">めくって覚える学習とテスト</span></span></button><button class="navbtn" data-tool="diagram" data-keys="図表 ガント マインドマップ 予定 整理"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">図表作成</span><span class="ndesc">ガント表とマインドマップ</span></span></button><button class="navbtn" data-tool="templates" data-keys="議事録 テンプレート 意思決定 マトリクス SWOT 会議"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">文書テンプレート・意思決定</span><span class="ndesc">議事録・意思決定マトリクス・SWOT</span></span></button></nav>
 
         <main id="panels">
           <div class="nohit" id="noHit">条件に合うツールが見つかりませんでした。別の言葉で検索してみてください。</div>
@@ -1199,6 +1210,36 @@ Dさん</textarea>
 買い物
 ゴミ出し</textarea></div><div class="field"><label>担当する人（1行に1人）</label><textarea class="ta" id="choreMembers" rows="3">Aさん
 Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">分担表を作る</button></div><div class="tblwrap" id="choreOut"></div><p class="note">週ごとに担当が1人ずつずれる形で割り当てています。</p></div>
+</section>
+<section class="panel" data-panel="flashcard" hidden aria-label="暗記カード">
+<h2>暗記カード</h2>
+<p class="desc">問題と答えの組を作って、めくって覚える学習と、答えを書くテストができます。</p>
+<div class="field"><label>問題と答え（1行に1組。「問題,答え」またはタブ区切り）</label><textarea class="ta" id="fcDeck" rows="6">日本の首都は？,東京
+水の化学式は？,H2O
+富士山の高さは？,3776m</textarea></div><div class="seg" id="fcMode"><button data-mode="learn" class="active">学習（めくる）</button><button data-mode="test">テスト（書く）</button></div><div id="fcLearn"><div class="flashcard" id="fcCard">カードを押すと答えが出ます</div><p class="note" id="fcPos"></p><div class="btnrow"><button class="btn ghost" id="fcPrev">前へ</button><button class="btn" id="fcFlip">答えを見る</button><button class="btn ghost" id="fcNext">次へ</button><button class="btn ghost" id="fcShuffle">並びを混ぜる</button></div></div><div id="fcTest" hidden><p class="note" id="fcQ"></p><div class="field"><label>答えを書く</label><input type="text" id="fcAns"></div><div class="btnrow"><button class="btn" id="fcJudge">判定する</button><button class="btn ghost" id="fcSkip">飛ばす</button></div><div class="statgrid"><div class="stat"><span class="k">解いた数</span><span class="v" id="fcDone">0</span></div><div class="stat"><span class="k">正解</span><span class="v" id="fcOk">0</span></div></div><p class="note" id="fcTestNote"></p></div>
+</section>
+<section class="panel" data-panel="diagram" hidden aria-label="図表作成">
+<h2>図表作成</h2>
+<p class="desc">予定を帯で表すガント表と、考えを枝分かれで整理するマインドマップ（簡易）を作ります。</p>
+<div class="seg" id="dgMode"><button data-mode="gantt" class="active">ガント表</button><button data-mode="mind">マインドマップ</button></div><div id="dgGantt"><div class="field"><label>作業（1行に1つ。「作業名,開始日,終了日」）</label><textarea class="ta" id="gtInput" rows="5">設計,2026-11-01,2026-11-10
+制作,2026-11-08,2026-11-25
+確認,2026-11-24,2026-11-30</textarea></div><div class="btnrow"><button class="btn" id="gtRun">ガント表を作る</button></div><p class="note" id="gtNote"></p><div id="gtOut"></div></div><div id="dgMind" hidden><div class="field"><label>中心の言葉と枝（行頭の空白で階層を表します）</label><textarea class="ta" id="mmInput" rows="7">旅行の計画
+ 行き先
+  北海道
+  沖縄
+ 予算
+  交通費
+  宿泊費</textarea></div><div class="btnrow"><button class="btn" id="mmRun">マインドマップを作る</button></div><div class="mm" id="mmOut"></div></div>
+</section>
+<section class="panel" data-panel="templates" hidden aria-label="文書テンプレート・意思決定">
+<h2>文書テンプレート・意思決定</h2>
+<p class="desc">議事録の型、意思決定マトリクス、SWOT分析の枠を作ります。</p>
+<div class="seg" id="tpMode"><button data-mode="minutes" class="active">議事録</button><button data-mode="matrix">意思決定マトリクス</button><button data-mode="swot">SWOT分析</button></div><div id="tpMinutes"><div class="row"><div class="field"><label>会議名</label><input type="text" id="mtTitle" value="定例会議"></div><div class="field"><label>日付</label><input type="date" id="mtDate"></div></div><div class="field"><label>参加者</label><input type="text" id="mtMembers" placeholder="例：田中、佐藤"></div><div class="field"><label>議題（1行に1つ）</label><textarea class="ta" id="mtAgenda" rows="3">進捗の確認
+来月の予定</textarea></div><div class="btnrow"><button class="btn" id="mtRun">議事録の型を作る</button></div><textarea class="ta" id="mtOut" rows="12" readonly></textarea><div class="btnrow"><button class="btn ghost" data-copy="mtOut">文章をコピー</button></div></div><div id="tpMatrix" hidden><div class="field"><label>候補（1行に1つ）</label><textarea class="ta" id="mxOptions" rows="3">候補A
+候補B</textarea></div><div class="field"><label>判断の物差しと重み（1行に1つ。「物差し,重み」）</label><textarea class="ta" id="mxCriteria" rows="3">価格,3
+品質,2
+早さ,1</textarea></div><div class="field"><label>点数（候補×物差しの順に、カンマ区切りで候補ごとに1行。5点満点）</label><textarea class="ta" id="mxScores" rows="3">4,5,3
+5,3,4</textarea></div><div class="btnrow"><button class="btn" id="mxRun">計算する</button></div><div class="tblwrap" id="mxOut"></div><p class="note" id="mxNote"></p></div><div id="tpSwot" hidden><div class="swotgrid"><div class="swotcell"><h3>強み（内部）</h3><textarea class="ta" id="swS" rows="3"></textarea></div><div class="swotcell"><h3>弱み（内部）</h3><textarea class="ta" id="swW" rows="3"></textarea></div><div class="swotcell"><h3>機会（外部）</h3><textarea class="ta" id="swO" rows="3"></textarea></div><div class="swotcell"><h3>脅威（外部）</h3><textarea class="ta" id="swT" rows="3"></textarea></div></div><div class="btnrow"><button class="btn" id="swRun">表にまとめる</button></div><div id="swOut"></div></div>
 </section>
 </main>
       </div>
@@ -2823,6 +2864,149 @@ $('choreRun').addEventListener('click', () => {
     html += '</tr>';
   });
   $('choreOut').innerHTML = html + '</tbody></table>';
+});
+
+
+/* ===== batch F: study & work tools ===== */
+function parseDeck(){
+  return $('fcDeck').value.split('\n').map(l => {
+    const i = l.search(/[,\t]/);
+    if(i < 0) return null;
+    return {q: l.slice(0, i).trim(), a: l.slice(i + 1).trim()};
+  }).filter(x => x && x.q && x.a);
+}
+let fcCards = [], fcIdx = 0, fcFlipped = false;
+function fcShow(){
+  if(!fcCards.length){ $('fcCard').textContent = '問題と答えを入れてください'; $('fcPos').textContent = ''; return; }
+  const c = fcCards[fcIdx];
+  $('fcCard').textContent = fcFlipped ? c.q + '\n→ ' + c.a : c.q;
+  $('fcPos').textContent = (fcIdx + 1) + ' / ' + fcCards.length + ' 枚目';
+}
+function fcInit(){ fcCards = parseDeck(); fcIdx = 0; fcFlipped = false; fcShow(); fcTestReset(); }
+$('fcCard').addEventListener('click', () => { fcFlipped = !fcFlipped; fcShow(); });
+$('fcFlip').addEventListener('click', () => { fcFlipped = !fcFlipped; fcShow(); });
+$('fcNext').addEventListener('click', () => { if(fcCards.length){ fcIdx = (fcIdx + 1) % fcCards.length; fcFlipped = false; fcShow(); } });
+$('fcPrev').addEventListener('click', () => { if(fcCards.length){ fcIdx = (fcIdx - 1 + fcCards.length) % fcCards.length; fcFlipped = false; fcShow(); } });
+$('fcShuffle').addEventListener('click', () => {
+  for(let i = fcCards.length - 1; i > 0; i--){ const j = randBelow(i + 1); const t = fcCards[i]; fcCards[i] = fcCards[j]; fcCards[j] = t; }
+  fcIdx = 0; fcFlipped = false; fcShow();
+});
+$('fcDeck').addEventListener('change', fcInit);
+let fcTestIdx = 0, fcTestDone = 0, fcTestOk = 0;
+function fcTestReset(){
+  fcTestIdx = 0; fcTestDone = 0; fcTestOk = 0;
+  $('fcDone').textContent = '0'; $('fcOk').textContent = '0';
+  fcTestShow();
+}
+function fcTestShow(){
+  if(!fcCards.length){ $('fcQ').textContent = '問題と答えを入れてください'; return; }
+  if(fcTestIdx >= fcCards.length){ $('fcQ').textContent = '全部終わりました。解いた数 ' + fcTestDone + '、正解 ' + fcTestOk + ' です'; return; }
+  $('fcQ').textContent = '問題：' + fcCards[fcTestIdx].q;
+  $('fcAns').value = '';
+}
+$('fcJudge').addEventListener('click', () => {
+  if(fcTestIdx >= fcCards.length) return;
+  const ok = $('fcAns').value.trim() === fcCards[fcTestIdx].a;
+  fcTestDone++; if(ok) fcTestOk++;
+  $('fcDone').textContent = String(fcTestDone);
+  $('fcOk').textContent = String(fcTestOk);
+  $('fcTestNote').textContent = ok ? '正解です' : '不正解です。正しい答えは「' + fcCards[fcTestIdx].a + '」です';
+  fcTestIdx++; fcTestShow();
+});
+$('fcSkip').addEventListener('click', () => { fcTestIdx++; fcTestShow(); });
+segWire('fcMode', 'data-mode', v => {
+  $('fcLearn').hidden = v !== 'learn';
+  $('fcTest').hidden = v !== 'test';
+  if(v === 'test'){ fcCards = parseDeck(); fcTestReset(); }
+});
+fcInit();
+
+segWire('dgMode', 'data-mode', v => {
+  $('dgGantt').hidden = v !== 'gantt';
+  $('dgMind').hidden = v !== 'mind';
+});
+$('gtRun').addEventListener('click', () => {
+  const rows = $('gtInput').value.split('\n').map(l => {
+    const p = l.split(',').map(x => x.trim());
+    if(p.length < 3) return null;
+    const st = new Date(p[1] + 'T00:00:00'), en = new Date(p[2] + 'T00:00:00');
+    if(isNaN(st) || isNaN(en) || en < st) return null;
+    return {name: p[0], st, en};
+  }).filter(x => x);
+  if(!rows.length){ $('gtNote').textContent = '読み取れる行がありませんでした'; $('gtOut').innerHTML = ''; return; }
+  const min = Math.min.apply(null, rows.map(r => r.st.getTime()));
+  const max = Math.max.apply(null, rows.map(r => r.en.getTime())) + 86400000;
+  const span = max - min;
+  let html = '';
+  for(const r of rows){
+    const left = ((r.st.getTime() - min) / span * 100).toFixed(1);
+    const width = Math.max(2, ((r.en.getTime() + 86400000 - r.st.getTime()) / span * 100)).toFixed(1);
+    html += '<div class="ganttrow"><span class="gname">' + escHtml(r.name) + '</span><div class="gantttrack"><div class="ganttbar" style="left:' + left + '%;width:' + width + '%"></div></div></div>';
+  }
+  $('gtOut').innerHTML = html;
+  $('gtNote').textContent = '期間：' + new Date(min).toISOString().slice(0, 10) + ' 〜 ' + new Date(max - 86400000).toISOString().slice(0, 10);
+});
+$('mmRun').addEventListener('click', () => {
+  const lines = $('mmInput').value.split('\n').filter(l => l.trim());
+  if(!lines.length){ $('mmOut').innerHTML = ''; return; }
+  let html = '', depth = 0;
+  const levels = lines.map(l => {
+    const m = l.match(/^[ \u3000\t]*/)[0].replace(/\t/g, '  ').length;
+    return {text: l.trim(), lv: Math.floor(m / 1)};
+  });
+  // normalize: use relative indentation steps
+  const uniq = Array.from(new Set(levels.map(x => x.lv))).sort((a, b) => a - b);
+  levels.forEach(x => { x.lv = uniq.indexOf(x.lv); });
+  let cur = 0;
+  html = '<ul>';
+  levels.forEach((x, i) => {
+    if(i === 0){ html += '<li>' + escHtml(x.text); cur = 0; return; }
+    if(x.lv > cur){ html += '<ul><li>' + escHtml(x.text); cur = x.lv; }
+    else if(x.lv === cur){ html += '</li><li>' + escHtml(x.text); }
+    else { html += '</li>' + '</ul></li>'.repeat(cur - x.lv) + '<li>' + escHtml(x.text); cur = x.lv; }
+  });
+  html += '</li>' + '</ul></li>'.repeat(cur) + '</ul>';
+  $('mmOut').innerHTML = html;
+});
+
+segWire('tpMode', 'data-mode', v => {
+  $('tpMinutes').hidden = v !== 'minutes';
+  $('tpMatrix').hidden = v !== 'matrix';
+  $('tpSwot').hidden = v !== 'swot';
+});
+$('mtDate').value = todayStr();
+$('mtRun').addEventListener('click', () => {
+  const agenda = $('mtAgenda').value.split('\n').map(x => x.trim()).filter(x => x);
+  let out = '会議名：' + $('mtTitle').value + '\n日付：' + $('mtDate').value + '\n参加者：' + $('mtMembers').value + '\n';
+  agenda.forEach((a, i) => {
+    out += '\n■ 議題' + (i + 1) + '：' + a + '\n・内容：\n・決まったこと：\n・担当と期限：\n';
+  });
+  out += '\n■ 次回予定：\n';
+  $('mtOut').value = out;
+});
+$('mxRun').addEventListener('click', () => {
+  const opts = $('mxOptions').value.split('\n').map(x => x.trim()).filter(x => x);
+  const crits = $('mxCriteria').value.split('\n').map(l => {
+    const i = l.lastIndexOf(',');
+    if(i < 0) return null;
+    return {name: l.slice(0, i).trim(), w: parseFloat(l.slice(i + 1)) || 0};
+  }).filter(x => x && x.name);
+  const scores = $('mxScores').value.split('\n').filter(l => l.trim()).map(l => l.split(',').map(x => parseFloat(x) || 0));
+  if(!opts.length || !crits.length || scores.length < opts.length){ $('mxNote').textContent = '入力が足りません（候補・物差し・点数の行数を確認してください）'; $('mxOut').innerHTML = ''; return; }
+  let html = '<table class="datatbl"><thead><tr><th>候補</th>' + crits.map(c => '<th>' + escHtml(c.name) + '（重み' + c.w + '）</th>').join('') + '<th>合計</th></tr></thead><tbody>';
+  let best = -1, bestName = '';
+  opts.forEach((o, i) => {
+    let total = 0;
+    const cells = crits.map((c, j) => { const v = (scores[i][j] || 0) * c.w; total += v; return '<td>' + (scores[i][j] || 0) + '</td>'; }).join('');
+    if(total > best){ best = total; bestName = o; }
+    html += '<tr><td>' + escHtml(o) + '</td>' + cells + '<td><strong>' + Math.round(total * 10) / 10 + '</strong></td></tr>';
+  });
+  $('mxOut').innerHTML = html + '</tbody></table>';
+  $('mxNote').textContent = '合計が最も大きいのは「' + bestName + '」です（' + Math.round(best * 10) / 10 + '点）';
+});
+$('swRun').addEventListener('click', () => {
+  const cell = (title, v) => '<div class="swotcell"><h3>' + title + '</h3><div>' + escHtml(v).replace(/\n/g, '<br>') + '</div></div>';
+  $('swOut').innerHTML = '<div class="swotgrid">' + cell('強み（内部）', $('swS').value) + cell('弱み（内部）', $('swW').value) + cell('機会（外部）', $('swO').value) + cell('脅威（外部）', $('swT').value) + '</div>';
 });
 
 </script>
