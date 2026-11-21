@@ -261,7 +261,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 .catchip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;cursor:pointer}
 .catchip.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 .toolbar{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0 12px}
-.panel{scroll-margin-top:132px}
+.panel{scroll-margin-top:176px}
  footer.site { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 13px; }
       footer.site p { margin: 0 0 6px; }
 
@@ -1355,7 +1355,11 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         var key = b.getAttribute('data-tool');
         activateTool(key);
         if (window.innerWidth <= 840 && panels[key]) {
-          setTimeout(function(){ panels[key].scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 30);
+          setTimeout(function(){
+            var tb = document.querySelector('.toolbar');
+            var y = panels[key].getBoundingClientRect().top + window.pageYOffset - (tb ? tb.offsetHeight : 0) - 12;
+            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+          }, 30);
         }
       });
     });
