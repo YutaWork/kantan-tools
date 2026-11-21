@@ -277,6 +277,19 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/></svg>
             <span><span class="nname">日付計算</span><span class="ndesc">日数の差と◯日後の日付</span></span>
           </button>
+
+          <button class="navbtn" data-tool="percent" data-keys="割引 パーセント 割合 セール 値引き 何パーセント 逆算">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="17" r="2.6"/><path d="M17 4 7 20"/></svg>
+            <span><span class="nname">割引・パーセント</span><span class="ndesc">割引価格と割合の計算</span></span>
+          </button>
+          <button class="navbtn" data-tool="timecalc" data-keys="時間 時刻 計算 足し算 引き算 差 勤務時間 何時間">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+            <span><span class="nname">時間の計算</span><span class="ndesc">時刻の差と足し算・引き算</span></span>
+          </button>
+          <button class="navbtn" data-tool="age" data-keys="年齢 生年月日 誕生日 干支 何歳 あと何日">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21h16"/><path d="M5 21v-4.5h14V21"/><path d="M12 12.5v-2"/><circle cx="12" cy="8" r="1.4"/></svg>
+            <span><span class="nname">年齢計算</span><span class="ndesc">満年齢と次の誕生日まで</span></span>
+          </button>
         </nav>
 
         <main id="panels">
@@ -617,6 +630,162 @@
                 <div class="result-big" id="dateAddOut">—</div>
               </div>
             </div>
+          </section>
+
+          <!-- 割引・パーセント -->
+          <section class="panel" data-panel="percent" hidden aria-label="割引・パーセント計算">
+            <h2>割引・パーセント</h2>
+            <p class="sub">割引後の価格、割合、元の価格の逆算ができます。</p>
+            <div class="seg" id="pctMode">
+              <button data-pmode="off" class="active">割引</button>
+              <button data-pmode="up">割増</button>
+              <button data-pmode="ratio">割合</button>
+              <button data-pmode="back">元の価格を逆算</button>
+            </div>
+
+            <div id="pctOffBlock">
+              <div class="row2">
+                <div class="field">
+                  <label for="pctOffPrice">元の価格</label>
+                  <div class="withunit"><input type="number" id="pctOffPrice" value="10000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+                </div>
+                <div class="field">
+                  <label for="pctOffRate">割引率</label>
+                  <div class="withunit"><input type="number" id="pctOffRate" value="20" min="0" max="100" step="1" inputmode="decimal" /><span class="unit">%</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">支払う金額</div><div class="svalue mono" id="pctOffPay">—</div></div>
+                <div class="stat"><div class="slabel">割引される額</div><div class="svalue mono" id="pctOffAmt">—</div></div>
+              </div>
+            </div>
+
+            <div id="pctUpBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="pctUpPrice">元の価格</label>
+                  <div class="withunit"><input type="number" id="pctUpPrice" value="10000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+                </div>
+                <div class="field">
+                  <label for="pctUpRate">増加率</label>
+                  <div class="withunit"><input type="number" id="pctUpRate" value="10" min="0" step="1" inputmode="decimal" /><span class="unit">%</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">増えた後の価格</div><div class="svalue mono" id="pctUpResult">—</div></div>
+                <div class="stat"><div class="slabel">増えた額</div><div class="svalue mono" id="pctUpAmt">—</div></div>
+              </div>
+            </div>
+
+            <div id="pctRatioBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="pctRatioA">比べる量（A）</label>
+                  <div class="withunit"><input type="number" id="pctRatioA" value="30" min="0" step="1" inputmode="decimal" /></div>
+                </div>
+                <div class="field">
+                  <label for="pctRatioB">基準の量（B）</label>
+                  <div class="withunit"><input type="number" id="pctRatioB" value="120" min="0" step="1" inputmode="decimal" /></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">A は B の</div><div class="svalue mono" id="pctRatioOut">—</div></div>
+              </div>
+              <p class="note">割合（％）＝ A ÷ B × 100 で計算します。</p>
+            </div>
+
+            <div id="pctBackBlock" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label for="pctBackPrice">割引後の価格</label>
+                  <div class="withunit"><input type="number" id="pctBackPrice" value="8000" min="0" step="1" inputmode="numeric" /><span class="unit">円</span></div>
+                </div>
+                <div class="field">
+                  <label for="pctBackRate">割引率</label>
+                  <div class="withunit"><input type="number" id="pctBackRate" value="20" min="0" max="99" step="1" inputmode="decimal" /><span class="unit">%</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">元の価格</div><div class="svalue mono" id="pctBackOut">—</div></div>
+                <div class="stat"><div class="slabel">割引されていた額</div><div class="svalue mono" id="pctBackAmt">—</div></div>
+              </div>
+              <p class="note">元の価格 ＝ 割引後の価格 ÷（1 − 割引率 ÷ 100）で計算します。</p>
+            </div>
+          </section>
+
+          <!-- 時間の計算 -->
+          <section class="panel" data-panel="timecalc" hidden aria-label="時間の計算">
+            <h2>時間の計算</h2>
+            <p class="sub">2つの時刻の差と、時刻への足し算・引き算ができます。</p>
+            <div class="seg" id="tcMode">
+              <button data-tmode="diff" class="active">時刻の差</button>
+              <button data-tmode="add">時刻の計算</button>
+            </div>
+
+            <div id="tcDiffBlock">
+              <div class="row2">
+                <div class="field">
+                  <label for="tcStart">開始時刻</label>
+                  <input type="time" id="tcStart" value="09:00" />
+                </div>
+                <div class="field">
+                  <label for="tcEnd">終了時刻</label>
+                  <input type="time" id="tcEnd" value="17:30" />
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">差</div><div class="svalue mono" id="tcDiffOut">—</div></div>
+                <div class="stat"><div class="slabel">分に直すと</div><div class="svalue mono" id="tcDiffMin">—</div></div>
+              </div>
+              <p class="note" id="tcDiffNote">終了時刻が開始時刻より前の場合は、翌日までとして計算します。</p>
+            </div>
+
+            <div id="tcAddBlock" hidden>
+              <div class="field">
+                <label for="tcBase">基準の時刻</label>
+                <input type="time" id="tcBase" value="09:00" />
+              </div>
+              <div class="seg wrap-fit" id="tcSign">
+                <button data-sign="plus" class="active">足す</button>
+                <button data-sign="minus">引く</button>
+              </div>
+              <div class="row2">
+                <div class="field">
+                  <label for="tcH">時間</label>
+                  <div class="withunit"><input type="number" id="tcH" value="1" min="0" max="999" step="1" inputmode="numeric" /><span class="unit">時間</span></div>
+                </div>
+                <div class="field">
+                  <label for="tcM">分</label>
+                  <div class="withunit"><input type="number" id="tcM" value="30" min="0" max="9999" step="1" inputmode="numeric" /><span class="unit">分</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">計算後の時刻</div><div class="svalue mono" id="tcAddOut">—</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 年齢計算 -->
+          <section class="panel" data-panel="age" hidden aria-label="年齢計算">
+            <h2>年齢計算</h2>
+            <p class="sub">生年月日から、満年齢・生まれてからの日数・次の誕生日までの日数を計算します。</p>
+            <div class="row2">
+              <div class="field">
+                <label for="ageBirth">生年月日</label>
+                <input type="date" id="ageBirth" value="1990-04-01" />
+              </div>
+              <div class="field">
+                <label for="ageRef">基準日</label>
+                <input type="date" id="ageRef" />
+              </div>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">満年齢</div><div class="svalue mono" id="ageYears">—</div></div>
+              <div class="stat"><div class="slabel">生まれてからの日数</div><div class="svalue mono" id="ageDays">—</div></div>
+              <div class="stat"><div class="slabel">次の誕生日まで</div><div class="svalue mono" id="ageNext">—</div></div>
+              <div class="stat"><div class="slabel">干支</div><div class="svalue mono" id="ageEto">—</div></div>
+            </div>
+            <p class="note" id="ageDetail"></p>
           </section>
         </main>
       </div>
@@ -1202,6 +1371,117 @@
     });
     updateDateDiff();
     updateDateAdd();
+
+    /* ---------- 割引・パーセント ---------- */
+    function updatePctOff() {
+      var p = parseFloat($('pctOffPrice').value), r = parseFloat($('pctOffRate').value);
+      if (isNaN(p) || isNaN(r)) { $('pctOffPay').textContent = '—'; $('pctOffAmt').textContent = '—'; return; }
+      var amt = Math.round(p * r / 100);
+      $('pctOffPay').textContent = yen(p - amt);
+      $('pctOffAmt').textContent = yen(amt);
+    }
+    function updatePctUp() {
+      var p = parseFloat($('pctUpPrice').value), r = parseFloat($('pctUpRate').value);
+      if (isNaN(p) || isNaN(r)) { $('pctUpResult').textContent = '—'; $('pctUpAmt').textContent = '—'; return; }
+      var amt = Math.round(p * r / 100);
+      $('pctUpResult').textContent = yen(p + amt);
+      $('pctUpAmt').textContent = yen(amt);
+    }
+    function updatePctRatio() {
+      var a = parseFloat($('pctRatioA').value), b = parseFloat($('pctRatioB').value);
+      if (isNaN(a) || isNaN(b) || b === 0) { $('pctRatioOut').textContent = '—'; return; }
+      var v = a / b * 100;
+      $('pctRatioOut').textContent = (Math.round(v * 100) / 100).toLocaleString('ja-JP') + ' %';
+    }
+    function updatePctBack() {
+      var p = parseFloat($('pctBackPrice').value), r = parseFloat($('pctBackRate').value);
+      if (isNaN(p) || isNaN(r) || r >= 100) { $('pctBackOut').textContent = '—'; $('pctBackAmt').textContent = '—'; return; }
+      var orig = Math.round(p / (1 - r / 100));
+      $('pctBackOut').textContent = yen(orig);
+      $('pctBackAmt').textContent = yen(orig - p);
+    }
+    segWire('pctMode', 'data-pmode', function(m){
+      $('pctOffBlock').hidden = m !== 'off';
+      $('pctUpBlock').hidden = m !== 'up';
+      $('pctRatioBlock').hidden = m !== 'ratio';
+      $('pctBackBlock').hidden = m !== 'back';
+    });
+    ['pctOffPrice','pctOffRate'].forEach(function(id){ $(id).addEventListener('input', updatePctOff); });
+    ['pctUpPrice','pctUpRate'].forEach(function(id){ $(id).addEventListener('input', updatePctUp); });
+    ['pctRatioA','pctRatioB'].forEach(function(id){ $(id).addEventListener('input', updatePctRatio); });
+    ['pctBackPrice','pctBackRate'].forEach(function(id){ $(id).addEventListener('input', updatePctBack); });
+    updatePctOff(); updatePctUp(); updatePctRatio(); updatePctBack();
+
+    /* ---------- 時間の計算 ---------- */
+    function timeToMin(v) {
+      if (!v) return null;
+      var p = v.split(':');
+      return parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+    }
+    function fmtHM(total) {
+      var h = Math.floor(total / 60), m = total % 60;
+      return h + '時間' + (m ? m + '分' : '');
+    }
+    function updateTcDiff() {
+      var a = timeToMin($('tcStart').value), b = timeToMin($('tcEnd').value);
+      if (a === null || b === null) { $('tcDiffOut').textContent = '—'; $('tcDiffMin').textContent = '—'; return; }
+      var d = b - a;
+      if (d < 0) d += 1440;
+      $('tcDiffOut').textContent = fmtHM(d);
+      $('tcDiffMin').textContent = num(d) + ' 分';
+    }
+    var tcSignVal = 'plus';
+    function updateTcAdd() {
+      var base = timeToMin($('tcBase').value);
+      var h = parseInt($('tcH').value, 10), m = parseInt($('tcM').value, 10);
+      if (base === null || isNaN(h) || isNaN(m)) { $('tcAddOut').textContent = '—'; return; }
+      var delta = h * 60 + m;
+      var t = tcSignVal === 'plus' ? base + delta : base - delta;
+      var dayNote = '';
+      if (t >= 1440) dayNote = '（翌日）';
+      if (t < 0) dayNote = '（前日）';
+      t = ((t % 1440) + 1440) % 1440;
+      $('tcAddOut').textContent = p2(Math.floor(t / 60)) + ':' + p2(t % 60) + dayNote;
+    }
+    segWire('tcMode', 'data-tmode', function(m){
+      $('tcDiffBlock').hidden = m !== 'diff';
+      $('tcAddBlock').hidden = m !== 'add';
+    });
+    segWire('tcSign', 'data-sign', function(v){ tcSignVal = v; updateTcAdd(); });
+    $('tcStart').addEventListener('change', updateTcDiff);
+    $('tcEnd').addEventListener('change', updateTcDiff);
+    $('tcBase').addEventListener('change', updateTcAdd);
+    $('tcH').addEventListener('input', updateTcAdd);
+    $('tcM').addEventListener('input', updateTcAdd);
+    updateTcDiff(); updateTcAdd();
+
+    /* ---------- 年齢計算 ---------- */
+    var ETO = ['申','酉','戌','亥','子','丑','寅','卯','辰','巳','午','未'];
+    function updateAge() {
+      var b = parseDateInput($('ageBirth').value);
+      var r = parseDateInput($('ageRef').value);
+      if (!b || !r || r < b) {
+        $('ageYears').textContent = '—'; $('ageDays').textContent = '—';
+        $('ageNext').textContent = '—'; $('ageEto').textContent = '—'; $('ageDetail').textContent = '';
+        return;
+      }
+      var years = r.getFullYear() - b.getFullYear();
+      var bm = b.getMonth(), bd = b.getDate();
+      if (r.getMonth() < bm || (r.getMonth() === bm && r.getDate() < bd)) years--;
+      var days = Math.round((r - b) / 86400000);
+      var next = new Date(r.getFullYear(), bm, bd);
+      if (next < r) next = new Date(r.getFullYear() + 1, bm, bd);
+      var nextDays = Math.round((next - r) / 86400000);
+      $('ageYears').textContent = years + ' 歳';
+      $('ageDays').textContent = num(days) + ' 日';
+      $('ageNext').textContent = nextDays === 0 ? '今日が誕生日です' : 'あと ' + num(nextDays) + ' 日';
+      $('ageEto').textContent = ETO[b.getFullYear() % 12] + '年';
+      $('ageDetail').textContent = fmtDate(b) + ' 生まれ。基準日は ' + fmtDate(r) + ' です。';
+    }
+    $('ageRef').value = todayStr();
+    $('ageBirth').addEventListener('change', updateAge);
+    $('ageRef').addEventListener('change', updateAge);
+    updateAge();
     </script>
   </body>
 </html>
