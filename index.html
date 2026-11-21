@@ -257,13 +257,20 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 .swotcell h3{margin:0 0 6px;font-size:.95rem}
 .mm ul{margin:4px 0 4px 18px}
 
-      footer.site { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 13px; }
+     .catrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.catchip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;cursor:pointer}
+.catchip.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.toolbar{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0 12px}
+.panel{scroll-margin-top:132px}
+ footer.site { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 13px; }
       footer.site p { margin: 0 0 6px; }
 
       @media (max-width: 840px) {
         .layout { grid-template-columns: 1fr; }
         nav.toolnav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .navbtn { background: var(--surface); border-color: var(--line); min-height: 56px; }
+        .navbtn { background: var(--surface); border-color: var(--line); min-height: 48px; padding: 8px 10px; gap: 8px; }
+        .navbtn .nname { font-size: 13.5px; }
+        nav.toolnav { gap: 6px; }
         .navbtn .ndesc { display: none; }
         .panel { padding: 20px 16px; }
         .row2, .row3 { grid-template-columns: 1fr; }
@@ -289,87 +296,95 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
           <input type="text" id="toolSearch" placeholder="ツールを検索（例：税金、長さ、パスワード）" aria-label="ツールを検索" />
         </div>
+        <div class="catrow" role="group" aria-label="分野で絞り込む">
+          <button class="catchip active" data-cat="all">すべて</button>
+          <button class="catchip" data-cat="keisan">計算・お金</button>
+          <button class="catchip" data-cat="bunsho">文章・データ</button>
+          <button class="catchip" data-cat="gazou">画像・デザイン</button>
+          <button class="catchip" data-cat="seikatsu">生活・健康</button>
+          <button class="catchip" data-cat="shigoto">仕事・学習</button>
+        </div>
       </div>
 
       <div class="layout">
         <nav class="toolnav" id="toolNav" aria-label="ツール一覧">
-          <button class="navbtn active" data-tool="counter" data-keys="文字数 カウント 文章 文字 もじ 原稿用紙 バイト">
+          <button class="navbtn active" data-tool="counter" data-cat="bunsho" data-keys="文字数 カウント 文章 文字 もじ 原稿用紙 バイト">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
             <span><span class="nname">文字数カウンター</span><span class="ndesc">文字数・行数・読了時間の目安</span></span>
           </button>
-          <button class="navbtn" data-tool="password" data-keys="パスワード 生成 ランダム 暗証番号 セキュリティ">
+          <button class="navbtn" data-tool="password" data-cat="shigoto" data-keys="パスワード 生成 ランダム 暗証番号 セキュリティ">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>
             <span><span class="nname">パスワード生成</span><span class="ndesc">安全なランダム文字列を作成</span></span>
           </button>
-          <button class="navbtn" data-tool="unit" data-keys="単位 変換 長さ 重さ 温度 面積 速さ 坪 インチ ポンド">
+          <button class="navbtn" data-tool="unit" data-cat="keisan" data-keys="単位 変換 長さ 重さ 温度 面積 速さ 坪 インチ ポンド">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13"/><path d="m13 4 4 4-4 4"/><path d="M20 16H7"/><path d="m11 12-4 4 4 4"/></svg>
             <span><span class="nname">単位変換</span><span class="ndesc">長さ・重さ・温度・面積・速さ</span></span>
           </button>
-          <button class="navbtn" data-tool="tax" data-keys="消費税 税金 税込 税抜 割り勘 わりかん 割り算 飲み会 お金">
+          <button class="navbtn" data-tool="tax" data-cat="keisan" data-keys="消費税 税金 税込 税抜 割り勘 わりかん 割り算 飲み会 お金">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>
             <span><span class="nname">消費税・割り勘</span><span class="ndesc">税込・税抜と1人あたり金額</span></span>
           </button>
-          <button class="navbtn" data-tool="loan" data-keys="ローン 住宅ローン 借入 返済 金利 元利均等 シミュレーション">
+          <button class="navbtn" data-tool="loan" data-cat="keisan" data-keys="ローン 住宅ローン 借入 返済 金利 元利均等 シミュレーション">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
             <span><span class="nname">ローン計算</span><span class="ndesc">毎月の返済額と利息の試算</span></span>
           </button>
-          <button class="navbtn" data-tool="savings" data-keys="積立 つみたて 貯金 投資 運用 複利 シミュレーション nisa">
+          <button class="navbtn" data-tool="savings" data-cat="keisan" data-keys="積立 つみたて 貯金 投資 運用 複利 シミュレーション nisa">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m6.5 15 4-4.5 3.5 2.5L19 7.5"/><path d="M15.5 7.5H19V11"/></svg>
             <span><span class="nname">積立シミュレーション</span><span class="ndesc">毎月の積立と複利の伸び</span></span>
           </button>
-          <button class="navbtn" data-tool="timer" data-keys="タイマー ストップウォッチ 時間 計測 カウントダウン ラップ">
+          <button class="navbtn" data-tool="timer" data-cat="seikatsu" data-keys="タイマー ストップウォッチ 時間 計測 カウントダウン ラップ">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.8 2"/><path d="M9.5 2.5h5"/><path d="M12 2.5v3.5"/></svg>
             <span><span class="nname">タイマー</span><span class="ndesc">カウントダウンとストップウォッチ</span></span>
           </button>
-          <button class="navbtn" data-tool="date" data-keys="日付 日数 計算 何日 あと何日 曜日 カレンダー">
+          <button class="navbtn" data-tool="date" data-cat="keisan" data-keys="日付 日数 計算 何日 あと何日 曜日 カレンダー">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/></svg>
             <span><span class="nname">日付計算</span><span class="ndesc">日数の差と◯日後の日付</span></span>
           </button>
 
-          <button class="navbtn" data-tool="percent" data-keys="割引 パーセント 割合 セール 値引き 何パーセント 逆算">
+          <button class="navbtn" data-tool="percent" data-cat="keisan" data-keys="割引 パーセント 割合 セール 値引き 何パーセント 逆算">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="2.6"/><circle cx="17" cy="17" r="2.6"/><path d="M17 4 7 20"/></svg>
             <span><span class="nname">割引・パーセント</span><span class="ndesc">割引価格と割合の計算</span></span>
           </button>
-          <button class="navbtn" data-tool="timecalc" data-keys="時間 時刻 計算 足し算 引き算 差 勤務時間 何時間">
+          <button class="navbtn" data-tool="timecalc" data-cat="keisan" data-keys="時間 時刻 計算 足し算 引き算 差 勤務時間 何時間">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
             <span><span class="nname">時間の計算</span><span class="ndesc">時刻の差と足し算・引き算</span></span>
           </button>
-          <button class="navbtn" data-tool="age" data-keys="年齢 生年月日 誕生日 干支 何歳 あと何日">
+          <button class="navbtn" data-tool="age" data-cat="keisan" data-keys="年齢 生年月日 誕生日 干支 何歳 あと何日">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21h16"/><path d="M5 21v-4.5h14V21"/><path d="M12 12.5v-2"/><circle cx="12" cy="8" r="1.4"/></svg>
             <span><span class="nname">年齢計算</span><span class="ndesc">満年齢と次の誕生日まで</span></span>
           </button>
 
-          <button class="navbtn" data-tool="calc" data-keys="電卓 計算機 四則演算 足し算 引き算 掛け算 割り算">
+          <button class="navbtn" data-tool="calc" data-cat="keisan" data-keys="電卓 計算機 四則演算 足し算 引き算 掛け算 割り算">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>
             <span><span class="nname">電卓</span><span class="ndesc">ふつうの四則演算</span></span>
           </button>
-          <button class="navbtn" data-tool="pomodoro" data-keys="ポモドーロ 集中 作業 タイマー 休憩 勉強">
+          <button class="navbtn" data-tool="pomodoro" data-cat="seikatsu" data-keys="ポモドーロ 集中 作業 タイマー 休憩 勉強">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><circle cx="12" cy="13" r="3"/><path d="M12 5.5c.8-1.5 2.2-2.3 4-2.5"/></svg>
             <span><span class="nname">ポモドーロ</span><span class="ndesc">作業と休憩の繰り返し</span></span>
           </button>
-          <button class="navbtn" data-tool="salary" data-keys="年収 時給 月給 換算 給料 賃金 収入">
+          <button class="navbtn" data-tool="salary" data-cat="keisan" data-keys="年収 時給 月給 換算 給料 賃金 収入">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m9 8.5 3 3.5 3-3.5M12 12v6M9.3 14.8h5.4M9.3 17.2h5.4"/></svg>
             <span><span class="nname">年収・時給換算</span><span class="ndesc">時給と月収・年収の換算</span></span>
           </button>
 
-          <button class="navbtn" data-tool="fuel" data-keys="燃費 ガソリン 燃料代 車 ドライブ 旅行">
+          <button class="navbtn" data-tool="fuel" data-cat="keisan" data-keys="燃費 ガソリン 燃料代 車 ドライブ 旅行">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M14 9h2.5A1.5 1.5 0 0 1 18 10.5V16a2 2 0 0 0 4 0V9.8a2 2 0 0 0-.6-1.4L19 6"/><path d="M2.5 21h13.5"/><path d="M7 8h4v4H7z"/></svg>
             <span><span class="nname">燃費・ガソリン代</span><span class="ndesc">燃費と燃料代の計算</span></span>
           </button>
-          <button class="navbtn" data-tool="roulette" data-keys="ルーレット 抽選 ランダム くじ 順番 決める">
+          <button class="navbtn" data-tool="roulette" data-cat="seikatsu" data-keys="ルーレット 抽選 ランダム くじ 順番 決める">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="1.6"/><path d="M12 3.5v5M19.5 16.5l-4.5-2M4.5 16.5l4.5-2"/></svg>
             <span><span class="nname">ルーレット・抽選</span><span class="ndesc">候補からランダムに1つ選ぶ</span></span>
           </button>
-          <button class="navbtn" data-tool="base" data-keys="進数 変換 2進数 10進数 16進数 バイナリ">
+          <button class="navbtn" data-tool="base" data-cat="keisan" data-keys="進数 変換 2進数 10進数 16進数 バイナリ">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 3.5 12 7 19"/><path d="m17 5 3.5 7L17 19"/></svg>
             <span><span class="nname">進数変換</span><span class="ndesc">2進・8進・10進・16進</span></span>
           </button>
 
-          <button class="navbtn" data-tool="stats" data-keys="平均 合計 最大 最小 中央値 データ 集計 平均点">
+          <button class="navbtn" data-tool="stats" data-cat="keisan" data-keys="平均 合計 最大 最小 中央値 データ 集計 平均点">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-5"/><path d="M10 20V7"/><path d="M15 20v-8"/><path d="M20 20V4"/></svg>
             <span><span class="nname">平均・合計</span><span class="ndesc">平均・最大・最小・中央値</span></span>
           </button>
-        <button class="navbtn" data-tool="mojihenkan" data-keys="文字 変換 大文字 小文字 全角 半角 ひらがな カタカナ 英語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文字変換</span><span class="ndesc">大文字・小文字、全角・半角、かな変換</span></span></button><button class="navbtn" data-tool="textseiri" data-keys="テキスト 整理 空白 改行 重複 削除 並べ替え 行番号 置換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">テキスト整理</span><span class="ndesc">空白整理・重複削除・並べ替え・置換</span></span></button><button class="navbtn" data-tool="diff" data-keys="比較 違い 差分 文章"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文章比較</span><span class="ndesc">2つの文章の違いを表示</span></span></button><button class="navbtn" data-tool="markdown" data-keys="Markdown マークダウン プレビュー 記法"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">Markdownプレビュー</span><span class="ndesc">Markdownの表示を確認</span></span></button><button class="navbtn" data-tool="dataconv" data-keys="JSON CSV TSV 変換 整形 データ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">データ変換</span><span class="ndesc">JSON・CSV・TSVの変換と整形</span></span></button><button class="navbtn" data-tool="csvtools" data-keys="CSV 列 抽出 閲覧 表 ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">CSV加工・閲覧</span><span class="ndesc">列の取り出しと表での確認</span></span></button><button class="navbtn" data-tool="encode" data-keys="URL HTML Base64 エンコード デコード 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">エンコード・デコード</span><span class="ndesc">URL・HTML・Base64の変換</span></span></button><button class="navbtn" data-tool="filecheck" data-keys="ファイル 情報 容量 ハッシュ SHA 確認"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">ファイル確認</span><span class="ndesc">容量・種類・SHA-256を確認</span></span></button><button class="navbtn" data-tool="imageconv" data-keys="画像 圧縮 リサイズ 形式 変換 トリミング 切り抜き 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像加工</span><span class="ndesc">圧縮・大きさ・形式・切り抜き</span></span></button><button class="navbtn" data-tool="colorpick" data-keys="画像 色 抽出 カラー 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像から色を取り出す</span><span class="ndesc">使われている色を調べる</span></span></button><button class="navbtn" data-tool="imgpdf" data-keys="画像 PDF 作成 変換 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像からPDF作成</span><span class="ndesc">画像をPDFにまとめる</span></span></button><button class="navbtn" data-tool="colortools" data-keys="色 カラー 配色 コントラスト デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">色の道具</span><span class="ndesc">色番号の変換・配色・コントラスト</span></span></button><button class="navbtn" data-tool="cssgen" data-keys="CSS グラデーション 影 デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">CSS生成</span><span class="ndesc">グラデーションと文字の影</span></span></button><button class="navbtn" data-tool="devtools" data-keys="正規表現 UUID JWT HTML Favicon 開発"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">開発補助</span><span class="ndesc">正規表現・UUID・JWTなど</span></span></button><button class="navbtn" data-tool="listkanri" data-keys="リスト 買い物 チェックリスト 荷造り 引っ越し 冷蔵庫 在庫"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">リスト管理</span><span class="ndesc">買い物・チェックリスト・冷蔵庫在庫</span></span></button><button class="navbtn" data-tool="planmake" data-keys="献立 分担 家事 料理 プラン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">献立・分担プラン</span><span class="ndesc">献立ローテーションと家事分担表</span></span></button><button class="navbtn" data-tool="flashcard" data-keys="暗記 カード 学習 テスト 単語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">暗記カード</span><span class="ndesc">めくって覚える学習とテスト</span></span></button><button class="navbtn" data-tool="diagram" data-keys="図表 ガント マインドマップ 予定 整理"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">図表作成</span><span class="ndesc">ガント表とマインドマップ</span></span></button><button class="navbtn" data-tool="templates" data-keys="議事録 テンプレート 意思決定 マトリクス SWOT 会議"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">文書テンプレート・意思決定</span><span class="ndesc">議事録・意思決定マトリクス・SWOT</span></span></button><button class="navbtn" data-tool="datetools" data-keys="日時 和暦 世界時計 睡眠 サイクル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">日時ツール</span><span class="ndesc">和暦変換・世界時計・睡眠サイクル</span></span></button><button class="navbtn" data-tool="health" data-keys="健康 BMI 体重 基礎代謝 カロリー"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">健康計算</span><span class="ndesc">BMI・基礎代謝・消費カロリー</span></span></button><button class="navbtn" data-tool="denki" data-keys="電気 料金 電気代 家電 試算"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">電気料金の試算</span><span class="ndesc">月の電気料金と家電の電気代</span></span></button><button class="navbtn" data-tool="ziptool" data-keys="ZIP 圧縮 解凍 まとめる ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 9v3M12 15v3"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg><span><span class="nname">ZIP作成・解凍</span><span class="ndesc">ファイルをまとめる・取り出す</span></span></button></nav>
+        <button class="navbtn" data-tool="mojihenkan" data-cat="bunsho" data-keys="文字 変換 大文字 小文字 全角 半角 ひらがな カタカナ 英語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文字変換</span><span class="ndesc">大文字・小文字、全角・半角、かな変換</span></span></button><button class="navbtn" data-tool="textseiri" data-cat="bunsho" data-keys="テキスト 整理 空白 改行 重複 削除 並べ替え 行番号 置換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">テキスト整理</span><span class="ndesc">空白整理・重複削除・並べ替え・置換</span></span></button><button class="navbtn" data-tool="diff" data-cat="bunsho" data-keys="比較 違い 差分 文章"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">文章比較</span><span class="ndesc">2つの文章の違いを表示</span></span></button><button class="navbtn" data-tool="markdown" data-cat="bunsho" data-keys="Markdown マークダウン プレビュー 記法"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">Markdownプレビュー</span><span class="ndesc">Markdownの表示を確認</span></span></button><button class="navbtn" data-tool="dataconv" data-cat="bunsho" data-keys="JSON CSV TSV 変換 整形 データ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">データ変換</span><span class="ndesc">JSON・CSV・TSVの変換と整形</span></span></button><button class="navbtn" data-tool="csvtools" data-cat="bunsho" data-keys="CSV 列 抽出 閲覧 表 ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">CSV加工・閲覧</span><span class="ndesc">列の取り出しと表での確認</span></span></button><button class="navbtn" data-tool="encode" data-cat="bunsho" data-keys="URL HTML Base64 エンコード デコード 変換"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">エンコード・デコード</span><span class="ndesc">URL・HTML・Base64の変換</span></span></button><button class="navbtn" data-tool="filecheck" data-cat="bunsho" data-keys="ファイル 情報 容量 ハッシュ SHA 確認"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg><span><span class="nname">ファイル確認</span><span class="ndesc">容量・種類・SHA-256を確認</span></span></button><button class="navbtn" data-tool="imageconv" data-cat="gazou" data-keys="画像 圧縮 リサイズ 形式 変換 トリミング 切り抜き 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像加工</span><span class="ndesc">圧縮・大きさ・形式・切り抜き</span></span></button><button class="navbtn" data-tool="colorpick" data-cat="gazou" data-keys="画像 色 抽出 カラー 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像から色を取り出す</span><span class="ndesc">使われている色を調べる</span></span></button><button class="navbtn" data-tool="imgpdf" data-cat="gazou" data-keys="画像 PDF 作成 変換 写真"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 19 5-5 3 3 3-3 3 3"/></svg><span><span class="nname">画像からPDF作成</span><span class="ndesc">画像をPDFにまとめる</span></span></button><button class="navbtn" data-tool="colortools" data-cat="gazou" data-keys="色 カラー 配色 コントラスト デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">色の道具</span><span class="ndesc">色番号の変換・配色・コントラスト</span></span></button><button class="navbtn" data-tool="cssgen" data-cat="gazou" data-keys="CSS グラデーション 影 デザイン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">CSS生成</span><span class="ndesc">グラデーションと文字の影</span></span></button><button class="navbtn" data-tool="devtools" data-cat="shigoto" data-keys="正規表現 UUID JWT HTML Favicon 開発"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg><span><span class="nname">開発補助</span><span class="ndesc">正規表現・UUID・JWTなど</span></span></button><button class="navbtn" data-tool="listkanri" data-cat="seikatsu" data-keys="リスト 買い物 チェックリスト 荷造り 引っ越し 冷蔵庫 在庫"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">リスト管理</span><span class="ndesc">買い物・チェックリスト・冷蔵庫在庫</span></span></button><button class="navbtn" data-tool="planmake" data-cat="seikatsu" data-keys="献立 分担 家事 料理 プラン"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14"/><path d="m3.5 5 .8.8L6 4" opacity="0"/><circle cx="4" cy="5" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="19" r="1" fill="currentColor"/></svg><span><span class="nname">献立・分担プラン</span><span class="ndesc">献立ローテーションと家事分担表</span></span></button><button class="navbtn" data-tool="flashcard" data-cat="shigoto" data-keys="暗記 カード 学習 テスト 単語"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">暗記カード</span><span class="ndesc">めくって覚える学習とテスト</span></span></button><button class="navbtn" data-tool="diagram" data-cat="shigoto" data-keys="図表 ガント マインドマップ 予定 整理"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">図表作成</span><span class="ndesc">ガント表とマインドマップ</span></span></button><button class="navbtn" data-tool="templates" data-cat="shigoto" data-keys="議事録 テンプレート 意思決定 マトリクス SWOT 会議"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span><span class="nname">文書テンプレート・意思決定</span><span class="ndesc">議事録・意思決定マトリクス・SWOT</span></span></button><button class="navbtn" data-tool="datetools" data-cat="seikatsu" data-keys="日時 和暦 世界時計 睡眠 サイクル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">日時ツール</span><span class="ndesc">和暦変換・世界時計・睡眠サイクル</span></span></button><button class="navbtn" data-tool="health" data-cat="seikatsu" data-keys="健康 BMI 体重 基礎代謝 カロリー"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">健康計算</span><span class="ndesc">BMI・基礎代謝・消費カロリー</span></span></button><button class="navbtn" data-tool="denki" data-cat="keisan" data-keys="電気 料金 電気代 家電 試算"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><span class="nname">電気料金の試算</span><span class="ndesc">月の電気料金と家電の電気代</span></span></button><button class="navbtn" data-tool="ziptool" data-cat="bunsho" data-keys="ZIP 圧縮 解凍 まとめる ファイル"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 9v3M12 15v3"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg><span><span class="nname">ZIP作成・解凍</span><span class="ndesc">ファイルをまとめる・取り出す</span></span></button></nav>
 
         <main id="panels">
           <div class="nohit" id="noHit">条件に合うツールが見つかりませんでした。別の言葉で検索してみてください。</div>
@@ -1336,7 +1351,13 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       if (location.hash !== '#' + key) { history.replaceState(null, '', '#' + key); }
     }
     navBtns.forEach(function(b){
-      b.addEventListener('click', function(){ activateTool(b.getAttribute('data-tool')); });
+      b.addEventListener('click', function(){
+        var key = b.getAttribute('data-tool');
+        activateTool(key);
+        if (window.innerWidth <= 840 && panels[key]) {
+          setTimeout(function(){ panels[key].scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 30);
+        }
+      });
     });
     var initialTool = (location.hash || '').replace('#', '');
     if (panels[initialTool]) activateTool(initialTool);
@@ -1344,20 +1365,29 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       var k = (location.hash || '').replace('#', '');
       if (panels[k]) activateTool(k);
     });
-    $('toolSearch').addEventListener('input', function(){
-      var q = this.value.trim().toLowerCase();
+    var currentCat = 'all';
+    function applyFilter(){
+      var q = $('toolSearch').value.trim().toLowerCase();
       var visible = 0, firstVisible = null;
       navBtns.forEach(function(b){
         var hay = (b.querySelector('.nname').textContent + ' ' + (b.getAttribute('data-keys') || '')).toLowerCase();
-        var show = !q || hay.indexOf(q) !== -1;
+        var show = (!q || hay.indexOf(q) !== -1) && (currentCat === 'all' || b.getAttribute('data-cat') === currentCat);
         b.hidden = !show;
         if (show) { visible++; if (!firstVisible) firstVisible = b; }
       });
       $('noHit').classList.toggle('show', visible === 0);
-      if (q && firstVisible) {
+      if ((q || currentCat !== 'all') && firstVisible) {
         var activeBtn = document.querySelector('.navbtn.active');
         if (!activeBtn || activeBtn.hidden) activateTool(firstVisible.getAttribute('data-tool'));
       }
+    }
+    $('toolSearch').addEventListener('input', applyFilter);
+    Array.prototype.forEach.call(document.querySelectorAll('.catchip'), function(chip){
+      chip.addEventListener('click', function(){
+        Array.prototype.forEach.call(document.querySelectorAll('.catchip'), function(c){ c.classList.toggle('active', c === chip); });
+        currentCat = chip.getAttribute('data-cat');
+        applyFilter();
+      });
     });
 
     /* ---------- 文字数カウンター ---------- */
