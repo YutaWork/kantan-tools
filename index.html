@@ -327,6 +327,11 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 3.5 12 7 19"/><path d="m17 5 3.5 7L17 19"/></svg>
             <span><span class="nname">進数変換</span><span class="ndesc">2進・8進・10進・16進</span></span>
           </button>
+
+          <button class="navbtn" data-tool="stats" data-keys="平均 合計 最大 最小 中央値 データ 集計 平均点">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-5"/><path d="M10 20V7"/><path d="M15 20v-8"/><path d="M20 20V4"/></svg>
+            <span><span class="nname">平均・合計</span><span class="ndesc">平均・最大・最小・中央値</span></span>
+          </button>
         </nav>
 
         <main id="panels">
@@ -757,6 +762,7 @@
             <div class="seg" id="tcMode">
               <button data-tmode="diff" class="active">時刻の差</button>
               <button data-tmode="add">時刻の計算</button>
+              <button data-tmode="work">勤務時間</button>
             </div>
 
             <div id="tcDiffBlock">
@@ -799,6 +805,28 @@
               <div class="statgrid">
                 <div class="stat"><div class="slabel">計算後の時刻</div><div class="svalue mono" id="tcAddOut">—</div></div>
               </div>
+            </div>
+
+            <div id="tcWorkBlock" hidden>
+              <div class="row3">
+                <div class="field">
+                  <label for="tcWStart">出勤時刻</label>
+                  <input type="time" id="tcWStart" value="09:00" />
+                </div>
+                <div class="field">
+                  <label for="tcWEnd">退勤時刻</label>
+                  <input type="time" id="tcWEnd" value="18:00" />
+                </div>
+                <div class="field">
+                  <label for="tcWBreak">休憩</label>
+                  <div class="withunit"><input type="number" id="tcWBreak" value="60" min="0" max="720" step="5" inputmode="numeric" /><span class="unit">分</span></div>
+                </div>
+              </div>
+              <div class="statgrid">
+                <div class="stat"><div class="slabel">実働時間</div><div class="svalue mono" id="tcWorkOut">—</div></div>
+                <div class="stat"><div class="slabel">分に直すと</div><div class="svalue mono" id="tcWorkMin">—</div></div>
+              </div>
+              <p class="note">退勤時刻が出勤時刻より前の場合は、翌日までとして計算します。休憩を引いた時間が実働時間です。</p>
             </div>
           </section>
 
@@ -1011,6 +1039,29 @@ Dさん</textarea>
               <div class="stat"><div class="slabel">16進数</div><div class="svalue mono" id="baseOut16">—</div></div>
             </div>
             <p class="note" id="baseMsg">16進数のアルファベット（A〜F）も入力できます。</p>
+          </section>
+
+          <!-- 平均・合計 -->
+          <section class="panel" data-panel="stats" hidden aria-label="平均・合計計算">
+            <h2>平均・合計</h2>
+            <p class="sub">数字を1行に1つずつ入力すると、合計・平均・最大・最小・中央値を計算します。</p>
+            <div class="field">
+              <label for="statsInput">数字（1行に1つ）</label>
+              <textarea id="statsInput" rows="6">80
+90
+75
+100
+85</textarea>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="slabel">件数</div><div class="svalue mono" id="statsCount">—</div></div>
+              <div class="stat"><div class="slabel">合計</div><div class="svalue mono" id="statsSum">—</div></div>
+              <div class="stat"><div class="slabel">平均</div><div class="svalue mono" id="statsAvg">—</div></div>
+              <div class="stat"><div class="slabel">最大</div><div class="svalue mono" id="statsMax">—</div></div>
+              <div class="stat"><div class="slabel">最小</div><div class="svalue mono" id="statsMin">—</div></div>
+              <div class="stat"><div class="slabel">中央値</div><div class="svalue mono" id="statsMedian">—</div></div>
+            </div>
+            <p class="note">小数やマイナスの数も使えます。数字でない行は数えません。</p>
           </section>
         </main>
       </div>
@@ -1671,6 +1722,7 @@ Dさん</textarea>
     segWire('tcMode', 'data-tmode', function(m){
       $('tcDiffBlock').hidden = m !== 'diff';
       $('tcAddBlock').hidden = m !== 'add';
+      $('tcWorkBlock').hidden = m !== 'work';
     });
     segWire('tcSign', 'data-sign', function(v){ tcSignVal = v; updateTcAdd(); });
     $('tcStart').addEventListener('change', updateTcDiff);
@@ -1679,6 +1731,22 @@ Dさん</textarea>
     $('tcH').addEventListener('input', updateTcAdd);
     $('tcM').addEventListener('input', updateTcAdd);
     updateTcDiff(); updateTcAdd();
+
+    function updateTcWork() {
+      var a = timeToMin($('tcWStart').value), b = timeToMin($('tcWEnd').value);
+      var br = parseInt($('tcWBreak').value, 10);
+      if (a === null || b === null || isNaN(br)) { $('tcWorkOut').textContent = '—'; $('tcWorkMin').textContent = '—'; return; }
+      var d = b - a;
+      if (d < 0) d += 1440;
+      d -= br;
+      if (d < 0) d = 0;
+      $('tcWorkOut').textContent = fmtHM(d);
+      $('tcWorkMin').textContent = num(d) + ' 分';
+    }
+    $('tcWStart').addEventListener('change', updateTcWork);
+    $('tcWEnd').addEventListener('change', updateTcWork);
+    $('tcWBreak').addEventListener('input', updateTcWork);
+    updateTcWork();
 
     /* ---------- 年齢計算 ---------- */
     var ETO = ['申','酉','戌','亥','子','丑','寅','卯','辰','巳','午','未'];
@@ -1904,6 +1972,30 @@ Dさん</textarea>
     segWire('baseFrom', 'data-bf', function(v){ baseFromVal = parseInt(v, 10); updateBase(); });
     $('baseInput').addEventListener('input', updateBase);
     updateBase();
+
+    /* ---------- 平均・合計 ---------- */
+    function fmtStat(x) {
+      return (Math.round(x * 100) / 100).toLocaleString('ja-JP');
+    }
+    function updateStats() {
+      var vals = $('statsInput').value.split(/[\s,、，]+/).filter(function(x){ return x !== ''; }).map(function(x){ return parseFloat(x); }).filter(function(x){ return !isNaN(x); });
+      if (vals.length === 0) {
+        ['statsCount','statsSum','statsAvg','statsMax','statsMin','statsMedian'].forEach(function(id){ $(id).textContent = '—'; });
+        return;
+      }
+      var sum = vals.reduce(function(a, b){ return a + b; }, 0);
+      var sorted = vals.slice().sort(function(a, b){ return a - b; });
+      var mid = Math.floor(sorted.length / 2);
+      var median = sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+      $('statsCount').textContent = vals.length + ' 件';
+      $('statsSum').textContent = fmtStat(sum);
+      $('statsAvg').textContent = fmtStat(sum / vals.length);
+      $('statsMax').textContent = fmtStat(sorted[sorted.length - 1]);
+      $('statsMin').textContent = fmtStat(sorted[0]);
+      $('statsMedian').textContent = fmtStat(median);
+    }
+    $('statsInput').addEventListener('input', updateStats);
+    updateStats();
     </script>
   </body>
 </html>
