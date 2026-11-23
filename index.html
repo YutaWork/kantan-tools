@@ -85,7 +85,8 @@
       .lead p { margin: 0; color: var(--ink-2); font-size: 15px; max-width: 42em; }
 
       .toolbar { margin-bottom: 18px; }
-      .searchbox { position: relative; }
+      .searchbox { position: relative; display: flex; align-items: center; gap: 6px; }
+      .searchbox input[type="text"] { flex: 1; min-width: 0; width: auto; }
       .searchbox svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ink-2); pointer-events: none; }
       .searchbox input[type="text"] {
         width: 100%; min-height: 48px; padding: 10px 14px 10px 46px;
@@ -306,6 +307,8 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
         main#panels { order: 1; }
         nav.toolnav { order: 2; display: none; }
         nav.toolnav.open { display: grid; }
+        .layout.nav-open main#panels { order: 2; }
+        .layout.nav-open nav.toolnav { order: 1; }
         #navToggle { display:block; width:100%; min-height:48px; margin:10px 0 4px; border-radius:12px; border:1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-weight:700; cursor:pointer; }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -1625,7 +1628,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       b.addEventListener('click', function(){
         var key = b.getAttribute('data-tool');
         activateTool(key);
-        if (window.innerWidth <= 840) { var nv3 = document.getElementById('toolNav'); if (nv3) nv3.classList.remove('open'); var nt3 = document.getElementById('navToggle'); if (nt3) { nt3.setAttribute('aria-expanded','false'); nt3.textContent = 'ツールを選ぶ ▾'; } }
+        if (window.innerWidth <= 840) { var nv3 = document.getElementById('toolNav'); if (nv3) nv3.classList.remove('open'); var lay3 = document.querySelector('.layout'); if (lay3) lay3.classList.remove('nav-open'); var nt3 = document.getElementById('navToggle'); if (nt3) { nt3.setAttribute('aria-expanded','false'); nt3.textContent = 'ツールを選ぶ ▾'; } }
         if (window.innerWidth <= 840 && panels[key]) {
           setTimeout(function(){
             var tb = document.querySelector('.toolbar');
@@ -1699,6 +1702,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     if (navT && navEl2) {
       navT.addEventListener('click', function(){
         var open = navEl2.classList.toggle('open');
+        var lay = document.querySelector('.layout'); if (lay) lay.classList.toggle('nav-open', open);
         navT.setAttribute('aria-expanded', open ? 'true' : 'false');
         navT.textContent = open ? 'ツールを閉じる ▴' : 'ツールを選ぶ ▾';
       });
@@ -1717,7 +1721,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         if (show) { visible++; if (!firstVisible) firstVisible = b; }
       });
       $('noHit').classList.toggle('show', visible === 0);
-      if (window.innerWidth <= 840 && (q || currentCat !== 'all')) { var nv = document.getElementById('toolNav'); if (nv) nv.classList.add('open'); var nt2 = document.getElementById('navToggle'); if (nt2) { nt2.setAttribute('aria-expanded','true'); nt2.textContent = 'ツールを閉じる ▴'; } }
+      if (window.innerWidth <= 840 && (q || currentCat !== 'all')) { var nv = document.getElementById('toolNav'); if (nv) nv.classList.add('open'); var lay2 = document.querySelector('.layout'); if (lay2) lay2.classList.add('nav-open'); var nt2 = document.getElementById('navToggle'); if (nt2) { nt2.setAttribute('aria-expanded','true'); nt2.textContent = 'ツールを閉じる ▴'; } }
       if ((q || currentCat !== 'all') && firstVisible) {
         var activeBtn = document.querySelector('.navbtn.active');
         if (!activeBtn || activeBtn.hidden) activateTool(firstVisible.getAttribute('data-tool'));
