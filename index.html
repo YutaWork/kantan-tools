@@ -94,6 +94,11 @@
         background: var(--surface); color: var(--ink); font: inherit; font-size: 16px;
       }
       .searchbox input:focus { outline: 3px solid var(--ring); outline-offset: 0; border-color: var(--accent); }
+      #searchClear { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); width: 32px; height: 32px; border: none; background: none; color: var(--ink-2); cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+      #searchClear:hover { color: var(--accent); background: var(--accent-soft); }
+      #searchClear[hidden] { display: none; }
+      .searchbox.has-recent #searchClear { right: 54px; }
+      .searchbox input[type="text"].has-clear { padding-right: 44px; }
       .nohit { display: none; padding: 18px; color: var(--ink-2); background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; }
       .nohit.show { display: block; }
       #recentBtn { flex:none; width:44px; height:44px; border:none; background:none; color: var(--ink-2); cursor:pointer; border-radius:10px; }
@@ -109,8 +114,7 @@
       .quickchip { min-height:44px; padding:8px 14px; border-radius:999px; border:1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size:14px; cursor:pointer; }
       .quickchip:hover { border-color: var(--accent); }
       .recentclear { min-height:44px; padding:8px 10px; border:none; background:none; color: var(--ink-2); font: inherit; font-size:13px; text-decoration: underline; cursor:pointer; }
-      #copyToast { position:fixed; left:50%; bottom:16px; transform:translateX(-50%) translateY(20px); background:#123; color:#fff; padding:7px 14px; border-radius:999px; font-size:13px; opacity:0; pointer-events:none; transition: opacity .2s, transform .2s; z-index:99; }
-      #copyToast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+      .note { font-size: 13px; color: var(--muted); }
 
 
       .layout { display: grid; grid-template-columns: 252px minmax(0, 1fr); gap: 20px; align-items: start; }
@@ -137,6 +141,9 @@
       }
       .panel[hidden] { display: none; }
       .panel h2 { font-size: 21px; font-weight: 900; margin: 0 0 4px; }
+      .panelhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 4px; }
+      .panelhead h2 { margin: 0; }
+      .panelhead .btn { flex: none; }
       .panel .sub { color: var(--ink-2); font-size: 14px; margin: 0 0 20px; }
       .panel h3 { font-size: 15px; font-weight: 700; margin: 22px 0 8px; }
 
@@ -203,7 +210,7 @@
 
       .note { font-size: 13px; color: var(--ink-2); margin-top: 16px; }
       .note strong { color: var(--ink); }
-      .copied { font-size: 13px; color: var(--accent-strong); font-weight: 700; min-height: 1.4em; }
+      .over { color: var(--danger); font-weight: 700; }
 
       input[type="range"] { width: 100%; min-height: 40px; accent-color: var(--accent); }
       .meter { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; margin-top: 10px; }
@@ -327,6 +334,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
         <div class="searchbox">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
           <input type="text" id="toolSearch" placeholder="ツールを検索（例：税金、長さ、パスワード）" aria-label="ツールを検索" />
+          <button type="button" id="searchClear" aria-label="検索を消す" title="検索を消す" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
           <button id="recentBtn" aria-label="最近使ったツール" title="最近使ったツール" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button>
         </div>
         <div id="recentPop" hidden>
@@ -345,8 +353,6 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
           <button class="catchip" data-cat="shigoto">仕事・学習</button>
         </div>
       </div>
-
-      <div id="copyToast" role="status" aria-live="polite">コピーしました</div>
 
       <button id="navToggle" aria-expanded="false">ツールを選ぶ ▾</button>
       <div class="layout">
@@ -471,6 +477,11 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <label for="counterText">文章</label>
               <textarea id="counterText" placeholder="ここに文章を入力または貼り付けてください"></textarea>
             </div>
+            <div class="field">
+              <label for="counterLimit">文字数の上限（任意）</label>
+              <div class="withunit"><input type="number" id="counterLimit" min="1" step="1" inputmode="numeric" placeholder="例：1000" /><span class="unit">文字</span></div>
+            </div>
+            <p class="note" id="cntLimitLine" hidden>上限 <span class="mono" id="cntLimitNum"></span>文字 ／ <span id="cntLimitMsg"></span></p>
             <div class="statgrid">
               <div class="stat"><div class="slabel">文字数（全体）</div><div class="svalue mono" id="cntAll">0</div></div>
               <div class="stat"><div class="slabel">空白・改行を除く</div><div class="svalue mono" id="cntNoSpace">0</div></div>
@@ -485,7 +496,6 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <button class="btn ghost sm" id="counterCopy">文章をコピー</button>
               <button class="btn plain sm" id="counterClear">クリア</button>
             </div>
-            <div class="copied" id="counterMsg" aria-live="polite"></div>
             <p class="note">読了時間は1分500字、音読時間は1分300字で計算した目安です。句読点や記号も1文字として数えています。</p>
           </section>
 
@@ -517,7 +527,6 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <button class="btn" id="pwGen">新しいパスワードを作る</button>
               <button class="btn ghost" id="pwCopy">コピーする</button>
             </div>
-            <div class="copied" id="pwMsg" aria-live="polite"></div>
             <p class="note">同じパスワードを複数のサービスで使い回さず、パスワード管理アプリなどに保管してください。このページを閉じると、生成したパスワードは残りません。</p>
           </section>
 
@@ -695,7 +704,10 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 
           <!-- 積立シミュレーション -->
           <section class="panel" data-panel="savings" hidden aria-label="積立シミュレーション">
-            <h2>積立シミュレーション</h2>
+            <div class="panelhead">
+              <h2>積立シミュレーション</h2>
+              <button class="btn plain sm" id="savClear" type="button">入力をクリア</button>
+            </div>
             <p class="sub">毎月積み立てた場合に、元本と運用益がどう伸びるかを試算します。</p>
             <div class="row3">
               <div class="field">
@@ -871,7 +883,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
             </div>
           
 <div id="dateWarekiBlock" hidden><div class="row"><div class="field"><label>西暦の日付</label><input type="date" id="wkDate"></div></div><div class="btnrow"><button class="btn" id="wkRun">和暦に直す</button></div><p class="note" id="wkOut"></p><div class="row"><div class="field"><label>元号</label><select id="wkEra"><option value="2019">令和</option><option value="1989">平成</option><option value="1926">昭和</option><option value="1912">大正</option><option value="1868">明治</option></select></div><div class="field"><label>年（元年は1）</label><input type="number" id="wkYear" value="7" min="1"></div><div class="field"><label>月</label><input type="number" id="wkMonth" value="1" min="1" max="12"></div><div class="field"><label>日</label><input type="number" id="wkDay" value="1" min="1" max="31"></div></div><div class="btnrow"><button class="btn" id="wkRun2">西暦に直す</button></div><p class="note" id="wkOut2"></p><p class="note">元号が始まった年は、途中からその元号になります（例：平成元年は1989年1月8日から）。</p></div>
-<p class="note">計算方法：2つの日付の差を日数として数えます。「開始日を含む」を選ぶと、初日を1日目として数えます。</p>
+<p class="note">計算方法：2つの日付の差を日数として数えます。</p>
 
 <div style="margin-top:22px">
 <h3>営業日の計算</h3>
@@ -879,9 +891,9 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 <div class="field"><label for="bizFrom">開始日</label><input type="date" id="bizFrom" /></div>
 <div class="field"><label for="bizTo">終了日</label><input type="date" id="bizTo" /></div>
 </div>
-<label class="chk"><input type="checkbox" id="bizHol" checked> 祝日も休みに含める（2025年・2026年の祝日に対応）</label>
+<label class="chk"><input type="checkbox" id="bizHol" checked> 祝日も休みに含める（2025年〜2027年の祝日に対応）</label>
 <div class="resultbox"><div class="result-label">営業日の数（開始日と終了日を含む）</div><div class="result-big mono" id="bizOut">—</div></div>
-<p class="note">土曜日・日曜日を休みとして数えます。祝日の一覧は2025年と2026年の分を用意しています。それ以外の年は土日だけで計算します。</p>
+<p class="note">土曜日・日曜日を休みとして数えます。祝日の一覧は2025年〜2027年の分を用意しています。それ以外の年は土日だけで計算します。</p>
 </div>
 </section>
 <section class="panel" data-panel="worldclock" hidden aria-label="世界時計">
@@ -934,12 +946,11 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
               <div class="statgrid">
                 <div class="stat"><div class="slabel">A は B の</div><div class="svalue mono" id="pctRatioOut">—</div></div>
               </div>
-              <p class="note">割合（％）＝ A ÷ B × 100 で計算します。</p>
             </div>
 
             
           
-<p class="note">計算方法：割引後の価格は「元の価格 ×（1 − 割引率）」です。2割引は割引率0.2、20%引きも0.2として計算します。割合の計算は「全体 × 割合 ÷ 100」です。</p>
+<p class="note">計算方法：増えた後の価格は「元の価格 ×（1 ＋ 増加率 ÷ 100）」です。増加率は％の数字で入れます（10%なら10）。割合（％）は「比べる量 ÷ 基準の量 × 100」です。</p>
 </section>
 
           <!-- 時間の計算 -->
@@ -1592,9 +1603,16 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     function $(id) { return document.getElementById(id); }
     function yen(n) { return Math.round(n).toLocaleString('ja-JP') + ' 円'; }
     function num(n) { return n.toLocaleString('ja-JP'); }
-    function copyText(text, msgEl) {
-      function done() { if (msgEl) { msgEl.textContent = 'コピーしました'; setTimeout(function(){ msgEl.textContent=''; }, 2500); } var toast = document.getElementById('copyToast'); if (toast) { toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 1500); } }
-      function fail() { if (msgEl) { msgEl.textContent = 'コピーできませんでした。長押しや右クリックでコピーしてください。'; } }
+    function copyText(text, btn) {
+      function flash(label, ms) {
+        if (!btn) return;
+        if (btn._copyOrig === undefined) btn._copyOrig = btn.textContent;
+        if (btn._copyTimer) clearTimeout(btn._copyTimer);
+        btn.textContent = label;
+        btn._copyTimer = setTimeout(function(){ btn.textContent = btn._copyOrig; btn._copyTimer = null; }, ms);
+      }
+      function done() { flash('コピーしました ✓', 1500); }
+      function fail() { flash('コピーできませんでした', 2500); }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
       } else { fallback(); }
@@ -1690,6 +1708,8 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         box.appendChild(chip); shown++;
       });
       if (btn) btn.hidden = shown === 0;
+      var sb = document.querySelector('.searchbox');
+      if (sb) sb.classList.toggle('has-recent', shown > 0);
       if (shown === 0) pop.hidden = true;
     }
     var rc = document.getElementById('recentClear');
@@ -1709,6 +1729,21 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       });
     }
     renderRecent();
+    /* ---------- 検索の消去ボタン ---------- */
+    var searchInput = $('toolSearch');
+    var searchClearBtn = document.getElementById('searchClear');
+    function updateSearchClear(){
+      var hasText = searchInput.value.length > 0;
+      if (searchClearBtn) searchClearBtn.hidden = !hasText;
+      searchInput.classList.toggle('has-clear', hasText);
+    }
+    if (searchClearBtn) searchClearBtn.addEventListener('click', function(){
+      searchInput.value = '';
+      applyFilter();
+      updateSearchClear();
+      searchInput.focus();
+    });
+    updateSearchClear();
     var currentCat = 'all';
     function applyFilter(){
       var q = $('toolSearch').value.trim().toLowerCase();
@@ -1728,7 +1763,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         if (!activeBtn || activeBtn.hidden) activateTool(firstVisible.getAttribute('data-tool'));
       }
     }
-    $('toolSearch').addEventListener('input', applyFilter);
+    $('toolSearch').addEventListener('input', function(){ applyFilter(); updateSearchClear(); });
     Array.prototype.forEach.call(document.querySelectorAll('.catchip'), function(chip){
       chip.addEventListener('click', function(){
         Array.prototype.forEach.call(document.querySelectorAll('.catchip'), function(c){ c.classList.toggle('active', c === chip); });
@@ -1754,10 +1789,28 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       $('cntGenko').innerHTML = num(Math.ceil(noSpace / 400)) + '<small> 枚</small>';
       $('cntRead').innerHTML = (noSpace === 0 ? '0' : String(Math.max(1, Math.round(noSpace / 500)))) + '<small> 分</small>';
       $('cntSpeak').innerHTML = (noSpace === 0 ? '0' : String(Math.max(1, Math.round(noSpace / 300)))) + '<small> 分</small>';
+      var limit = parseInt($('counterLimit').value, 10);
+      var limitLine = $('cntLimitLine');
+      if (!isNaN(limit) && limit > 0) {
+        limitLine.hidden = false;
+        $('cntLimitNum').textContent = num(limit);
+        var diff = limit - all;
+        var msg = $('cntLimitMsg');
+        if (diff >= 0) {
+          msg.textContent = 'あと' + num(diff) + '文字入力できます';
+          msg.classList.remove('over');
+        } else {
+          msg.textContent = num(-diff) + '文字オーバーしています';
+          msg.classList.add('over');
+        }
+      } else {
+        limitLine.hidden = true;
+      }
     }
     counterText.addEventListener('input', updateCounter);
+    $('counterLimit').addEventListener('input', updateCounter);
     $('counterClear').addEventListener('click', function(){ counterText.value = ''; updateCounter(); counterText.focus(); });
-    $('counterCopy').addEventListener('click', function(){ if (counterText.value) copyText(counterText.value, $('counterMsg')); });
+    $('counterCopy').addEventListener('click', function(){ if (counterText.value) copyText(counterText.value, this); });
     updateCounter();
 
     /* ---------- パスワード生成 ---------- */
@@ -1806,7 +1859,6 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       else { label = '非常に強い'; cls = ''; }
       $('pwStrength').textContent = label;
       meter.className = cls;
-      $('pwMsg').textContent = '';
     }
     Array.prototype.forEach.call(document.querySelectorAll('#pwKinds .chip'), function(chip){
       chip.addEventListener('click', function(){
@@ -1825,7 +1877,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     $('pwGen').addEventListener('click', genPassword);
     $('pwCopy').addEventListener('click', function(){
       var pw = $('pwOut').textContent;
-      if (pw && pw !== '—' && pw.indexOf('選んで') === -1) copyText(pw, $('pwMsg'));
+      if (pw && pw !== '—' && pw.indexOf('選んで') === -1) copyText(pw, this);
     });
     genPassword();
 
@@ -2074,6 +2126,13 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         '</svg>';
     }
     ['savMonthly', 'savRate', 'savYears', 'savInitial'].forEach(function(id){ $(id).addEventListener('input', updateSavings); });
+    $('savClear').addEventListener('click', function(){
+      $('savMonthly').value = '30000';
+      $('savRate').value = '5';
+      $('savYears').value = '20';
+      $('savInitial').value = '0';
+      updateSavings();
+    });
     updateSavings();
 
     /* ---------- タイマー ---------- */
@@ -2616,9 +2675,10 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
 
 /* ===== integrated tools (restructure) ===== */
 Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function(b){
+  if(b.dataset.boundCopy) return; b.dataset.boundCopy = '1';
   b.addEventListener('click', function(){
     var el = $(b.getAttribute('data-copy'));
-    if(el && el.value) copyText(el.value, $(b.getAttribute('data-copy') + 'Note'));
+    if(el && el.value) copyText(el.value, b);
   });
 });
 function setOut(id, txt, note){ $(id).value = txt; if(note !== undefined) $(id+'Note').textContent = note; }
@@ -2890,7 +2950,7 @@ $('fcFile').addEventListener('change', async e => {
   $('fcHash').textContent = fcHash;
   $('fcNote').textContent = f.name + ' の情報です。ファイルは外部に送られていません。';
 });
-$('fcCopy').addEventListener('click', () => { if(fcHash) copyText(fcHash, $('fcNote')); });
+$('fcCopy').addEventListener('click', () => { if(fcHash) copyText(fcHash, $('fcCopy')); });
 
 
 /* ===== batch C: image tools ===== */
@@ -3070,7 +3130,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function(
 if(b.dataset.boundCopy) return; b.dataset.boundCopy = '1';
 b.addEventListener('click', function(){
 var el = $(b.getAttribute('data-copy'));
-if(el && el.value) copyText(el.value, $(b.getAttribute('data-copy') + 'Note'));
+if(el && el.value) copyText(el.value, b);
 });
 });
 function hexToRgb(hex){
@@ -3170,7 +3230,7 @@ lastCss = css;
 $('cssOut').textContent = lastCss;
 }
 ['grC1','grC2','grC3','shX','shY','shBlur','shColor','shText'].forEach(id => $(id).addEventListener('input', renderCss));
-$('cssCopy').addEventListener('click', () => copyText(lastCss, $('cssNote')));
+$('cssCopy').addEventListener('click', () => copyText(lastCss, $('cssCopy')));
 renderCss();
 
 let devMode = 'regex';
@@ -3844,7 +3904,8 @@ stRun(); frRun();
 /* ---------- 日付計算の追加（営業日） ---------- */
 var HOLIDAYS_JP = {};
 ['2025-01-01','2025-01-13','2025-02-11','2025-02-23','2025-02-24','2025-03-20','2025-04-29','2025-05-03','2025-05-04','2025-05-05','2025-05-06','2025-07-21','2025-08-11','2025-09-15','2025-09-23','2025-10-13','2025-11-03','2025-11-23','2025-11-24',
- '2026-01-01','2026-01-12','2026-02-11','2026-02-23','2026-03-20','2026-04-29','2026-05-03','2026-05-04','2026-05-05','2026-05-06','2026-07-20','2026-08-11','2026-09-21','2026-09-22','2026-09-23','2026-10-12','2026-11-03','2026-11-23'].forEach(function(d){ HOLIDAYS_JP[d] = 1; });
+ '2026-01-01','2026-01-12','2026-02-11','2026-02-23','2026-03-20','2026-04-29','2026-05-03','2026-05-04','2026-05-05','2026-05-06','2026-07-20','2026-08-11','2026-09-21','2026-09-22','2026-09-23','2026-10-12','2026-11-03','2026-11-23',
+ '2027-01-01','2027-01-11','2027-02-11','2027-02-23','2027-03-21','2027-03-22','2027-04-29','2027-05-03','2027-05-04','2027-05-05','2027-07-19','2027-08-11','2027-09-20','2027-09-23','2027-10-11','2027-11-03','2027-11-23'].forEach(function(d){ HOLIDAYS_JP[d] = 1; });
 function bizKey(d){ return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
 function bizRun(){
   var a = parseDateInput($('bizFrom').value), b = parseDateInput($('bizTo').value);
