@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ローン計算｜毎月の返済額をその場で試算 - かんたんツール集</title>
+<meta name="description" content="借入額・金利・返済期間を入れるだけで、元利均等返済の毎月の返済額・総返済額・利息の合計と年ごとの残高の推移を計算します。登録なし・無料。" />
+<link rel="canonical" href="https://yutawork.github.io/kantan-tools/tools/loan/" />
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"元利均等返済と元金均等返済の違いは？","acceptedAnswer":{"@type":"Answer","text":"元利均等返済は毎月の返済額が一定で、返済計画が立てやすい方式です。元金均等返済は毎月返す元金が一定で、初めの返済額は大きくなりますが利息の合計は少なくなります。このページは元利均等返済で計算します。"}},
+{"@type":"Question","name":"変動金利の場合はどう考えればよいですか？","acceptedAnswer":{"@type":"Answer","text":"変動金利では将来の金利が分からないため、まず今の金利で計算し、金利が1%上がった場合などでも計算し直して、返済額の増え方を確認するのが目安になります。"}},
+{"@type":"Question","name":"ボーナス払いや手数料は含まれますか？","acceptedAnswer":{"@type":"Answer","text":"含まれません。このページは元利均等返済・固定金利の概算です。ボーナス払い、保証料・手数料、団体信用生命保険料は金融機関の条件で確認してください。"}}
+]}
+</script>
+<style>
+:root{--bg:#f3f5f3;--surface:#ffffff;--ink:#17211c;--ink-2:#57665e;--line:#d9e0da;--accent:#0b7560;--accent-soft:#dff0e9;--shadow:0 1px 3px rgba(20,40,30,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:20px 16px 48px}
+.crumb{font-size:13px;color:var(--ink-2);margin-bottom:12px}
+.crumb a{color:var(--accent);text-decoration:none}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:26px;margin-bottom:20px}
+h1{font-size:26px;margin:0 0 6px}
+h2{font-size:19px;margin:0 0 10px}
+.sub{color:var(--ink-2);margin:0 0 18px}
+.row3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.withunit{position:relative}
+.withunit input{width:100%;min-height:48px;padding:10px 44px 10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.withunit .unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-2);font-size:13px}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat .slabel{font-size:12px;font-weight:700;color:var(--ink-2)}
+.stat .svalue{font-size:20px;font-weight:700;margin-top:2px}
+.mono{font-family:ui-monospace,monospace}
+.tablescroll{overflow-x:auto}
+table.data{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+table.data th,table.data td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right}
+table.data th:first-child,table.data td:first-child{text-align:left}
+.note{font-size:13px;color:var(--ink-2);margin-top:16px}
+ol.steps{margin:0;padding-left:22px}
+.faq dt{font-weight:700;margin-top:14px}
+.faq dd{margin:4px 0 0;color:var(--ink-2)}
+.rel{display:flex;flex-wrap:wrap;gap:8px}
+.rel a{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:8px 14px;text-decoration:none;font-size:14px;font-weight:700}
+footer{font-size:12px;color:var(--ink-2);text-align:center;margin-top:8px}
+footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumb"><a href="../../">かんたんツール集</a> › お金・家計 › ローン計算</nav>
+
+  <section class="panel" aria-label="ローン計算">
+    <h1>ローン計算</h1>
+    <p class="sub">元利均等返済での毎月の返済額を試算します。数字を変えると、その場で結果が変わります。</p>
+    <div class="row3">
+      <div class="field"><label for="loanAmt">借入額</label><div class="withunit"><input type="number" id="loanAmt" value="3000" min="0" step="10" inputmode="numeric" /><span class="unit">万円</span></div></div>
+      <div class="field"><label for="loanRate">金利（年率）</label><div class="withunit"><input type="number" id="loanRate" value="1.0" min="0" step="0.05" inputmode="decimal" /><span class="unit">%</span></div></div>
+      <div class="field"><label for="loanYears">返済期間</label><div class="withunit"><input type="number" id="loanYears" value="35" min="1" max="50" step="1" inputmode="numeric" /><span class="unit">年</span></div></div>
+    </div>
+    <div class="statgrid">
+      <div class="stat"><div class="slabel">毎月の返済額</div><div class="svalue mono" id="loanMonthly">—</div></div>
+      <div class="stat"><div class="slabel">総返済額</div><div class="svalue mono" id="loanTotal">—</div></div>
+      <div class="stat"><div class="slabel">利息の合計</div><div class="svalue mono" id="loanInterest">—</div></div>
+      <div class="stat"><div class="slabel">返済回数</div><div class="svalue mono" id="loanCount">—</div></div>
+    </div>
+    <h2 style="margin-top:22px">年ごとの残高の推移</h2>
+    <div class="tablescroll">
+      <table class="data" id="loanTable" aria-label="年ごとの返済推移">
+        <thead><tr><th>年</th><th>その年の返済額</th><th>うち利息</th><th>年末残高</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note"><strong>計算方法：</strong>毎月の返済額 ＝ 借入額 × 月の金利 ×（1＋月の金利）^返済回数 ÷（（1＋月の金利）^返済回数 − 1）。月の金利は年率 ÷ 12 です。</p>
+    <p class="note"><strong>ご注意：</strong>これは元利均等返済・固定金利で計算した概算です。ボーナス払い、保証料・手数料、団体信用生命保険料などは含みません。実際の返済額は金融機関の条件で確認してください。</p>
+  </section>
+
+  <section class="panel" aria-label="使い方">
+    <h2>使い方</h2>
+    <ol class="steps">
+      <li>借入額を万円で入れます（例：3,000万円なら 3000）。</li>
+      <li>金利（年率）と返済期間を入れます。</li>
+      <li>毎月の返済額・総返済額・利息の合計と、年ごとの残高の推移がその場で表示されます。</li>
+    </ol>
+    <p class="note"><strong>入力例：</strong>借入額3,000万円・金利1.0%・35年返済の場合、毎月の返済額は約84,686円、利息の合計は約557万円になります。金利を1.5%に変えると毎月約91,855円になり、金利の違いで返済額がどう変わるか比べられます。</p>
+  </section>
+
+  <section class="panel" aria-label="よくある質問">
+    <h2>よくある質問</h2>
+    <dl class="faq">
+      <dt>元利均等返済と元金均等返済の違いは？</dt>
+      <dd>元利均等返済は毎月の返済額が一定で、返済計画が立てやすい方式です。元金均等返済は毎月返す元金が一定で、初めの返済額は大きくなりますが利息の合計は少なくなります。このページは元利均等返済で計算します。</dd>
+      <dt>変動金利の場合はどう考えればよいですか？</dt>
+      <dd>変動金利では将来の金利が分からないため、まず今の金利で計算し、金利が1%上がった場合などでも計算し直して、返済額の増え方を確認するのが目安になります。</dd>
+      <dt>ボーナス払いや手数料は含まれますか？</dt>
+      <dd>含まれません。このページは元利均等返済・固定金利の概算です。ボーナス払い、保証料・手数料、団体信用生命保険料は金融機関の条件で確認してください。</dd>
+    </dl>
+  </section>
+
+  <section class="panel" aria-label="関連ツール">
+    <h2>関連ツール</h2>
+    <div class="rel">
+      <a href="../../#savings">積立シミュレーション</a>
+      <a href="../../#tax">給与・税金計算</a>
+      <a href="../../#income">年収・時給換算</a>
+      <a href="../../#pricetax">消費税・割引計算</a>
+      <a href="../../">ツール一覧へ</a>
+    </div>
+  </section>
+
+  <footer>© 2026 かんたんツール集 ・ <a href="../../terms.html">利用条件・免責事項</a></footer>
+</div>
+<script>
+function $(id){return document.getElementById(id);}
+function num(v){return Math.round(v).toLocaleString('ja-JP');}
+function yen(v){return num(v)+' 円';}
+function updateLoan(){
+  var P=parseFloat($('loanAmt').value)*10000;
+  var annual=parseFloat($('loanRate').value);
+  var years=parseInt($('loanYears').value,10);
+  if(isNaN(P)||isNaN(annual)||isNaN(years)||P<0||years<1){
+    $('loanMonthly').textContent='—';$('loanTotal').textContent='—';$('loanInterest').textContent='—';$('loanCount').textContent='—';
+    document.querySelector('#loanTable tbody').innerHTML='';return;
+  }
+  var n=years*12, r=annual/100/12;
+  var pay=r===0?P/n:P*r/(1-Math.pow(1+r,-n));
+  var bal=P,totalInterest=0,rows='';
+  for(var y=1;y<=years;y++){
+    var yPay=0,yInt=0;
+    for(var m=0;m<12;m++){
+      var interest=bal*r;var principal=pay-interest;
+      if(principal>bal)principal=bal;
+      bal-=principal;yInt+=interest;yPay+=principal+interest;
+      if(bal<=0.005)bal=0;
+    }
+    totalInterest+=yInt;
+    rows+='<tr><td>'+y+' 年目</td><td class="mono">'+num(yPay)+' 円</td><td class="mono">'+num(yInt)+' 円</td><td class="mono">'+num(bal)+' 円</td></tr>';
+  }
+  $('loanMonthly').textContent=yen(pay);
+  $('loanTotal').textContent=yen(P+totalInterest);
+  $('loanInterest').textContent=yen(totalInterest);
+  $('loanCount').textContent=num(n)+' 回';
+  document.querySelector('#loanTable tbody').innerHTML=rows;
+}
+['loanAmt','loanRate','loanYears'].forEach(function(id){$(id).addEventListener('input',updateLoan);});
+updateLoan();
+</script>
+</body>
+</html>
