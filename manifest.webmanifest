@@ -1,6 +1,6 @@
 {
-  "name": "かんたんツール集",
-  "short_name": "かんたんツール集",
+  "name": "Kantan Lab",
+  "short_name": "Kantan Lab",
   "description": "計算・変換などの便利な機能を無料で提供するウェブサイトです。",
   "lang": "ja",
   "start_url": ".",
