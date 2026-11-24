@@ -322,7 +322,15 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
         * { transition: none !important; }
       }
     </style>
-  </head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PSHHPD4M8Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PSHHPD4M8Y');
+</script>
+</head>
   <body>
     <div class="wrap">
       <div class="lead">
@@ -1639,6 +1647,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       var btn = document.querySelector('.navbtn[data-tool="' + key + '"]');
       var nameEl = btn ? btn.querySelector('.nname') : null;
       if (nameEl) { document.title = nameEl.textContent.trim() + ' | かんたんツール集'; }
+      if (typeof gtag === 'function') { try { gtag('event', 'tool_open', { tool_key: key, tool_name: nameEl ? nameEl.textContent.trim() : key }); } catch(e) {} }
       try {
         var rec = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
         rec = [key].concat(rec.filter(function(x){ return x !== key; })).slice(0, 5);
