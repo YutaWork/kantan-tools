@@ -937,6 +937,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
           <section class="panel" data-panel="percent" hidden aria-label="割合計算">
             <h2>割合計算</h2>
             <p class="sub">割合と増減率（何％増えた・減った）の計算ができます。</p>
+            <p class="note">例：10,000円を10%増やすと11,000円になります。30は120の25%です。</p>
             <div class="seg" id="pctMode">
               
               <button data-pmode="up" class="active">割増・増減率</button>
@@ -1258,6 +1259,7 @@ Dさん</textarea>
           <section class="panel" data-panel="base" hidden aria-label="進数変換">
             <h2>進数変換</h2>
             <p class="sub">2進数・8進数・10進数・16進数のあいだで変換します（0以上の整数）。</p>
+            <p class="note">例：10進数の「10」は、2進数で「1010」になります。</p>
             <div class="field">
               <label for="baseInput">変換したい数</label>
               <input type="text" id="baseInput" value="255" inputmode="text" autocomplete="off" />
@@ -1331,7 +1333,7 @@ Dさん</textarea>
 明日も晴れでしょう。
 明後日は未定です。</textarea></div><div class="field"><label>修正後の文章</label><textarea class="ta" id="diffB" rows="5">今日は晴れです。
 明日は雨でしょう。
-明後日は未定です。</textarea></div><div class="btnrow"><button class="btn" id="diffRun">比べる</button></div><p class="note" id="diffNote" hidden></p><div id="diffOut" style="margin-top:10px"></div>
+明後日は未定です。</textarea></div><div class="btnrow"><button class="btn" id="diffRun">比べる</button></div><p class="note">緑の「＋」の行が追加、赤の「−」の行が削除です。</p><p class="note" id="diffNote" hidden></p><div id="diffOut" style="margin-top:10px"></div>
 </section>
 <section class="panel" data-panel="markdown" hidden aria-label="Markdownプレビュー">
 <h2>Markdownプレビュー</h2>
