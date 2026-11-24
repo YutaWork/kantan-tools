@@ -134,12 +134,11 @@
       .navbtn.active svg { color: var(--accent); }
       .navbtn:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
       .navbtn[hidden] { display: none; }
-      .tool-row { display: flex; align-items: stretch; width: 100%; }
-      .tool-row[hidden] { display: none; }
-      .tool-row .navbtn { flex: 1 1 auto; width: auto; min-width: 0; }
-      .favbtn { flex: none; align-self: stretch; width: 44px; min-height: 52px; display: flex; align-items: center; justify-content: center; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--ink-2); font: inherit; font-size: 20px; line-height: 1; cursor: pointer; }
-      .favbtn:hover { background: var(--surface); color: var(--accent); }
-      .favbtn[aria-pressed="true"] { color: var(--accent); }
+      .favheadrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .favheadrow h2 { margin: 0; }
+      .favstar { flex: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: none; border-radius: 10px; background: transparent; color: #9aa3a7; font: inherit; font-size: 18px; line-height: 1; cursor: pointer; }
+      .favstar:hover { background: var(--surface); }
+      .favstar[aria-pressed="true"] { color: #e8a33d; }
       #favSection { padding: 2px 2px 10px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
       #favSection .favhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
       #favSection .qlabel { font-weight: 700; font-size: 13px; color: var(--ink-2); }
@@ -313,7 +312,6 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
         nav.toolnav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .navbtn { background: var(--surface); border-color: var(--line); min-height: 48px; padding: 8px 10px; gap: 8px; }
         #favSection { grid-column: 1 / -1; }
-        .favbtn { min-height: 48px; }
         .navbtn .nname { font-size: 13.5px; }
         nav.toolnav { gap: 6px; }
         .navbtn .ndesc { display: none; }
@@ -378,7 +376,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
       <div class="layout">
         <nav class="toolnav" id="toolNav" aria-label="ツール一覧">
           <div id="favSection" hidden>
-            <div class="favhead"><span class="qlabel">お気に入り</span><button class="recentclear" id="favClear" type="button">すべて解除</button></div>
+            <div class="favhead"><span class="qlabel">お気に入り</span></div>
             <span id="favChips"></span>
           </div>
           <button class="navbtn" data-tool="pricetax" data-cat="money" data-keys="消費税 税金 税込 税抜 割引 お金">
@@ -1656,20 +1654,6 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     }
 
     /* ---------- ツール切り替えと検索 ---------- */
-    /* ---------- お気に入り：星はツールを開くボタンの外に置く ---------- */
-    Array.prototype.forEach.call(document.querySelectorAll('.navbtn'), function(b){
-      var row = document.createElement('div');
-      row.className = 'tool-row';
-      b.parentNode.insertBefore(row, b);
-      row.appendChild(b);
-      var star = document.createElement('button');
-      star.type = 'button';
-      star.className = 'favbtn';
-      star.setAttribute('aria-pressed', 'false');
-      star.textContent = '☆';
-      star.addEventListener('click', function(){ toggleFav(b.getAttribute('data-tool')); });
-      row.appendChild(star);
-    });
     var navBtns = Array.prototype.slice.call(document.querySelectorAll('.navbtn'));
     var panels = {};
     Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function(p){ panels[p.getAttribute('data-panel')] = p; });
@@ -1793,14 +1777,13 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     }
     function renderFavs(){
       var favs = loadFavs();
-      navBtns.forEach(function(b){
-        var k = b.getAttribute('data-tool');
-        var s = b.parentElement ? b.parentElement.querySelector('.favbtn') : null;
-        if (!s) return;
+      Array.prototype.forEach.call(document.querySelectorAll('.favstar'), function(s){
+        var k = s.getAttribute('data-tool');
         var on = favs.indexOf(k) >= 0;
         s.textContent = on ? '★' : '☆';
         s.setAttribute('aria-pressed', on ? 'true' : 'false');
-        var nm = b.querySelector('.nname');
+        var b = document.querySelector('.navbtn[data-tool="' + k + '"]');
+        var nm = b ? b.querySelector('.nname') : null;
         s.setAttribute('aria-label', (nm ? nm.textContent.trim() : k) + (on ? 'をお気に入りから外す' : 'をお気に入りに登録'));
       });
       var sec = document.getElementById('favSection');
@@ -1830,17 +1813,29 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       var vis = 0;
       Array.prototype.forEach.call(box.querySelectorAll('.quickchip'), function(chip){
         var b = document.querySelector('.navbtn[data-tool="' + chip.getAttribute('data-tool') + '"]');
-        var row = b ? b.closest('.tool-row') : null;
-        var show = !row || !row.hidden;
+        var show = !b || !b.hidden;
         chip.hidden = !show;
         if (show) vis++;
       });
       sec.hidden = favs.length === 0 || vis === 0;
     }
-    var favClearBtn = document.getElementById('favClear');
-    if (favClearBtn) favClearBtn.addEventListener('click', function(){
-      if (loadFavs().length === 0) return;
-      if (window.confirm('お気に入りをすべて解除しますか？')) { saveFavs([]); renderFavs(); }
+    /* ---------- お気に入り：星は各ツールの題名の右隣に1つだけ置く ---------- */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function(panel){
+      var key = panel.getAttribute('data-panel');
+      var h2 = panel.querySelector('h2');
+      if (!h2 || !h2.parentNode) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'favheadrow';
+      h2.parentNode.insertBefore(wrap, h2);
+      wrap.appendChild(h2);
+      var star = document.createElement('button');
+      star.type = 'button';
+      star.className = 'favstar';
+      star.setAttribute('data-tool', key);
+      star.setAttribute('aria-pressed', 'false');
+      star.textContent = '☆';
+      star.addEventListener('click', function(){ toggleFav(key); });
+      wrap.appendChild(star);
     });
     renderFavs();
     /* ---------- 検索の消去ボタン ---------- */
@@ -1867,16 +1862,14 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
         var hay = (b.querySelector('.nname').textContent + ' ' + keysRaw).toLowerCase();
         var matchQ = !q || hay.indexOf(q) !== -1 || keysRaw.toLowerCase().split(/\s+/).some(function(k){ return k && k.length >= 2 && q.indexOf(k) !== -1; }) || q.split(/\s+/).some(function(w){ return w && hay.indexOf(w) !== -1; });
         var show = matchQ && (currentCat === 'all' || b.getAttribute('data-cat') === currentCat);
-        var row = b.closest('.tool-row');
-        if (row) row.hidden = !show; else b.hidden = !show;
+        b.hidden = !show;
         if (show) { visible++; if (!firstVisible) firstVisible = b; }
       });
       $('noHit').classList.toggle('show', visible === 0);
       if (window.innerWidth <= 840 && (q || currentCat !== 'all')) { var nv = document.getElementById('toolNav'); if (nv) nv.classList.add('open'); var lay2 = document.querySelector('.layout'); if (lay2) lay2.classList.add('nav-open'); var nt2 = document.getElementById('navToggle'); if (nt2) { nt2.setAttribute('aria-expanded','true'); nt2.textContent = 'ツールを閉じる ▴'; } }
       if ((q || currentCat !== 'all') && firstVisible) {
         var activeBtn = document.querySelector('.navbtn.active');
-        var activeRow = activeBtn ? activeBtn.closest('.tool-row') : null;
-        if (!activeBtn || (activeRow ? activeRow.hidden : activeBtn.hidden)) activateTool(firstVisible.getAttribute('data-tool'));
+        if (!activeBtn || activeBtn.hidden) activateTool(firstVisible.getAttribute('data-tool'));
       }
       if (typeof syncFavChips === 'function') syncFavChips();
     }
