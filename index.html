@@ -1615,6 +1615,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       }
       function done() { flash('コピーしました ✓', 1500); }
       function fail() { flash('コピーできませんでした', 2500); }
+      if (!text) { flash('コピーする内容がありません', 2500); return; }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
       } else { fallback(); }
@@ -1834,7 +1835,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     counterText.addEventListener('input', updateCounter);
     $('counterLimit').addEventListener('input', updateCounter);
     $('counterClear').addEventListener('click', function(){ counterText.value = ''; updateCounter(); counterText.focus(); });
-    $('counterCopy').addEventListener('click', function(){ if (counterText.value) copyText(counterText.value, this); });
+    $('counterCopy').addEventListener('click', function(){ copyText(counterText.value, this); });
     updateCounter();
 
     /* ---------- パスワード生成 ---------- */
@@ -1901,7 +1902,8 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
     $('pwGen').addEventListener('click', genPassword);
     $('pwCopy').addEventListener('click', function(){
       var pw = $('pwOut').textContent;
-      if (pw && pw !== '—' && pw.indexOf('選んで') === -1) copyText(pw, this);
+      if (!pw || pw === '—' || pw.indexOf('選んで') !== -1) pw = '';
+      copyText(pw, this);
     });
     genPassword();
 
@@ -2702,7 +2704,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function(
   if(b.dataset.boundCopy) return; b.dataset.boundCopy = '1';
   b.addEventListener('click', function(){
     var el = $(b.getAttribute('data-copy'));
-    if(el && el.value) copyText(el.value, b);
+    copyText(el ? el.value : '', b);
   });
 });
 function setOut(id, txt, note){ $(id).value = txt; if(note !== undefined) $(id+'Note').textContent = note; }
@@ -2977,7 +2979,7 @@ $('fcFile').addEventListener('change', async e => {
   $('fcHash').textContent = fcHash;
   $('fcNote').textContent = f.name + ' の情報です。ファイルは外部に送られていません。';
 });
-$('fcCopy').addEventListener('click', () => { if(fcHash) copyText(fcHash, $('fcCopy')); });
+$('fcCopy').addEventListener('click', () => { copyText(fcHash, $('fcCopy')); });
 
 
 /* ===== batch C: image tools ===== */
@@ -3157,7 +3159,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function(
 if(b.dataset.boundCopy) return; b.dataset.boundCopy = '1';
 b.addEventListener('click', function(){
 var el = $(b.getAttribute('data-copy'));
-if(el && el.value) copyText(el.value, b);
+copyText(el ? el.value : '', b);
 });
 });
 function hexToRgb(hex){
