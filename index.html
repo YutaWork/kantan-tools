@@ -24,6 +24,10 @@
     <meta name="twitter:title" content="かんたんツール集" />
     <meta name="twitter:description" content="文字数カウント、パスワード生成、単位変換、消費税・割り勘、ローン計算、積立シミュレーション、タイマー、日付計算、割引・パーセント、時間の計算、年齢計算、電卓、ポモドーロ、年収・時給換算、燃費計算、抽選、進数変換、平均・合計。全44ツールが無料で使えるツール集です。" />
     <meta name="theme-color" content="#0b7560" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <title>かんたんツール集</title>
     <script type="application/ld+json">
@@ -1758,6 +1762,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
       });
     }
     renderRecent();
+    if ('serviceWorker' in navigator) { try { navigator.serviceWorker.register('sw.js'); } catch(e) {} }
     /* ---------- お気に入り ---------- */
     var FAV_KEY = 'kantan-tools:v1:favorites';
     function loadFavs(){
