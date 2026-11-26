@@ -671,6 +671,7 @@ input[type="color"]{width:64px;height:40px;padding:2px;border:1px solid var(--li
 <section class="panel" data-panel="warikan" hidden aria-label="割り勘計算">
 <h2>割り勘計算</h2>
 <p class="sub">合計金額を人数で割り、1人あたりの金額を計算します。</p>
+            <p class="note">例：10,000円を3人で分ける場合、100円単位で切り上げると1人3,400円、集まる合計は10,200円になります。</p>
 <div id="splitBlock">
               <div class="row2">
                 <div class="field">
@@ -1510,6 +1511,7 @@ Bさん</textarea></div><div class="btnrow"><button class="btn" id="choreRun">�
 <section class="panel" data-panel="health" hidden aria-label="健康計算">
 <h2>健康計算</h2>
 <p class="desc">BMIと適正体重、基礎代謝と1日の消費カロリー、睡眠サイクルの目安を計算します。医療の判断には使えません。</p>
+<p class="note">例：身長170cm・体重65kgなら、BMIは22.5で「普通体重」です。</p>
 <div class="seg" id="heMode"><button data-mode="bmi" class="active">BMI・適正体重</button><button data-mode="bmr">基礎代謝・消費カロリー</button><button data-mode="sleep">睡眠サイクル</button></div><div id="heCalc"><div class="row"><div class="field"><label>身長（cm）</label><input type="number" id="heHeight" value="170" step="0.1"></div><div class="field"><label>体重（kg）</label><input type="number" id="heWeight" value="65" step="0.1"></div></div><div id="heBmrFields" hidden><div class="row"><div class="field"><label>年齢</label><input type="number" id="heAge" value="35"></div><div class="field"><label>性別</label><select id="heSex"><option value="m">男性</option><option value="f">女性</option></select></div></div><div class="field"><label>ふだんの活動量</label><select id="heAct"><option value="1.2">ほぼ運動しない</option><option value="1.375">軽い運動（週1〜3日）</option><option value="1.55" selected>中くらいの運動（週3〜5日）</option><option value="1.725">激しい運動（週6〜7日）</option></select></div></div><div class="btnrow"><button class="btn" id="heRun">計算する</button></div><div class="statgrid"><div class="stat"><span class="k" id="heK1">BMI</span><span class="v" id="heV1">-</span></div><div class="stat"><span class="k" id="heK2">判定・適正体重</span><span class="v" id="heV2" style="font-size:1rem">-</span></div></div><p class="note" id="heNote"></p></div>
 <div id="heSleep" hidden><div class="row"><div class="field"><label>起きる時刻</label><input type="time" id="slWake" value="07:00"></div></div><div class="btnrow"><button class="btn" id="slRun">寝る時刻の目安を出す</button></div><div class="tblwrap" id="slOut"></div><p class="note">眠りは約90分の周期で浅くなると言われます。寝つくまでの15分を見込んで計算しています。あくまで目安です。</p></div>
 </section>
