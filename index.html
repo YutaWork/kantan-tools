@@ -3242,9 +3242,10 @@ function csvcheckAnalyze(rows, parseErrors) {
     if (spaced.length) add('yellow', 'spaces-' + col, '「' + colName + '」列に前後の空白が付いた値があります', spaced.length, spaced.map(function (x) { return x.row; }), '');
     if (nonEmpty.length >= 3) {
       var numericCount = nonEmpty.filter(function (x) { return csvcheckIsNumeric(x.v.trim()); }).length;
-      if (numericCount / nonEmpty.length >= 0.7) {
-        var broken = nonEmpty.filter(function (x) { return !csvcheckIsNumeric(x.v.trim()) && csvcheckIsNumericLikeBroken(x.v.trim()); });
-        if (broken.length) add('orange', 'numeric-string-' + col, '「' + colName + '」列に、数値として読めない形の値があります', broken.length, broken.map(function (x) { return x.row; }), '例: ' + broken.slice(0, 3).map(function (x) { return x.v; }).join(' / ') + '。カンマ・単位・全角数字が付いていると、表計算ソフトで数値として計算できません。');
+      var brokenNums = nonEmpty.filter(function (x) { return !csvcheckIsNumeric(x.v.trim()) && csvcheckIsNumericLikeBroken(x.v.trim()); });
+      /* 数値そのものが多数派の場合と、数値+「数値に見えるが読めない形」が多数派の場合の両方を見る（例：金額の半分がカンマ入りでも見逃さない） */
+      if (brokenNums.length && (numericCount / nonEmpty.length >= 0.7 || (numericCount + brokenNums.length) / nonEmpty.length >= 0.7)) {
+        add('orange', 'numeric-string-' + col, '「' + colName + '」列に、数値として読めない形の値があります', brokenNums.length, brokenNums.map(function (x) { return x.row; }), '例: ' + brokenNums.slice(0, 3).map(function (x) { return x.v; }).join(' / ') + '。カンマ・単位・全角数字が付いていると、表計算ソフトで数値として計算できません。');
       }
       var dateKinds = {}, dateRows = {};
       nonEmpty.forEach(function (x) { var k = csvcheckDateKind(x.v.trim()); if (k) { dateKinds[k] = true; (dateRows[k] = dateRows[k] || []).push(x.row); } });
